@@ -1,0 +1,30 @@
+---
+import "../styles/fonts.css";
+import "../styles/variables.css";
+import "../styles/typography.css";
+import "../styles/globals.css";
+
+const title = Astro.props.title
+  ? `${Astro.props.title} | Vivir Plenamente`
+  : "Vivir Plenamente";
+---
+
+<!doctype html>
+<html lang="es-ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="Vivir Plenamente - Recursos y apoyo para una vida saludable y feliz."
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

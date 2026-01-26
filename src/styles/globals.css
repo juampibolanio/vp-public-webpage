@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-background);
+}
+
+/* images */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* lists */
+ul,
+ol {
+  padding-left: var(--space-lg);
+}
+
+/* base buttons */
+button {
+  font-family: var(--font-family-base);
+  cursor: pointer;
+  border: none;
+}
+
+/* accesibility */
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}

@@ -1,0 +1,54 @@
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-md);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+}
+
+/* Títulos */
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+}
+
+h1 {
+    font-size: var(--font-size-xxl);
+}
+
+h2 {
+    font-size: var(--font-size-xl);
+}
+
+h3 {
+    font-size: var(--font-size-lg);
+}
+
+/* Texto */
+p {
+    margin-bottom: var(--space-md);
+    color: var(--color-text-secondary);
+}
+
+/* Enlaces */
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Énfasis */
+strong {
+    font-weight: 600;
+}
+
+em {
+    font-style: italic;
+}
