@@ -1,0 +1,80 @@
+---
+import "./Navbar.css";
+---
+
+<nav class="navbar" aria-label="Navegación principal">
+  <div class="navbar__container">
+    <button class="navbar__toggle" aria-label="Abrir menú"> ☰ </button>
+
+    <div class="navbar__links">
+      <a class="navbar__link link--double-line link--important" href="#">
+        <span class="link__text">Ayuda</span>
+        <span class="link__text">Inmediata</span>
+      </a>
+
+      <a class="navbar__link" href="/">Inicio</a>
+
+      <div class="navbar__item navbar__item--dropdown">
+        <button class="navbar__link link--double-line navbar__accordion-toggle">
+          <span class="link__text">Personas</span>
+          <span class="link__text">Mayores</span>
+        </button>
+
+        <div class="dropdown">
+          <a class="dropdown__link" href="#">Trámites paso a paso</a>
+          <a class="dropdown__link" href="#">Tus derechos</a>
+          <a class="dropdown__link" href="#">Teléfonos útiles</a>
+          <a class="dropdown__link" href="#">Actividades y clubes</a>
+          <a class="dropdown__link" href="#">Salud y cuidados</a>
+        </div>
+      </div>
+
+      <div class="navbar__item navbar__item--dropdown">
+        <button class="navbar__link navbar__accordion-toggle">Familias</button>
+
+        <div class="dropdown">
+          <a class="dropdown__link" href="#">Primeros pasos</a>
+          <a class="dropdown__link" href="#">Residencias</a>
+          <a class="dropdown__link" href="#">Salud y cuidado</a>
+          <a class="dropdown__link" href="#">Orientación</a>
+          <a class="dropdown__link" href="#">A quién llamar</a>
+        </div>
+      </div>
+
+      <div class="navbar__item navbar__item--dropdown">
+        <button class="navbar__link navbar__accordion-toggle"
+          >Profesionales</button
+        >
+
+        <div class="dropdown">
+          <a class="dropdown__link" href="#">Capacitaciones</a>
+          <a class="dropdown__link" href="#">Recursos</a>
+          <a class="dropdown__link" href="#">Marco normativo</a>
+          <a class="dropdown__link" href="#">Comunidad</a>
+        </div>
+      </div>
+
+      <a class="navbar__link" href="#">Noticias</a>
+      <a class="navbar__link" href="#">Contacto</a>
+    </div>
+  </div>
+</nav>
+
+<script>
+  const toggle = document.querySelector(".navbar__toggle");
+  const links = document.querySelector(".navbar__links");
+
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      links.classList.toggle("is-open");
+    });
+  }
+
+  document.querySelectorAll(".navbar__accordion-toggle").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      btn.parentElement?.classList.toggle("is-open");
+    });
+  });
+</script>
+
+<!-- Se deben añadir los links a medida que se van creando las demás secciones. -->

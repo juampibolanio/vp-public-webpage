@@ -3,6 +3,7 @@
     --color-primary: #ee7923;
     --color-secondary: #fdeCDD;
     --color-background: #fff9f2;
+    --color-alternative: #F44A09;
 
     --color-text-primary: #2b2b2b;
     --color-text-secondary: #5a5a5a;
@@ -26,11 +27,13 @@
     /* 32px */
 
     /* spacing */
+    --space-xxs: 0.25rem;
     --space-xs: 0.5rem;
     --space-sm: 0.75rem;
     --space-md: 1rem;
     --space-lg: 1.5rem;
     --space-xl: 2rem;
+    --space-xxl: 2.2rem;
 
     /* borders */
     --radius-sm: 6px;
