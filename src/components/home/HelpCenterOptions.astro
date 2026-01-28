@@ -1,0 +1,81 @@
+---
+import "./HelpCenterOptions.css";
+import { Icon } from "astro-icon/components";
+
+import optionImage1 from "../../assets/help-center-image-a.webp";
+import optionImage2 from "../../assets/help-center-image-b.webp";
+import optionImage3 from "../../assets/help-center-image-c.webp";
+
+const options = [
+  {
+    title: "Soy una persona mayor",
+    description:
+      "Encontrá información sobre tus derechos, salud, trámites de jubilación y actividades recreativas pensadas para vos.",
+    icon: "mdi:hail",
+    image: optionImage1,
+    alt: "Persona mayor",
+  },
+  {
+    title: "Acompaño a un familiar",
+    description:
+      "Cuando alguien que querés deja de ser autónomo y no sabés por dónde empezar, no estás solo/a.",
+    icon: "mdi:people-group",
+    image: optionImage2,
+    alt: "Familia acompañando a una persona mayor",
+  },
+  {
+    title: "Soy profesional",
+    description:
+      "Formación, actualización y recursos para trabajar con personas mayores desde una perspectiva de derechos.",
+    icon: "mdi:person-tie",
+    image: optionImage3,
+    alt: "Profesional de la salud o área social",
+  },
+];
+---
+
+<section class="help-center">
+  <div class="help-center__header">
+    <h2 class="help-center__title">¿En qué te podemos ayudar?</h2>
+    <p class="help-center__description">
+      Seleccioná la opción que mejor te describa para encontrar recursos
+      personalizados.
+    </p>
+  </div>
+
+  <div class="help-center__cards">
+    {
+      options.map((option) => (
+        <article class="option-card">
+          <div class="option-card__image-wrapper">
+            <img
+              src={option.image.src}
+              alt={option.alt}
+              class="option-card__image"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="option-card__content">
+            <Icon
+              name={option.icon}
+              class="option-card__icon"
+              aria-hidden="true"
+            />
+
+            <h3 class="option-card__title">{option.title}</h3>
+
+            <p class="option-card__description">{option.description}</p>
+          </div>
+
+          <div class="option-card__actions">
+            <a href="#" class="option-card__button">
+              Ver recursos 
+            </a>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

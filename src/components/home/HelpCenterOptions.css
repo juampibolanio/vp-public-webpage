@@ -1,0 +1,109 @@
+.help-center {
+    width: 100%;
+    padding: var(--space-xxl) var(--space-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    background-color: var(--color-background);
+}
+
+.help-center__header {
+    max-width: 720px;
+    text-align: center;
+}
+
+.help-center__title {
+    font-size: var(--font-size-xxl);
+    margin-bottom: var(--space-sm);
+}
+
+.help-center__description {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-muted);
+}
+
+.help-center__cards {
+    display: flex;
+    gap: var(--space-xxxl);
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* card */
+
+.option-card {
+    background-color: var(--color-secondary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    max-width: 360px;
+    min-height: 520px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    transition: all 0.3s ease-in-out;
+}
+
+.option-card:hover {
+    transform: translateY(-3px);
+
+}
+
+/* image */
+
+.option-card__image-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.option-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* content */
+
+.option-card__content {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+}
+
+.option-card__icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-text-primary);
+}
+
+.option-card__title {
+    font-size: var(--font-size-lg);
+}
+
+.option-card__description {
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+/* button */
+
+.option-card__actions {
+    margin-top: auto;
+    padding: var(--space-lg);
+}
+
+.option-card__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    color: var(--color-alternative);
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.option-card__button:hover {
+    background-color: var(--color-primary-dark);
+}
