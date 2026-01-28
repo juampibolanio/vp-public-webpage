@@ -1,0 +1,30 @@
+---
+import "./Hero.css";
+import footer_icon from "../../assets/footer-icon.webp";
+---
+
+<section class="hero">
+  <div class="hero__overlay"></div>
+
+  <div class="hero__content">
+    <div class="hero__header">
+      <img
+        src={footer_icon.src}
+        alt="Vivir Plenamente Logo"
+        class="hero__logo"
+      />
+
+      <h1 class="hero__title">
+        <span class="hero__title-vivir">VIVIR</span>
+        <span class="hero__title-plenamente">PLENAMENTE</span>
+      </h1>
+    </div>
+
+    <p class="hero__subtitle">Periodismo especializado en vejez</p>
+
+    <div class="hero__buttons">
+      <a href="#ayuda" class="hero__button"> Necesito ayuda ahora </a>
+      <a href="#noticias" class="hero__button"> Leer las últimas noticias </a>
+    </div>
+  </div>
+</section>

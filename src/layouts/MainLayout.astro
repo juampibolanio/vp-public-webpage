@@ -6,6 +6,7 @@ import "../styles/globals.css";
 
 import Navbar from "../components/navigation/Navbar.astro";
 import Footer from "../components/navigation/Footer.astro";
+import Hero from "../components/shared/Hero.astro";
 
 const title = Astro.props.title
   ? `${Astro.props.title} | Vivir Plenamente`
@@ -30,6 +31,7 @@ const title = Astro.props.title
   <body>
 
 	<Navbar />
+  <Hero />
     <slot />
   <Footer />
   </body>
