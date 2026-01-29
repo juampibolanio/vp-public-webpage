@@ -14,17 +14,12 @@
 
     /* Fonts sizes */
     --font-size-xs: 0.875rem;
-    /* 14px */
     --font-size-sm: 1rem;
-    /* 16px */
     --font-size-md: 1.125rem;
-    /* 18px */
     --font-size-lg: 1.25rem;
-    /* 20px */
     --font-size-xl: 1.5rem;
-    /* 24px */
     --font-size-xxl: 2rem;
-    /* 32px */
+    --font-size-xxxl: 3rem;
 
     /* spacing */
     --space-xxs: 0.25rem;

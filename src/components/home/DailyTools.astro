@@ -1,0 +1,72 @@
+---
+import { Icon } from "astro-icon/components";
+import "./DailyTools.css";
+
+const daily_tools = [
+  {
+    title: "Guía de trámites",
+    description: "Paso a paso para gestiones.",
+    icon: "mdi:clipboard-text",
+    link: "#"
+  },
+  {
+    title: "Clubes y actividades",
+    description: "Actividades sociales y recreativas.",
+    icon: "mdi:person-multiple-add",
+    link: "#"
+  },
+  {
+    title: "Teléfonos útiles",
+    description: "Emergencias y consultas.",
+    icon: "mdi:phone",
+    link: "#"
+  },
+  {
+    title: "Salud y cuidados",
+    description: "Guía de cuidados y salud.",
+    icon: "mdi:hospital-box",
+    link: "#"
+  },
+  {
+    title: "Residencias",
+    description: "Listado de centros habilitados.",
+    icon: "mdi:house",
+    link: "#"
+  },
+  {
+    title: "Derechos",
+    description: "Tus derechos correspondientes.",
+    icon: "mdi:scale-balance",
+    link: "#"
+  },
+];
+---
+
+<section class="container">
+  <div class="daily-tools__header">
+    <h2 class="header__title">Herramientas para la vida cotidiana</h2>
+    <p class="header__subtitle">
+      Accesos directos a información clara y confiable para resolver situaciones
+      del día a día.
+    </p>
+  </div>
+
+  <div class="daily-tools__list">
+    {
+      daily_tools.map((tool) => (
+        <a href={tool.link} class="tool__card">
+          <div class="card__image-wrapper">
+            <Icon name={tool.icon} class="card__icon" aria-hidden="true" size={32}/>
+          </div>
+
+          <div class="card__content-wrapper">
+            <h4 class="content-wrapper__title">{tool.title}</h4>
+            <p class="content-wrapper__description">
+              {tool.description}
+            </p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
