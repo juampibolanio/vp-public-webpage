@@ -1,6 +1,6 @@
 .help-center {
     width: 100%;
-    padding: var(--space-xxl) var(--space-md);
+    padding: 6rem var(--space-md);
     display: flex;
     flex-direction: column;
     align-items: center;
