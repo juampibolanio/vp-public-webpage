@@ -43,6 +43,8 @@ const news = [
 
 ---
 
+<!-- Nota: Se deben revisar los <a>, ya que deben tener el href y redirigir a la noticia correspondiente. Revisar. -->
+
 <section class="container-news-rights">
     <div class="container__header">
         <h2 class="header__title">Actualidad y derechos</h2>
@@ -64,13 +66,13 @@ const news = [
                                 {formatDate(news[0].date)}
                         </time>
                     </span>
-                    <a class="news-featured__category">{news[0].category}</a>
+                    <a aria-label={`Categoría: ${news[0].category}`} class="news-featured__category">{news[0].category}</a>
                 </div>
 
                 <span class="news-featured__author">Por: {news[0].autor}</span>
             </div>
 
-            <a class="news-featured__title">{news[0].title}</a>
+            <a aria-label={`Ver noticia: ${news[0].title}`} class="news-featured__title">{news[0].title}</a>
 
             <p class="news-featured__summary">{news[0].summary}</p>
         </article>
@@ -83,8 +85,8 @@ const news = [
                     </div>
 
                     <div class="item__content">
-                        <a class="content__category">{item.category}</a>
-                        <a href={item.link} class="content__title">{item.title}</a>
+                        <a aria-label={`Categoría: ${item.category}`} class="content__category">{item.category}</a>
+                        <a aria-label={`Ver noticia: ${item.title}`} href={item.link} class="content__title">{item.title}</a>
 
                         <span class="content__author">Por: {item.autor}</span>
                         <span class="content__date">
@@ -96,7 +98,7 @@ const news = [
                 </article>
             ))}
 
-            <a class="news-list__more">Ver todas las noticias</a>
+            <a class="news-list__more" aria-label="Ver todas las noticias">Ver todas las noticias</a>
         </aside>
     </div>
 
