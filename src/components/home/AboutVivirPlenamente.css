@@ -47,6 +47,7 @@
 /* button */
 
 .home__button {
+    text-align: center;
     display: inline-block;
     min-width: 250px;
     font-size: var(--font-size-xs);
@@ -54,7 +55,6 @@
     border-radius: var(--space-xl);;
     color: var(--color-background);
     text-decoration: none;
-    outline: 20px var(--color-primary);
     padding: var(--space-sm) var(--space-xl);
     border: var(--space-xxs) solid var(--color-background);
 }
