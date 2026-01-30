@@ -1,52 +1,36 @@
-
-.about-vivir-plenamente__container {
+.colaborate-periodism__container {
     width: 100%;
     padding: var(--space-xxl);
-    background-color: var(--color-secondary);
+    background-color: var(--color-background);
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.about-vivir-plenamente__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* image */
-
-.vivir-plenamente__icon {
-    width: 125px;
-    height: 125px;
+    text-align: center;
 }
 
 /* content */
 
-.header-about-vp__tittle {
-    font-size: var(--font-size-xxl);
+.colaborate-periodism__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-}
-
-.about-vivir-plenamente__content {
     max-width: 720px;
     gap: var(--space-xl);
-    display: flex;
-    align-items: center;
-    flex-direction: column;
 }
 
+.colaborate-periodism__tittle {
+    font-size: var(--font-size-xxl);
+}
 
-.content__text {
-    text-align: center;
+.colaborate-periodism__subtittle {
     font-family: var(--font-family-base);
     font-size: var(--font-size-lg);
-    color: var(--color-optional-text);
 }
 
 /* button */
 
-.home__button {
+.colaborate-periodism__button {
     display: inline-block;
     min-width: 250px;
     font-size: var(--font-size-xs);
@@ -54,8 +38,7 @@
     border-radius: var(--space-xl);;
     color: var(--color-background);
     text-decoration: none;
-    outline: 20px var(--color-primary);
     padding: var(--space-sm) var(--space-xl);
-    border: var(--space-xxs) solid var(--color-background);
+    border: var(--space-xxs) solid var(--color-secondary);
 }
 
