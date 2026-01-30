@@ -1,0 +1,35 @@
+---
+import './ActivityAndSpaces.css';
+import ActivityAndSpacesImage from "../../assets/home-map-image.webp";
+
+---
+
+<section class="activity-container">
+  <div class="activity-container__header">
+    <h2 class="activity-container__title">
+      Actividades y espacios para compartir cerca tuyo
+    </h2>
+    <p class="activity-container__description">
+      Explorá el mapa y encontrá clubes, centros de jubilados, bibliotecas
+      populares y mucho más, en Chaco y Corrientes. Espacios pensados para
+      encontrarse, aprender, moverse y seguir participando de la vida
+      comunitaria.
+    </p>
+  </div>
+
+  <div class="activity-container__content">
+    <div class="activity-container__image-wrapper">
+      <img
+        class="activity-container__image"
+        src={ActivityAndSpacesImage.src}
+        alt="Mapa de actividades y espacios"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+
+    <div class="activity-container__button-wrapper">
+      <a href="#" class="activity-container__button"> Ver el mapa </a>
+    </div>
+  </div>
+</section>
