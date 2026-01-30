@@ -1,0 +1,59 @@
+
+.about-vivir-plenamente__container {
+    width: 100%;
+    padding: var(--space-xxl);
+    background-color: var(--color-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.about-vivir-plenamente__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* image */
+
+.vivir-plenamente__icon {
+    width: 125px;
+    height: 125px;
+}
+
+/* content */
+
+.header-about-vp__tittle {
+    font-size: var(--font-size-xxl);
+    text-align: center;
+}
+
+.about-vivir-plenamente__content {
+    max-width: 720px;
+    gap: var(--space-xl);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Falta crear variable de este color en variables.css */ 
+.content__text {
+    text-align: center;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+    color: var(--color-optional-text);
+}
+
+/* button */
+
+.home__button {
+    font-size: var(--font-size-xs);
+    background-color: var(--color-primary);
+    border-radius: var(--space-xl);;
+    color: var(--color-background);
+    text-decoration: none;
+    outline: 20px var(--color-primary);
+    padding: var(--space-sm) var(--space-xl);
+    border: var(--space-xxs) solid var(--color-background);
+}
+
