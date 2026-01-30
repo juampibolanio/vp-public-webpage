@@ -1,0 +1,35 @@
+---
+import SponsorsCarousel from "../../islands/SponsorsCarousel/SponsorsCarousel";
+import "./Sponsors.css";
+
+
+// Los datos de los sponsors deben venir luego desde la API
+const sponsors = [
+  {
+    name: "Ariel Silva Asesores Seguros",
+    logo: "/src/assets/ariel-silva-logo.webp",
+    url: "https://arielsilvaseguros.com.ar/",
+  },
+  {
+    name: "Corrientes",
+    logo: "/src/assets/corrientes-logo.webp",
+    url: "https://www.corrientes.gob.ar/",
+  },
+
+];
+---
+
+<section class="sponsors-section">
+
+    <div class="sponsors-section__header">
+        <h2 class="sponsors-section__title">Acompañan a Vivir Plenamente</h2>
+        <p class="sponsors-section__description">
+            Instituciones y empresas comprometidas con una vejez activa y con derechos
+        </p>
+    </div>
+
+    <div class="sponsors-section__carousel-wrapper">
+        <SponsorsCarousel sponsors={sponsors} client:visible />    
+    </div>
+
+</section>
