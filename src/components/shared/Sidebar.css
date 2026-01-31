@@ -1,0 +1,71 @@
+.sidebar {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxxl);
+    padding: var(--space-lg);
+}
+
+.sidebar-section {
+    width: 100%;
+}
+
+.sidebar-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-sm);
+}
+
+.social-networks__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.social-networks__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+}
+
+.sponsors-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.sponsors-section__item {
+    display: flex;
+    justify-content: center;
+}
+
+.sponsors-section__item img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    cursor: pointer;
+}
+
+.utils-phones__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    font-size: var(--font-size-xs);
+}
+
+.utils-phones__item {
+    color: var(--color-text-primary);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+}
