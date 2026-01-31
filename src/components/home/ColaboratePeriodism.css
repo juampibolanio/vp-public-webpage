@@ -1,0 +1,44 @@
+.colaborate-periodism__container {
+    width: 100%;
+    padding: var(--space-xxl);
+    background-color: var(--color-background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* content */
+
+.colaborate-periodism__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 720px;
+    gap: var(--space-xl);
+}
+
+.colaborate-periodism__tittle {
+    font-size: var(--font-size-xxl);
+}
+
+.colaborate-periodism__subtittle {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+}
+
+/* button */
+
+.colaborate-periodism__button {
+    display: inline-block;
+    min-width: 250px;
+    font-size: var(--font-size-xs);
+    background-color: var(--color-primary);
+    border-radius: var(--space-xl);;
+    color: var(--color-background);
+    text-decoration: none;
+    padding: var(--space-sm) var(--space-xl);
+    border: var(--space-xxs) solid var(--color-secondary);
+}
+
