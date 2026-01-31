@@ -1,0 +1,19 @@
+.bar-container {
+    width: 100%;
+    background-color: var(--color-primary);
+}
+
+.bar__title {
+    position: relative;
+    left: 200px;
+    color: var(--color-background);
+    font-size: 2.5rem;
+    padding: var(--space-xs);
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .bar__title {
+        left: 0;
+    }
+}
