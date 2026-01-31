@@ -15,6 +15,8 @@
     font-size: var(--font-size-lg);
     font-weight: 600;
     margin-bottom: var(--space-sm);
+    border-left: 5px solid var(--color-alternative);
+    padding-left: var(--space-xs);
 }
 
 .social-networks__wrapper {
@@ -57,11 +59,17 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-xs);
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-sm);
 }
 
 .utils-phones__item {
     color: var(--color-text-primary);
+}
+
+.phone_number {
+    color: var(--color-alternative);
+    font-weight: 600;
+    font-size: var(--font-size-md);
 }
 
 @media (max-width: 768px) {

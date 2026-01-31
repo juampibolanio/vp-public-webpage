@@ -83,6 +83,7 @@ export default function WeatherWidget() {
                             className="weather__temp-icon"
                             src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@4x.png`}
                             alt={current.weather[0].description}
+                            title={current.weather[0].description}
                         />
                     </div>
 
@@ -113,6 +114,7 @@ export default function WeatherWidget() {
                             <img
                                 src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
                                 alt={day.weather[0].description}
+                                title={day.weather[0].description}
                             />
                             <span className="weather__forecast-label">
                                 {label}
