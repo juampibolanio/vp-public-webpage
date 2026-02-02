@@ -1,0 +1,27 @@
+.title-bar {
+    width: 100%;
+    background-color: var(--color-primary);
+}
+
+.title-bar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-lg);
+}
+
+.title-bar__title {
+    margin: 0;
+    color: var(--color-background);
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .title-bar__inner {
+        padding: var(--space-sm);
+    }
+
+    .title-bar__title {
+        font-size: var(--font-size-xl);
+    }
+}

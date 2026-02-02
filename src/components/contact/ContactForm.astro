@@ -1,0 +1,107 @@
+---
+import './ContactForm.css'
+import logoIcon from "../../assets/home-icon.webp";
+import { Icon } from "astro-icon/components";
+---
+
+<section class="contact-section">
+    <div class="contact-container">
+    
+    <div class="contact-form__wrapper">
+        <p class="contact-intro">
+            ¿Tenés una noticia para compartir o querés publicitar con nosotros? 
+            Escribinos, te leemos y te respondemos desde el corazón del NEA.
+        </p>
+
+    <form class="contact-form">
+        <h2 class="form-title">Envianos tu mensaje</h2>
+        
+        <div class="form-group__row">
+            <div class="form-field">
+                <label for="name">Nombre y apellido</label>
+                <input type="text" id="name" placeholder="Tu nombre completo" />
+            </div>
+            <div class="form-field">
+                <label for="email">Correo electrónico</label>
+                <input type="email" id="email" placeholder="Tu mail@ejemplo.com" />
+            </div>
+        </div>
+
+        <div class="form-field">
+            <label for="subject">Asunto</label>
+            <select id="subject">
+                <option value="" disabled selected>Seleccioná un motivo</option>
+                <option value="noticia">Enviar noticia</option>
+                <option value="publicidad">Publicidad</option>
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="message">Mensaje</label>
+            <textarea id="message" rows="15" placeholder="Escribí tu mensaje aquí..."></textarea>
+        </div>
+    </form>
+    </div>
+
+    <aside class="contact-sidebar">
+    <div class="sidebar-group">
+        <h3 class="sidebar-title">Información de contacto</h3>
+        <div class="sidebar-item">
+            <Icon name="mdi:email-outline" class="contact-icon" />
+            <div class="item-content">
+                <span class="item-label">Correo electrónico</span>
+                <a href="mailto:vivirplenamente2014@gmail.com" class="item-link">vivirplenamente2014@gmail.com</a>
+            </div>
+        </div>
+        <div class="sidebar-item">
+            <Icon name="mdi:whatsapp" class="contact-icon" />
+            <div class="item-content">
+                <span class="item-label">Whatsapp</span>
+                <a href="https://wa.me/5493794740543" class="item-link" target="_blank">+54 9 3794 74-0543</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-group">
+        <h3 class="sidebar-title">Nuestras redes</h3>
+        <ul class="social-list">
+            <li><a href="#" class="social-link"><Icon name="mdi:facebook" /> Facebook</a></li>
+            <li><a href="#" class="social-link"><Icon name="mdi:instagram" /> Instagram</a></li>
+            <li><a href="#" class="social-link"><Icon name="mdi:youtube" /> Youtube</a></li>
+            <li><a href="#" class="social-link"><Icon name="mdi:twitter" /> X</a></li>
+        </ul>
+    </div>
+
+    <div class="sidebar-group">
+        <h3 class="sidebar-title">Teléfonos útiles</h3>
+        <ul class="emergency-list">
+            <li><span class="emergency-num">1</span> 107 - EMERGENCIAS</li>
+            <li><span class="emergency-num">2</span> 911 - POLICÍA</li>
+            <li><span class="emergency-num">3</span> 103 - DEFENSA CIVIL</li>
+            <li><span class="emergency-num">4</span> 102 - AYUDA AL NIÑO Y ADOLESCENTE</li>
+            <li><span class="emergency-num">5</span> 100 - BOMBEROS</li>
+            <li><span class="emergency-num">6</span> 108 - ASIS. PERSONAS MAYORES (CHACO)</li>
+            <li><span class="emergency-num">7</span> 130 - ANSES</li>
+        </ul>
+    </div>
+</aside>
+
+    </div>
+
+    <div class="emission-footer">
+        <div class="emission-content">
+            <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="emission-logo" />
+            <div class="emission-text">
+                <h4 class="emission-title">Horarios de emisión</h4>
+                <div class="emission-info">
+                    <Icon name="mdi:arrow-right-thick" class="arrow-icon" />
+                    <p>
+                        Domingos de 8 a 10hs <br />
+                        <a href="https://www.radiosudamericana.com" target="_blank">www.radiosudamericana.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
