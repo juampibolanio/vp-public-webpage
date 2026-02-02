@@ -46,16 +46,20 @@
 
 /* button */
 
-.home__button {
-    text-align: center;
-    display: inline-block;
-    min-width: 250px;
-    font-size: var(--font-size-xs);
-    background-color: var(--color-primary);
-    border-radius: var(--space-xl);;
-    color: var(--color-background);
-    text-decoration: none;
+.about-container__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 280px;
     padding: var(--space-sm) var(--space-xl);
-    border: var(--space-xxs) solid var(--color-background);
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-radius: var(--space-md);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.3s ease-in-out;
 }
 
+.about-container__button:hover {
+    transform: translateY(-3px);
+}
