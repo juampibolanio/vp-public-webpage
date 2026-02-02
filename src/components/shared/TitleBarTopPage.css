@@ -1,19 +1,27 @@
-.bar-container {
+.title-bar {
     width: 100%;
     background-color: var(--color-primary);
 }
 
-.bar__title {
-    position: relative;
-    left: 200px;
-    color: var(--color-background);
-    font-size: 2.5rem;
-    padding: var(--space-xs);
-    margin: 0;
+.title-bar__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-lg);
 }
 
-@media screen and (max-width: 768px) {
-    .bar__title {
-        left: 0;
+.title-bar__title {
+    margin: 0;
+    color: var(--color-background);
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .title-bar__inner {
+        padding: var(--space-sm);
+    }
+
+    .title-bar__title {
+        font-size: var(--font-size-xl);
     }
 }

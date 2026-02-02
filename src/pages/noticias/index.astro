@@ -1,12 +1,106 @@
 ---
+export const prerender = false;
+
+import NewsFeatured from "../../components/news/NewsFeatured.astro";
+import NewsList from "../../components/news/NewsList.astro";
+import Pagination from "../../components/news/Pagination.astro";
 import Sidebar from "../../components/shared/Sidebar.astro";
 import TitleBarTopPage from "../../components/shared/TitleBarTopPage.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
+import { getNews } from "../../services/news.service";
 
+const { news: featuredResponse } = await getNews({
+  page: 1,
+  pageSize: 1,
+});
 
+const featuredNews = featuredResponse[0] || null;
+
+const pageParam = Astro.url.searchParams.get("page");
+const currentPage = pageParam ? Number(pageParam) : 1;
+
+const { news: listNews, pagination } = await getNews({
+  page: currentPage,
+  pageSize: 4,
+});
 ---
 
 <MainLayout>
-    <TitleBarTopPage title={"Todas las noticias"} />
-    <Sidebar />
+
+  <TitleBarTopPage title={"Todas las noticias"} />
+
+  <div class="news-page-wrapper">
+
+    <div class="news-page__content">
+      <div class="news-page-description">
+        <p>
+            Las últimas noticias, análisis y debates legislativos que definen el rumbo de la provincia del chaco y la región del NEA
+        </p>
+      </div>
+
+      <div class="news-main">
+        <NewsFeatured news={featuredNews}/>
+      </div>
+
+      <div class="news-grid">
+        <NewsList news={listNews} />
+      </div>
+
+      <Pagination currentPage={pagination.page} totalPages={pagination.pageCount}/>
+    </div>
+
+    <aside class="news-sidebar">
+      <Sidebar />
+    </aside>
+
+  </div>
+
+  <style>
+    .news-page-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .news-page__content {
+      flex: 1;
+      max-width: 800px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .news-page-description p {
+      font-size: var(--font-size-lg);
+      color: #000;
+      line-height: 1.6;
+    }
+
+    .news-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .news-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .news-page-wrapper {
+        flex-direction: column;
+      }
+
+      .news-sidebar {
+        display: none;
+      }
+    }
+  </style>
+
 </MainLayout>
