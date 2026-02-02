@@ -1,0 +1,35 @@
+---
+import './ProgramSchedule.css'
+import radioSudamericana from '../../assets/radio-sudamericana-logo.webp'
+---
+
+<section class="program-schedule-container">
+    <div class="program-schedule__header">
+        <h2 class="header-schedule__title">Nuestros programas</h2>
+        <p class="header__content">
+            Información confiable en todos los medios
+        </p>
+    </div>
+    <div class="program-schedule__footer">
+        <div class="card__img">
+            <img src={radioSudamericana.src} 
+                alt="Logo Radio Sudamericana" 
+                loading="lazy"
+                decoding="async">
+        </div>
+        <div class="card__content"> 
+            <h4 class="card__title">Radio Sudamericana</h4>
+
+                <div class="card__info">
+                    <p class="card__schedule">Domingos 08:00 hs</p>
+                </div>
+
+                <a 
+                    href="https://www.radiosudamericana.com" 
+                    class="card__link" 
+                    target="_blank">
+                    www.radiosudamericana.com
+                </a>
+        </div>
+    </div>
+</section>

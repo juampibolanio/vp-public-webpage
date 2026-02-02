@@ -1,0 +1,114 @@
+.program-schedule-container {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--color-secondary);
+    gap: var(--space-lg);
+    padding-top: var(--space-xxl);
+    padding-bottom: var(--space-xxxl);
+}
+
+.program-schedule__footer {
+    display: flex;
+    text-align: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+    background-color: var(--color-background);
+    border-radius: var(--radius-lg);
+    gap: var(--space-md);
+    margin: 0;
+    max-width: 600px; 
+    width: 100%;   
+    box-shadow: 2px 5px 25px rgba(0, 0, 0, 0.10);   
+}
+
+/* content */
+
+.card__content {
+    display: flex;
+    flex-direction: column;
+    text-align: left; 
+    gap: var(--space-xxs);
+}
+
+/* card */
+
+.card__title {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-weight: bold;
+    color: var(--color-text-primary);
+}
+
+.card__schedule {
+    margin: 0;
+}
+
+.card__details {
+    margin: 0;
+}
+
+.card__info {
+    font-family: var(--font-family-base);
+    color: var(--color-text-secondary);
+}
+
+.card__link {
+    color: var(--color-text-secondary);
+    text-decoration: none
+}
+
+.card__link:hover {
+    text-decoration: underline;
+    color: var(--color-primary); 
+}
+
+.header-schedule__title {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-xxl);
+    margin: 0;
+}
+
+.header__content {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-lg);
+}
+
+.card__img {
+    width: 120px; 
+    flex-shrink: 0; 
+}
+
+.card__img img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+@media (max-width: 600px) {
+    .program-schedule__footer {
+        flex-direction: column; 
+        width: 85%;            
+        max-width: 300px;      
+        margin: 0 auto;        
+        padding: var(--space-lg); 
+        gap: var(--space-md);  
+    }
+
+    .card__img {
+        width: 80px;           
+        display: flex;
+        justify-content: center;
+    }
+
+    .card__content {
+        text-align: center;    
+        align-items: center;  
+    }
+}
+
+
