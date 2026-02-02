@@ -1,0 +1,6 @@
+.news-list {
+    margin-top: var(--space-xxl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+}
