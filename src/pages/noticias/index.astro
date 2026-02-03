@@ -6,6 +6,7 @@ import NewsList from "../../components/news/NewsList.astro";
 import Pagination from "../../components/news/Pagination.astro";
 import Sidebar from "../../components/shared/Sidebar.astro";
 import TitleBarTopPage from "../../components/shared/TitleBarTopPage.astro";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getNews } from "../../services/news.service";
 
@@ -23,36 +24,46 @@ const { news: listNews, pagination } = await getNews({
   page: currentPage,
   pageSize: 4,
 });
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Noticias", href: "/noticias" },
+  { label: `Página ${currentPage}`, href: null },
+];
 ---
 
 <MainLayout>
-
-  <TitleBarTopPage title={"Todas las noticias"} />
-
-  <div class="news-page-wrapper">
-
-    <div class="news-page__content">
-      <div class="news-page-description">
-        <p>
-            Las últimas noticias, análisis y debates legislativos que definen el rumbo de la provincia del chaco y la región del NEA
-        </p>
-      </div>
-
-      <div class="news-main">
-        <NewsFeatured news={featuredNews}/>
-      </div>
-
-      <div class="news-grid">
-        <NewsList news={listNews} />
-      </div>
-
-      <Pagination currentPage={pagination.page} totalPages={pagination.pageCount}/>
+  <div class="news-layout">
+    <div class="news-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
     </div>
 
-    <aside class="news-sidebar">
-      <Sidebar />
-    </aside>
+    <TitleBarTopPage title={"Todas las noticias"} />
 
+    <div class="news-page-wrapper">
+      <div class="news-page__content">
+        <div class="news-page-description">
+          <p>Acceda a la última información sobre tus derechos, actividades, comunidades y mucho más. Descubre las últimas novedades y mantente al día con todo lo que necesitas saber.</p>
+        </div>
+
+        <div class="news-main">
+          <NewsFeatured news={featuredNews} />
+        </div>
+
+        <div class="news-grid">
+          <NewsList news={listNews} />
+        </div>
+
+        <Pagination
+          currentPage={pagination.page}
+          totalPages={pagination.pageCount}
+        />
+      </div>
+
+      <aside class="news-sidebar">
+        <Sidebar />
+      </aside>
+    </div>
   </div>
 
   <style>
@@ -64,6 +75,16 @@ const { news: listNews, pagination } = await getNews({
       max-width: 1280px;
       margin: 0 auto;
       padding: 2rem 1.5rem;
+    }
+
+
+    .news-layout__header {
+      display: flex;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-sm) 0;
+      padding-left: var(--space-sm);
     }
 
     .news-page__content {
@@ -102,5 +123,4 @@ const { news: listNews, pagination } = await getNews({
       }
     }
   </style>
-
 </MainLayout>
