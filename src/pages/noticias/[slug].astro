@@ -1,11 +1,11 @@
 ---
+export const prerender = false;
+
 import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import NewDetailItem from "../../components/news-detail/NewDetailItem.astro";
 import Sidebar from "../../components/shared/Sidebar.astro";
 import { getNewBySlug, getRelatedNews } from "../../services/news.service";
-
-export const prerender = false;
 
 const { slug } = Astro.params;
 
@@ -15,12 +15,14 @@ if (!news) {
   return Astro.redirect("/404");
 }
 
+/* Get a list of related news by category */
 const relatedNews = await getRelatedNews({
   category: news.category,
   excludeSlug: news.slug,
   limit: 3,
 });
 
+/* set items for the internal browser */
 const breadcrumbItems = [
   { label: "Inicio", href: "/" },
   { label: "Noticias", href: "/noticias" },
