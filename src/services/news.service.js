@@ -1,10 +1,39 @@
+/**
+ * News Service
+ * ------------
+ * Service layer responsible for fetching news data from the Strapi API.
+ *
+ * Responsibilities:
+ * - Build optimized API queries for different news use cases.
+ * - Delegate HTTP requests to the apiFetch utility.
+ * - Normalize API responses using dedicated normalizers.
+ *
+ * This layer:
+ * - Does NOT handle UI concerns.
+ * - Does NOT expose raw Strapi responses to the frontend.
+ * - Acts as a single source of truth for news-related API access.
+ */
+
 import { apiFetch } from "./api";
 import {
   normalizeNewsItem,
+  normalizeNewsListItem,
   normalizeNewsResponse,
 } from "../utils/news-normalizer";
 
-/* get all news (list news) */
+/**
+ * Fetch paginated list of news.
+ *
+ * Optimized for list views:
+ * - Fetches only required fields.
+ * - Uses first media item as cover image.
+ * - Returns normalized list and pagination metadata.
+ *
+ * @param {Object} [options]
+ * @param {number} [options.page=1] - Page number.
+ * @param {number} [options.pageSize=5] - Number of items per page.
+ * @returns {Promise<{ news: Array<Object>, pagination: Object }>}
+ */
 export async function getNews({ page = 1, pageSize = 5 } = {}) {
   const query = new URLSearchParams({
     "fields[0]": "title",
@@ -28,7 +57,16 @@ export async function getNews({ page = 1, pageSize = 5 } = {}) {
   return normalizeNewsResponse(response);
 }
 
-/* get new by slug (just a news) */
+/**
+ * Fetch a single news item by slug.
+ *
+ * Used for detail pages:
+ * - Fetches full content.
+ * - Includes full media gallery and author avatar.
+ *
+ * @param {string} slug - Unique slug of the news item.
+ * @returns {Promise<Object|null>} Normalized news item or null if not found.
+ */
 export async function getNewBySlug(slug) {
   const query = new URLSearchParams({
     "filters[slug][$eq]": slug,
@@ -46,7 +84,20 @@ export async function getNewBySlug(slug) {
   return normalizeNewsItem(response.data[0]);
 }
 
-/* get a list of related news */
+/**
+ * Fetch related news items.
+ *
+ * Criteria:
+ * - Excludes the current news item by slug.
+ * - Optionally filters by category.
+ * - Limits the number of results.
+ *
+ * @param {Object} options
+ * @param {Object|null} options.category - Category object ({ label, slug }).
+ * @param {string} options.excludeSlug - Slug to exclude from results.
+ * @param {number} [options.limit=3] - Maximum number of related items.
+ * @returns {Promise<Array<Object>>} Array of normalized related news items.
+ */
 export async function getRelatedNews({
   category,
   excludeSlug,
@@ -74,5 +125,5 @@ export async function getRelatedNews({
     return [];
   }
 
-  return response.data.map(normalizeNewsItem);
+  return response.data.map(normalizeNewsListItem);
 }

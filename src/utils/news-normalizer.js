@@ -1,7 +1,28 @@
-const PUBLIC_STRAPI_API_URL_IMAGES = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
+/**
+ * News Normalizer
+ * ----------------
+ * Utility functions to normalize news-related data coming from Strapi API.
+ *
+ * Responsibilities:
+ * - Normalize media objects (single and gallery).
+ * - Normalize author data.
+ * - Normalize news items for list and detail views.
+ * - Decouple frontend data structures from Strapi response format.
+ *
+ * Notes:
+ * - All media URLs are prefixed with the public Strapi assets base URL.
+ * - Defensive checks are applied to avoid runtime errors.
+ */
 
-/* normalizer single media */
+const PUBLIC_STRAPI_API_URL_IMAGES =
+  import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
 
+/**
+ * Normalize a single media object.
+ *
+ * @param {Object|null} media - Raw media object from Strapi.
+ * @returns {Object|null} Normalized media object or null if invalid.
+ */
 function normalizeSingleMedia(media) {
   if (!media || !media.url) return null;
 
@@ -16,7 +37,12 @@ function normalizeSingleMedia(media) {
   };
 }
 
-/* multimedia content normalizer for image galleries */
+/**
+ * Normalize an array of media items (image gallery).
+ *
+ * @param {Array} mediaArray - Array of raw media objects.
+ * @returns {Array<Object>} Normalized media gallery.
+ */
 function normalizeMediaGallery(mediaArray) {
   if (!Array.isArray(mediaArray)) return [];
 
@@ -25,8 +51,12 @@ function normalizeMediaGallery(mediaArray) {
     .filter(Boolean);
 }
 
-/* normalizer author */
-
+/**
+ * Normalize author data.
+ *
+ * @param {Object|null} author - Raw author object from Strapi.
+ * @returns {Object|null} Normalized author object or null.
+ */
 function normalizeAuthor(author) {
   if (!author) return null;
 
@@ -38,8 +68,12 @@ function normalizeAuthor(author) {
   };
 }
 
-/* normalizer new detail (slug) */
-
+/**
+ * Normalize a full news item (used for detail view by slug).
+ *
+ * @param {Object} item - Raw news item from Strapi.
+ * @returns {Object} Normalized news item.
+ */
 export function normalizeNewsItem(item) {
   return {
     id: item.id,
@@ -54,15 +88,22 @@ export function normalizeNewsItem(item) {
           slug: item.category.toLowerCase(),
         }
       : null,
-
     publishedDate: item.published_date,
     media: normalizeMediaGallery(item.media),
     author: normalizeAuthor(item.author),
   };
 }
 
-/* normalizer news list */
-
+/**
+ * Normalize a news item for list views.
+ *
+ * Optimized version:
+ * - Uses only the first media item as cover image.
+ * - Excludes full content.
+ *
+ * @param {Object} item - Raw news item from Strapi.
+ * @returns {Object} Normalized news list item.
+ */
 export function normalizeNewsListItem(item) {
   return {
     id: item.id,
@@ -78,8 +119,12 @@ export function normalizeNewsListItem(item) {
   };
 }
 
-/* responses */
-
+/**
+ * Normalize Strapi paginated news response.
+ *
+ * @param {Object} response - Raw Strapi API response.
+ * @returns {Object} Normalized response with news list and pagination data.
+ */
 export function normalizeNewsResponse(response) {
   return {
     news: response.data.map(normalizeNewsListItem),
