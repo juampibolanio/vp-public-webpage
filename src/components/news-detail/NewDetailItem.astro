@@ -1,0 +1,110 @@
+---
+import "./NewDetailItem.css";
+import { Icon } from "astro-icon/components";
+import MediaSlider from "../../islands/MediaSlider/MediaSlider";
+import RelatedNews from "./RelatedNews.astro";
+import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
+import RichText from "../shared/RichText.astro";
+
+const { news, relatedNews } = Astro.props;
+
+const sliderItems = Array.isArray(news.media)
+  ? news.media.map((media: any) => ({
+      type: "image",
+      src: media.url,
+      alt: media.alt || news.title,
+    }))
+  : [];
+
+---
+
+<section class="new-detail-wrapper">
+  <header class="new-detail__items">
+    {
+      news.category && (
+        <a
+          class="new-detail__button button--category"
+          href={`/noticias/categoria/${news.category.slug}`}
+        >
+          {news.category.label}
+        </a>
+      )
+    }
+
+    <a class="new-detail__button" href="/noticias"> Volver </a>
+  </header>
+
+  <article class="new-detail__content">
+    <div class="new-detail__header">
+      <h1 class="new-detail__title">{news.title}</h1>
+
+      <p class="new-detail__excerpt">{news.excerpt}</p>
+
+      <div class="new-detail__meta-wrapper">
+        {
+          news.author && (
+            <div class="meta-info">
+              {news.author.avatar && (
+                <div class="author__image-wrapper">
+                  <img
+                    class="author__image"
+                    src={news.author.avatar.url}
+                    alt={news.author.avatar.alt}
+                  />
+                </div>
+              )}
+
+              <div class="author__info-wrapper">
+                <span class="author__name">Por: {news.author.name}</span>
+
+                <span class="author__published-date">
+                  {new Date(news.publishedDate).toLocaleDateString("es-AR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            </div>
+          )
+        }
+
+        <button aria-label="Botón para escuchar la noticia" class="meta-button">
+          <Icon class="meta-icon" size={32} name="mdi:volume-high" />
+          <span class="meta-button-text">Escuchar Noticia</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="new-detail__body">
+      {
+        sliderItems.length > 0 && (
+          <MediaSlider client:visible items={sliderItems} />
+        )
+      }
+
+      <article class="news-detail__article">
+        <RichText content={news.content} />
+      </article>
+
+      <div class="new-detail__share">
+        <span class="share__title">Comparte esta noticia</span>
+        <div class="share-buttons-wrapper">
+          <button class="share-button button--whatsapp">
+            <Icon class="share-icon" name="mdi:whatsapp" size={32} />
+            <span class="share-text">Whatsapp</span>
+          </button>
+
+          <button class="share-button button--facebook">
+            <Icon class="share-icon" name="mdi:facebook" size={32} />
+            <span class="share-text">Facebook</span>
+          </button>
+        </div>
+      </div>
+
+      <RelatedNews relatedNews={relatedNews} />
+
+      <BroadcastSchedules />
+    </div>
+  </article>
+</section>
