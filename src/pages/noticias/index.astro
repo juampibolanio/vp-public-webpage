@@ -10,6 +10,7 @@ import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getNews } from "../../services/news.service";
 
+/* to get a news story to be featured */
 const { news: featuredResponse } = await getNews({
   page: 1,
   pageSize: 1,
@@ -17,14 +18,17 @@ const { news: featuredResponse } = await getNews({
 
 const featuredNews = featuredResponse[0] || null;
 
+/* detect current page number for pagination */
 const pageParam = Astro.url.searchParams.get("page");
 const currentPage = pageParam ? Number(pageParam) : 1;
 
+/* get news to list */
 const { news: listNews, pagination } = await getNews({
   page: currentPage,
   pageSize: 4,
 });
 
+/* set items for the internal browser */
 const breadcrumbItems = [
   { label: "Inicio", href: "/" },
   { label: "Noticias", href: "/noticias" },
