@@ -1,4 +1,27 @@
 ---
+/**
+ * RelatedNews
+ * -----------
+ * Displays a grid of related news cards.
+ *
+ * Responsibilities:
+ * - Render a list of related news items.
+ * - Gracefully handle empty or missing data (returns null if no items).
+ * - Provide accessible links and optimized media rendering.
+ *
+ * Data expectations:
+ * - `relatedNews` must be an array of normalized news objects.
+ * - Each item may include:
+ *   - slug (string)
+ *   - title (string)
+ *   - category { label, slug } | null
+ *   - media { url, thumbnail, alt } | null
+ *
+ * Notes:
+ * - Uses the thumbnail when available, falling back to the original image.
+ * - Category links route to the category listing page.
+ * - Images are lazy-loaded and async-decoded for performance.
+ */
 import "./RelatedNews.css";
 
 const { relatedNews } = Astro.props;
@@ -6,10 +29,6 @@ const { relatedNews } = Astro.props;
 if (!relatedNews || relatedNews.length === 0) {
   return null;
 }
-
-(relatedNews.forEach(item => console.log(item.media)))
-
-
 ---
 
 <section class="related-news">
@@ -27,8 +46,8 @@ if (!relatedNews || relatedNews.length === 0) {
 
           {news.media ? (
             <img
-              src={news.media[0].thumbnail || news.media[0].url}
-              alt={news.media[0].alt || news.title}
+              src={news.media.thumbnail || news.media.url}
+              alt={news.media.alt || news.title}
               class="related-news__image"
               loading="lazy"
               decoding="async"
@@ -42,7 +61,7 @@ if (!relatedNews || relatedNews.length === 0) {
               href={`/noticias/categoria/${news.category.slug}`}
               class="related-news__category"
             >
-              {news.category.label}
+              {news.category}
             </a>
           )}
 
