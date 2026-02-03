@@ -40,6 +40,13 @@
   color: var(--color-alternative);
 }
 
+.news-item__meta-divider {
+  display: inline-block;
+  width: 1px;
+  height: 14px;
+  background-color: var(--color-alternative);
+}
+
 /* contenido */
 .featured-new__content {
   width: 100%;
