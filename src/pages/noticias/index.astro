@@ -1,4 +1,39 @@
 ---
+/**
+ * News Index Page
+ * ---------------
+ * Entry point for the news section.
+ *
+ * Responsibilities:
+ * - Fetch and render the featured news item.
+ * - Fetch and render a paginated list of news.
+ * - Build breadcrumb navigation based on the current page.
+ * - Compose the page layout using reusable components.
+ *
+ * Rendering strategy:
+ * - prerender disabled to support server-side pagination via query params.
+ * - Data is fetched at request time using the news service layer.
+ *
+ * Data flow:
+ * - getNews(): retrieves normalized news data from Strapi.
+ * - Featured news: first item of page 1 (pageSize = 1).
+ * - News list: paginated, driven by the "page" query parameter.
+ *
+ * Layout:
+ * - MainLayout provides global structure (header, footer).
+ * - Main content column contains:
+ *   - Breadcrumb navigation
+ *   - Page title
+ *   - Section description
+ *   - Featured news
+ *   - News grid
+ *   - Pagination controls
+ * - Sidebar is displayed only on desktop screens.
+ *
+ * Notes:
+ * - No UI logic is embedded here; all rendering is delegated to components.
+ * - Pagination state is derived exclusively from the URL.
+ */
 export const prerender = false;
 
 import NewsFeatured from "../../components/news/NewsFeatured.astro";
@@ -28,7 +63,7 @@ const { news: listNews, pagination } = await getNews({
   pageSize: 4,
 });
 
-/* set items for the internal browser */
+/* set items for the breadcrumb navigation */
 const breadcrumbItems = [
   { label: "Inicio", href: "/" },
   { label: "Noticias", href: "/noticias" },
