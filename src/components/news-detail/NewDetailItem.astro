@@ -5,6 +5,7 @@ import MediaSlider from "../../islands/MediaSlider/MediaSlider";
 import RelatedNews from "./RelatedNews.astro";
 import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
 import RichText from "../shared/RichText.astro";
+import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech.jsx";
 
 const { news, relatedNews } = Astro.props;
 
@@ -16,6 +17,20 @@ const sliderItems = Array.isArray(news.media)
     }))
   : [];
 
+// Extraer texto plano del RichText (Strapi v5)
+const plainTextContent = Array.isArray(news.content)
+  ? news.content
+      .map((block) => block.children?.map((child) => child.text).join(" "))
+      .join("\n")
+  : "";
+
+// Compartir noticia (whatsapp & facebook)
+const tituloNoticia = news.title;
+const urlNoticia = Astro.url.href;
+const mensaje = `${tituloNoticia} ${urlNoticia}`;
+
+const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlNoticia)}`;
 ---
 
 <section class="new-detail-wrapper">
@@ -69,10 +84,10 @@ const sliderItems = Array.isArray(news.media)
           )
         }
 
-        <button aria-label="Botón para escuchar la noticia" class="meta-button">
-          <Icon class="meta-icon" size={32} name="mdi:volume-high" />
-          <span class="meta-button-text">Escuchar Noticia</span>
-        </button>
+        <TextToSpeech
+          client:load
+          text={`${news.title}. ${news.excerpt}. ${plainTextContent}`}
+        />
       </div>
     </div>
 
@@ -90,15 +105,25 @@ const sliderItems = Array.isArray(news.media)
       <div class="new-detail__share">
         <span class="share__title">Comparte esta noticia</span>
         <div class="share-buttons-wrapper">
-          <button class="share-button button--whatsapp">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="share-button button--whatsapp"
+          >
             <Icon class="share-icon" name="mdi:whatsapp" size={32} />
             <span class="share-text">Whatsapp</span>
-          </button>
+          </a>
 
-          <button class="share-button button--facebook">
+          <a
+            href={facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="share-button button--facebook"
+          >
             <Icon class="share-icon" name="mdi:facebook" size={32} />
             <span class="share-text">Facebook</span>
-          </button>
+          </a>
         </div>
       </div>
 
