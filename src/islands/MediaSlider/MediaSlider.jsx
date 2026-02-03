@@ -1,22 +1,47 @@
+/**
+ * MediaSlider
+ * -----------
+ * Horizontal media gallery based on Embla Carousel.
+ *
+ * - Supports images and videos (local file or YouTube).
+ * - No autoplay.
+ * - Controls (prev / next) are automatically enabled or disabled
+ *   depending on the carousel position.
+ *
+ * Props:
+ * - items: Array of media objects:
+ *   {
+ *     type: "image" | "video",
+ *     src: string,
+ *     alt?: string,
+ *     provider?: "file" | "youtube",
+ *     title?: string
+ *   }
+ */
 import { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import "./MediaSlider.css";
 
 export default function MediaSlider({ items = [] }) {
+
+    // initialize Embla and expose the carousel API
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: false,
         align: "start",
     });
 
+    // navigation status to enable/disable arrows
     const [canPrev, setCanPrev] = useState(false);
     const [canNext, setCanNext] = useState(false);
 
+    // updates the status of the controls according to the current position
     const updateControls = useCallback(() => {
         if (!emblaApi) return;
         setCanPrev(emblaApi.canScrollPrev());
         setCanNext(emblaApi.canScrollNext());
     }, [emblaApi]);
 
+    // subscribe the controls to embla events
     useEffect(() => {
         if (!emblaApi) return;
         updateControls();
