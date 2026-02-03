@@ -1,0 +1,54 @@
+---
+import "./RelatedNews.css";
+
+const { relatedNews } = Astro.props;
+
+if (!relatedNews || relatedNews.length === 0) {
+  return null;
+}
+
+(relatedNews.forEach(item => console.log(item.media)))
+
+
+---
+
+<section class="related-news">
+  <h2 class="related-news__title">Noticias relacionadas</h2>
+
+  <div class="related-news__grid">
+    {
+      relatedNews.map((news) => (
+        <article class="related-news__card">
+          <a
+            href={`/noticias/${news.slug}`}
+            class="related-news__link"
+            aria-label={`Leer noticia: ${news.title}`}
+          />
+
+          {news.media ? (
+            <img
+              src={news.media[0].thumbnail || news.media[0].url}
+              alt={news.media[0].alt || news.title}
+              class="related-news__image"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="related-news__image related-news__image--placeholder" />
+          )}
+
+          {news.category && (
+            <a
+              href={`/noticias/categoria/${news.category.slug}`}
+              class="related-news__category"
+            >
+              {news.category.label}
+            </a>
+          )}
+
+          <h3 class="related-news__headline">{news.title}</h3>
+        </article>
+      ))
+    }
+  </div>
+</section>
