@@ -1,0 +1,38 @@
+---
+const { content } = Astro.props;
+
+function renderText(child) {
+  let text = child.text || "";
+
+  if (child.bold) text = `<strong>${text}</strong>`;
+  if (child.italic) text = `<em>${text}</em>`;
+  if (child.underline) text = `<u>${text}</u>`;
+
+  return text;
+}
+---
+
+{
+  content?.map((block) => {
+    switch (block.type) {
+      case "paragraph":
+        return <p set:html={block.children.map(renderText).join("")} />;
+
+      case "heading":
+        const Tag = `h${block.level || 2}`;
+        return <Tag set:html={block.children.map(renderText).join("")} />;
+
+      case "list":
+        return (
+          <ul>
+            {block.children.map((item) => (
+              <li set:html={item.children.map(renderText).join("")} />
+            ))}
+          </ul>
+        );
+
+      default:
+        return null;
+    }
+  })
+}
