@@ -1,46 +1,14 @@
 ---
+//@ts-nocheck
 import './NewsAndRights.css';
 import { formatDate } from '../../utils/date.js'
+import { getNews } from '../../services/news.service';
 
-// Los datos de las noticias deben venir luego desde la API
-const news = [
-    {
-        title: 'Nueva legislación para la protección de los derechos de las personas mayores',
-        date: '2024-05-10',
-        summary: 'El gobierno ha aprobado una nueva ley que busca fortalecer los derechos y la protección de las personas mayores en diversos ámbitos.',
-        link: '/news/legislacion-proteccion-mayores',
-        category: 'Legislación',
-        image: 'https://img.freepik.com/foto-gratis/pareja-tomas-medias-posando-juntas_23-2148984296.jpg',
-        autor: 'Mirian Blanchard'
-    },
-    {
-        title: 'Impacto del envejecimiento poblacional en la economía',
-        date: '2024-04-22',
-        summary: 'Un análisis detallado sobre cómo el envejecimiento de la población afecta la economía global y qué medidas se están tomando para adaptarse a estos cambios.',
-        link: '/news/envejecimiento-economia',
-        category: 'Economía',
-        image: 'https://img.freepik.com/foto-gratis/pareja-tomas-medias-posando-juntas_23-2148984296.jpg',
-        autor: 'Mirian Blanchard'
-    },
-    {
-        title: 'Debate sobre la atención sanitaria para personas mayores',
-        date: '2024-03-15',
-        summary: 'Expertos y defensores de los derechos de las personas mayores discuten las mejoras necesarias en el sistema de atención sanitaria para este grupo demográfico.',
-        link: '/news/atencion-sanitaria-mayores',
-        category: 'Salud',
-        image: 'https://img.freepik.com/foto-gratis/pareja-tomas-medias-posando-juntas_23-2148984296.jpg',
-        autor: 'Mirian Blanchard'
-    },
-    {
-        title: 'Tecnologías innovadoras para mejorar la calidad de vida de las personas mayores',
-        date: '2024-02-28',
-        summary: 'Exploramos las últimas tecnologías diseñadas para ayudar a las personas mayores a vivir de manera más independiente y segura.',
-        link: '/news/tecnologias-calidad-vida-mayores',
-        category: 'Tecnología',
-        image: 'https://img.freepik.com/foto-gratis/pareja-tomas-medias-posando-juntas_23-2148984296.jpg',
-        autor: 'Mirian Blanchard'
-    }
-]
+/* get news to list */
+const { news: listNews } = await getNews({
+  page: 1,
+  pageSize: 4,
+});
 
 ---
 
@@ -57,49 +25,45 @@ const news = [
         
         <article class="news-featured">
             <div class="news-featured__image-container">
-                <img src={news[0].image} alt={news[0].title} class="news-featured__image" />
+                <img src={listNews[0].media.url || listNews[0].media.thumbnail} alt={listNews[0].media.alt || listNews[0].title} class="news-featured__image" />
             </div>
 
             <div class="news-featured__meta">
                 <div class="meta__content">
                     <span class="news-featured__date">
-                        <time datetime={news[0].date}>
-                                {formatDate(news[0].date)}
-                        </time>
+                        {formatDate(listNews[0].publishedDate)}
                     </span>
-                    <a aria-label={`Categoría: ${news[0].category}`} class="news-featured__category">{news[0].category}</a>
+                    <a aria-label={`Categoría: ${listNews[0].category}`} class="news-featured__category">{listNews[0].category}</a>
                 </div>
 
-                <span class="news-featured__author">Por: {news[0].autor}</span>
+                <span class="news-featured__author">Por: {listNews[0].author.name}</span>
             </div>
 
-            <a aria-label={`Ver noticia: ${news[0].title}`} class="news-featured__title">{news[0].title}</a>
+            <a href={`/noticias/${listNews[0].slug}`}  aria-label={`Ver noticia: ${listNews[0].title}`} class="news-featured__title">{listNews[0].title}</a>
 
-            <p class="news-featured__summary">{news[0].summary}</p>
+            <p class="news-featured__summary">{listNews[0].excerpt}</p>
         </article>
 
         <aside class="news-list">
-            {news.slice(1).map(item => (
+            {listNews.slice(1).map(item => (
                 <article class="news-list__item">
                     <div class="item__image-wrapper">
-                        <img src={item.image} alt={item.title} class="item__image-img" />
+                        <img src={item.media.url || item.media.thumbnail} alt={item.media.alt || item.title} class="item__image-img" />
                     </div>
 
                     <div class="item__content">
                         <a aria-label={`Categoría: ${item.category}`} class="content__category">{item.category}</a>
-                        <a aria-label={`Ver noticia: ${item.title}`} href={item.link} class="content__title">{item.title}</a>
+                        <a aria-label={`Ver noticia: ${item.title}`} href={`/noticias/${item.slug}`} class="content__title">{item.title}</a>
 
-                        <span class="content__author">Por: {item.autor}</span>
+                        <span class="content__author">Por: {item.author.name}</span>
                         <span class="content__date">
-                            <time datetime={item.date}>
-                                {formatDate(item.date)}
-                            </time>
+                            {formatDate(item.publishedDate)}
                         </span>
                     </div>
                 </article>
             ))}
 
-            <a class="news-list__more" aria-label="Ver todas las noticias">Ver todas las noticias</a>
+            <a href="/noticias" class="news-list__more" aria-label="Ver todas las noticias">Ver todas las noticias</a>
         </aside>
     </div>
 
