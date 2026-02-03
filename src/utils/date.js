@@ -17,10 +17,15 @@
  */
 export function formatDate(dateString) {
   const date = new Date(dateString);
+  
+  if (isNaN(date.getTime())) {
+    return "Fecha inválida";
+  }
 
   return new Intl.DateTimeFormat("es-AR", {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: "America/Argentina/Buenos_Aires",
   }).format(date);
 }
