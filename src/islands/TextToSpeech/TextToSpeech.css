@@ -5,14 +5,7 @@
     background-color: var(--color-primary);
     padding: var(--space-sm) var(--space-md);
     border-radius: var(--space-xl);
-}
-
-.meta-icon {
     color: var(--color-background);
-}
-
-.meta-button-text {
-    color: var(--color-background);
-    font-size: var(--font-size-sm);
     font-weight: 500;
+    font-size: var(--font-size-md);
 }
