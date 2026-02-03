@@ -1,0 +1,88 @@
+---
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import NewDetailItem from "../../components/news-detail/NewDetailItem.astro";
+import Sidebar from "../../components/shared/Sidebar.astro";
+import { getNewBySlug, getRelatedNews } from "../../services/news.service";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+const news = await getNewBySlug(slug);
+
+if (!news) {
+  return Astro.redirect("/404");
+}
+
+const relatedNews = await getRelatedNews({
+  category: news.category,
+  excludeSlug: news.slug,
+  limit: 3,
+});
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Noticias", href: "/noticias" },
+  news.category
+    ? {
+        label: news.category.label,
+        href: `/noticias/categoria/${news.category.slug}`,
+      }
+    : null,
+  { label: news.title, href: null },
+].filter(Boolean);
+---
+
+<MainLayout>
+  <div class="new-detail-layout">
+    <div class="new-detail-content">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <NewDetailItem news={news} relatedNews={relatedNews} />
+    </div>
+
+    <aside class="new-detail-sidebar">
+      <Sidebar />
+    </aside>
+  </div>
+</MainLayout>
+
+<style>
+  .new-detail-layout {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .new-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 1024px) {
+    .new-detail-layout {
+      flex-direction: column;
+      max-width: 100%;
+      padding: 1.5rem 1rem;
+    }
+
+    .new-detail-content {
+      width: 100%;
+    }
+
+    .new-detail-sidebar {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .new-detail-layout {
+      padding: 1rem;
+    }
+  }
+</style>
