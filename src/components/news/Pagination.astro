@@ -1,4 +1,22 @@
 ---
+/**
+ * Pagination
+ *
+ * Pagination component for news listings.
+ *
+ * Responsibilities:
+ * - Render previous / next navigation.
+ * - Display page numbers based on total pages.
+ * - Highlight the current page.
+ *
+ * Accessibility:
+ * - Uses semantic <nav> and <aria-current>.
+ * - Disables navigation when limits are reached.
+ *
+ * Props:
+ * - currentPage: number — active page.
+ * - totalPages: number — total available pages.
+ */
 import "./Pagination.css";
 
 const { currentPage, totalPages } = Astro.props;

@@ -1,34 +1,41 @@
 ---
+/**
+ * Sidebar
+ *
+ * Renders the main sidebar used across news and detail pages.
+ *
+ * Sections included:
+ * - Weather widget (client-side island)
+ * - Social media links
+ * - Sponsors (static, pending API integration)
+ * - Useful emergency phone numbers
+ *
+ * This component is layout-oriented and reused across multiple pages.
+ */
 import { Icon } from 'astro-icon/components';
 import './Sidebar.css';
 import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
 ---
 
 <aside class="sidebar">
-
     <div class="sidebar-section weather-section">
         <WeatherWidget client:load />
     </div>
-
     <div class="sidebar-section social-networks">
         <h4 class="sidebar-title">Nuestras redes</h4>
-
         <div class="social-networks__wrapper">
             <a class="social-networks__item" href="https://www.facebook.com/vivirplenamentetv/" aria-label="Facebook">
                 <Icon name="mdi:facebook" size={28} />
                 <span>Facebook</span>
             </a>
-
             <a class="social-networks__item" href="https://www.instagram.com/vivirplenamente/?hl=es" aria-label="Instagram">
                 <Icon name="mdi:instagram" size={28} />
                 <span>Instagram</span>
             </a>
-
             <a class="social-networks__item" href="https://www.youtube.com/c/VivirPlenamente" aria-label="YouTube">
                 <Icon name="mdi:youtube" size={28} />
                 <span>YouTube</span>
             </a>
-
             <a class="social-networks__item" href="https://x.com/ViviPlenamente" aria-label="X">
                 <Icon name="mdi:twitter" size={28} />
                 <span>X</span>
@@ -40,7 +47,6 @@ import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
         <a href="https://arielsilvaseguros.com.ar/" class="sponsors-section__item">
             <img src="https://arielsilvaseguros.com.ar/logotipoHorizontal/logotipo1.png" alt="Ariel Silva Asesores de Seguros" />
         </a>
-
         <a href="https://brello.com.ar/" class="sponsors-section__item">
             <img src="https://brello.com.ar/wp-content/uploads/2024/03/MARCA-BRELLO-704X250-PX-1-.png" alt="CAMDECH" />
         </a>
@@ -48,7 +54,6 @@ import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
 
     <div class="sidebar-section utils-phones">
         <h4 class="sidebar-title">Teléfonos útiles</h4>
-
         <ul class="utils-phones__list">
             <li class="utils-phones__item"> <span class="phone_number">107</span> - Emergencias</li>
             <li class="utils-phones__item"> <span class="phone_number">911</span> - Policía</li>
@@ -59,5 +64,4 @@ import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
             <li class="utils-phones__item"> <span class="phone_number">130</span> - ANSES</li>
         </ul>
     </div>
-
 </aside>

@@ -1,4 +1,29 @@
 ---
+/**
+ * NewsAndRights
+ *
+ * Homepage section that highlights recent news focused on
+ * current affairs and rights of older adults.
+ *
+ * Structure:
+ * - One featured article (most recent).
+ * - A secondary list of related articles.
+ *
+ * Data:
+ * - Fetched via news service (paginated, limited to 4 items).
+ *
+ * Responsibilities:
+ * - Emphasize editorial priority content.
+ * - Provide clear navigation to categories and full articles.
+ *
+ * Accessibility notes:
+ * - Descriptive alt text for images.
+ * - Aria-labels for links and navigation clarity.
+ *
+ * Notes:
+ * - Assumes at least one news item is returned.
+ * - Category is rendered as a navigable filter.
+ */
 //@ts-nocheck
 import './NewsAndRights.css';
 import { formatDate } from '../../utils/date.js'
@@ -11,8 +36,6 @@ const { news: listNews } = await getNews({
 });
 
 ---
-
-<!-- Nota: Se deben revisar los <a>, ya que deben tener el href y redirigir a la noticia correspondiente. Revisar. -->
 
 <section class="container-news-rights">
     <div class="container__header">
@@ -33,7 +56,7 @@ const { news: listNews } = await getNews({
                     <span class="news-featured__date">
                         {formatDate(listNews[0].publishedDate)}
                     </span>
-                    <a aria-label={`Categoría: ${listNews[0].category}`} class="news-featured__category">{listNews[0].category}</a>
+                    <a href={`/noticias/categoria/${listNews[0].category}`} aria-label={`Categoría: ${listNews[0].category}`} class="news-featured__category">{listNews[0].category}</a>
                 </div>
 
                 <span class="news-featured__author">Por: {listNews[0].author.name}</span>
@@ -52,7 +75,7 @@ const { news: listNews } = await getNews({
                     </div>
 
                     <div class="item__content">
-                        <a aria-label={`Categoría: ${item.category}`} class="content__category">{item.category}</a>
+                        <a aria-label={`Categoría: ${item.category}`} href={`/noticias/categoria/${item.category}`} class="content__category">{item.category}</a>
                         <a aria-label={`Ver noticia: ${item.title}`} href={`/noticias/${item.slug}`} class="content__title">{item.title}</a>
 
                         <span class="content__author">Por: {item.author.name}</span>

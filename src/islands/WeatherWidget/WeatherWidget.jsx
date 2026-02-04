@@ -1,3 +1,14 @@
+/**
+ * WeatherWidget
+ *
+ * Displays current weather conditions and a 5-day forecast
+ * for a fixed location (Corrientes, AR).
+ *
+ * Data source: OpenWeatherMap API (via weather.service)
+ * - Auto-refreshes every 30 minutes
+ * - Handles loading and error states
+ */
+
 import './WeatherWidget.css';
 import { useEffect, useState } from 'react';
 import { getCurrentWeather, getForecast } from '../../services/weather.service';
@@ -7,6 +18,10 @@ export default function WeatherWidget() {
     const [forecast, setForecast] = useState([]);
     const [error, setError] = useState(false);
 
+    /**
+     * Fetches current weather and forecast data.
+     * Updates state and handles API errors.
+    */
     useEffect(() => {
         async function loadWeather() {
             try {

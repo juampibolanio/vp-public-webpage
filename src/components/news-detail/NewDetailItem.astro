@@ -1,4 +1,29 @@
 ---
+/**
+ * NewsDetailItem
+ *
+ * Renders the full detail view of a single news article.
+ *
+ * Responsibilities:
+ * - Display category navigation and back link.
+ * - Render title, excerpt, author info, and publish date.
+ * - Provide text-to-speech accessibility for article content.
+ * - Render media gallery (slider) when media is available.
+ * - Render rich text content from the CMS.
+ * - Provide social sharing (WhatsApp, Facebook).
+ * - Display related news and broadcast schedules.
+ *
+ * Props:
+ * - news: normalized news object with full content.
+ * - relatedNews: array of normalized related news objects.
+ *
+ * Notes:
+ * - Media slider is loaded client-side on visibility.
+ * - Text-to-speech is loaded client-side for accessibility.
+ * - Plain text is derived from RichText blocks for TTS.
+ * - Share URLs are generated dynamically from the current page URL.
+ */
+
 // @ts-nocheck
 import "./NewDetailItem.css";
 import { Icon } from "astro-icon/components";
@@ -18,14 +43,14 @@ const sliderItems = Array.isArray(news.media)
     }))
   : [];
 
-// Extraer texto plano del RichText (Strapi v5)
+// extracting plain text from RichText
 const plainTextContent = Array.isArray(news.content)
   ? news.content
       .map((block) => block.children?.map((child) => child.text).join(" "))
       .join("\n")
   : "";
 
-// Compartir noticia (whatsapp & facebook)
+// share options
 const tituloNoticia = news.title;
 const urlNoticia = Astro.url.href;
 const mensaje = `${tituloNoticia} ${urlNoticia}`;

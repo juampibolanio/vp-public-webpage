@@ -1,4 +1,20 @@
 ---
+/**
+ * NewsItem
+ *
+ * Renders a single news card for list views.
+ *
+ * Responsibilities:
+ * - Display cover image, category, date, title, excerpt, and author.
+ * - Link to the news detail page.
+ *
+ * Props:
+ * - news: normalized news object.
+ *
+ * Notes:
+ * - Uses lazy-loaded media for performance.
+ * - Date formatting is delegated to a shared utility.
+ */
 import { formatDate } from "../../utils/date";
 import "./NewsItem.css";
 

@@ -1,13 +1,14 @@
 /**
- * Normalizes text for reading via Text-to-Speech in Spanish (AR)
- * Does not modify visual content.
+ * Normalizes text for Text-to-Speech (Spanish – Argentina).
+ * Transforms dates, numbers, and symbols into speech-friendly text.
+ * Visual content is not affected.
  */
 export function normalizeTextForTTS(rawText) {
   if (!rawText) return "";
 
   let text = rawText;
 
-  // Numerical dates: 14/01/2026 o 14-01-2026
+  // Numeric dates: 14/01/2026 or 14-01-2026 → 14 de enero de 2026
   text = text.replace(
     /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})\b/g,
     (_, d, m, y) => {
@@ -17,38 +18,38 @@ export function normalizeTextForTTS(rawText) {
         month: "long",
         year: "numeric",
       });
-    },
+    }
   );
 
-  // Standardized text dates (in case they are inconsistent)
+  // textual dates normalization (case consistency)
   text = text.replace(
     /\b(\d{1,2}) de ([a-záéíóúñ]+) de (\d{4})\b/gi,
-    (_, d, m, y) => `${d} de ${m.toLowerCase()} de ${y}`,
+    (_, d, m, y) => `${d} de ${m.toLowerCase()} de ${y}`
   );
 
-  // Numbers with thousands separator: 15,000 → 15000
+  // thousands separator: 15.000 → 15000
   text = text.replace(/\b\d{1,3}(\.\d{3})+\b/g, (match) =>
-    match.replace(/\./g, ""),
+    match.replace(/\./g, "")
   );
 
-  // Real decimals: 3.5 → 3 point 5
+  // decimal numbers (Spanish format): 3,5 → 3 coma 5
   text = text.replace(
     /\b(\d+),(\d+)\b/g,
-    (_, int, dec) => `${int} coma ${dec}`,
+    (_, int, dec) => `${int} coma ${dec}`
   );
 
-  // Percentages: 25% → 25 percent
+  // percentages: 25% -> 25 por ciento
   text = text.replace(/\b(\d+)\s?%\b/g, (_, n) => `${n} por ciento`);
 
-  // Currency: $15,000 → 15,000 pesos
+  // currency: $15.000 -> 15000 pesos
   text = text.replace(
     /\$\s?(\d+(\.\d{3})*)/g,
-    (_, n) => `${n.replace(/\./g, "")} pesos`,
+    (_, n) => `${n.replace(/\./g, "")} pesos`
   );
 
-  // Degrees: 30° → 30 degrees
+  // cegrees: 30° -> 30 grados
   text = text.replace(/\b(\d+)\s?°\b/g, (_, n) => `${n} grados`);
 
-  // Final cleaning of spaces
+  // normalize whitespace
   return text.replace(/\s+/g, " ").trim();
 }

@@ -5,8 +5,6 @@ import "./NewsFeatured.css";
 const { news } = Astro.props;
 
 const { title, slug, excerpt, category, publishedDate, media, author } = news;
-console.log(media.url);
-
 
 const formattedDate = formatDate(publishedDate);
 ---
@@ -28,8 +26,7 @@ const formattedDate = formatDate(publishedDate);
     </a>
 
     <div class="featured-new__meta">
-      <a href={`/noticias/${category}`} class="meta__category">
-        <!-- Esto debe ir a la lista de noticias de la categoria -->
+      <a href={`/noticias/categoria/${category}`} class="meta__category">
         {category}
       </a>
       <span class="news-item__meta-divider"></span>

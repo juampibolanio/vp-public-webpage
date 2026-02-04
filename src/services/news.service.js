@@ -127,3 +127,49 @@ export async function getRelatedNews({
 
   return response.data.map(normalizeNewsListItem);
 }
+
+/**
+ * Fetches a paginated list of news filtered by category.
+ *
+ * Requests only the required fields for news listings and includes
+ * basic relations such as media and author.
+ *
+ * @async
+ * @function getNewsByCategory
+ *
+ * @param {Object} options
+ * @param {string} options.category - News category (Strapi Enum value).
+ * @param {number} [options.page=1] - Current page number.
+ * @param {number} [options.pageSize=5] - Items per page.
+ *
+ * @returns {Promise<Object>} Normalized response containing:
+ * - `news`: Array of news items.
+ * - `pagination`: Pagination metadata.
+ */
+export async function getNewsByCategory({ category, page = 1, pageSize = 5 }) {
+  const params = {
+    "fields[0]": "title",
+    "fields[1]": "slug",
+    "fields[2]": "excerpt",
+    "fields[3]": "published_date",
+    "fields[4]": "category",
+    "fields[5]": "region",
+
+    "populate[media]": "true",
+    "populate[author][fields][0]": "name",
+    "populate[author][populate][avatar]": "true",
+
+    "pagination[page]": page,
+    "pagination[pageSize]": pageSize,
+    "sort[0]": "published_date:desc",
+  };
+
+  if (category) {
+    params["filters[category][$eq]"] = category;
+  }
+
+  const query = new URLSearchParams(params);
+  const response = await apiFetch(`/news?${query.toString()}`);
+
+  return normalizeNewsResponse(response);
+}

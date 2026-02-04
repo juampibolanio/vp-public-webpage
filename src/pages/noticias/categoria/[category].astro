@@ -1,0 +1,189 @@
+---
+/**
+ * News Category Page
+ * ------------------
+ * Dynamic page for rendering news filtered by category.
+ *
+ * Responsibilities:
+ * - Resolve the category slug from the URL.
+ * - Fetch paginated news belonging to the selected category.
+ * - Build contextual breadcrumb navigation.
+ * - Render featured news, news list, pagination, and sidebar.
+ * - Handle empty states when no news are found for a category.
+ *
+ * Rendering strategy:
+ * - prerender disabled to allow dynamic category routing.
+ * - Data is fetched at request time via the news service layer.
+ *
+ * Data flow:
+ * - getNewsByCategory():
+ *   - Fetches news filtered by category.
+ *   - Returns a paginated, normalized response.
+ * - The first news item is used as featured content.
+ * - Remaining items are rendered as a list.
+ *
+ * Pagination:
+ * - Page number is resolved from the `page` query parameter.
+ * - Pagination component receives current page and total pages.
+ *
+ * Breadcrumb logic:
+ * - Inicio → Noticias → Category
+ * - If page > 1, appends "Página X" to the breadcrumb.
+ *
+ * Layout:
+ * - MainLayout provides global layout (header/footer).
+ * - Main content column:
+ *   - Breadcrumb
+ *   - TitleBarTopPage (category title)
+ *   - Featured news (optional)
+ *   - News list
+ *   - Pagination
+ * - Sidebar rendered on desktop, hidden on smaller screens.
+ *
+ * Empty state:
+ * - Displays a user-friendly message when no news exist
+ *   for the selected category.
+ *
+ * Notes:
+ * - This page contains no presentation logic.
+ * - UI responsibilities are delegated to child components.
+ */
+// @ts-nocheck
+export const prerender = false;
+
+import NewsFeatured from "../../../components/news/NewsFeatured.astro";
+import NewsList from "../../../components/news/NewsList.astro";
+import Pagination from "../../../components/news/Pagination.astro";
+import Sidebar from "../../../components/shared/Sidebar.astro";
+import TitleBarTopPage from "../../../components/shared/TitleBarTopPage.astro";
+import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { getNewsByCategory } from "../../../services/news.service";
+
+const { category } = Astro.params; 
+
+const categoryFormatted = category.charAt(0).toUpperCase() + category.slice(1);
+
+const pageParam = Astro.url.searchParams.get("page");
+const currentPage = pageParam ? Number(pageParam) : 1;
+
+const { news, pagination } = await getNewsByCategory({
+  category: categoryFormatted, 
+  page: currentPage,
+  pageSize: 5,
+});
+
+const hasNews = news.length > 0;
+const featuredNews = hasNews ? news[0] : null;
+const listNews = news.length > 1 ? news.slice(1) : [];
+
+const pageTitle = `${categoryFormatted}`;
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Noticias", href: "/noticias" },
+  { label: categoryFormatted, href: null }, 
+];
+
+if (currentPage > 1) {
+  breadcrumbItems.push({ label: `Página ${currentPage}`, href: null });
+}
+---
+
+<MainLayout>
+  <div class="news-layout">
+    <div class="news-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
+    <TitleBarTopPage title={pageTitle} />
+
+    <div class="news-page-wrapper">
+      <div class="news-page__content">
+        {
+          hasNews ? (
+            <>
+              <div class="news-main">
+                {featuredNews && <NewsFeatured news={featuredNews} />}
+              </div>
+
+              <div class="news-grid">
+                {listNews.length > 0 && <NewsList news={listNews} />}
+              </div>
+
+              <Pagination
+                currentPage={pagination.page}
+                totalPages={pagination.pageCount}
+              />
+            </>
+          ) : (
+            <div class="empty-state">
+              <h3>No encontramos noticias en "{categoryFormatted}"</h3>
+              <p>Intenta buscar en otra sección.</p>
+              <a href="/noticias" class="btn-back">
+                Volver a Noticias
+              </a>
+            </div>
+          )
+        }
+      </div>
+
+      <aside class="news-sidebar">
+        <Sidebar />
+      </aside>
+    </div>
+  </div>
+
+  <style>
+    .news-page-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .news-layout__header {
+      display: flex;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-sm) 0;
+      padding-left: var(--space-sm);
+    }
+
+    .news-page__content {
+      flex: 1;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .news-main {
+      margin-bottom: 2rem;
+    }
+
+    .news-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .news-page-wrapper {
+        flex-direction: column;
+      }
+      .news-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</MainLayout>
