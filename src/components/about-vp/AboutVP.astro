@@ -1,0 +1,140 @@
+---
+import './AboutVP.css';
+import logoIcon from "../../assets/home-icon.webp";
+import { Icon } from "astro-icon/components";
+import miriamPhoto from "../../assets/miriam.webp"; 
+import marceloPhoto from "../../assets/marcelo.webp";
+import BroadcastSchedules from '../shared/BroadcastSchedules.astro';
+
+const editorialValues = [
+    {
+        icon: "mdi:check-circle-outline",
+        title: "Credibilidad",
+        description: "Información verificada y fuentes confiables."
+    },
+    {
+        icon: "mdi:account-group-outline",
+        title: "Cercanía",
+        description: "Lenguaje claro, accesible y empático."
+    },
+    {
+        icon: "mdi:shield-check-outline",
+        title: "Compromiso con los derechos",
+        description: "Enfoque basado en derechos humanos de las personas mayores."
+    },
+    {
+        icon: "mdi:map-marker-radius-outline",
+        title: "Identidad regional",
+        description: "Mirada desde el territorio con proyección nacional e internacional."
+    },
+    {
+        icon: "mdi:hand-heart-outline",
+        title: "Responsabilidad social",
+        description: "Periodismo al servicio de las personas."
+    }
+];
+
+const teamMembers = [
+    { 
+    name: "Miriam Blandchard", 
+    role: "Dueña / Autora",
+    image: miriamPhoto 
+    },
+    { 
+    name: "Marcelo Apellido", 
+    role: "Informador Comunicador",
+    image: marceloPhoto
+    }
+];
+---
+
+<article class="about-vp__intro">
+    <div class="intro__content">
+        <h3 class="intro__title">
+            Periodismo especializado en derecho de la vejez en Argentina. Vivir Plenamente es un medio periodístico
+            multiplataforma especializado en derecho de la vejez y calidad de vida de las personas mayores en Argentina.
+        </h3>
+        <div class="intro__texts">
+            <p>En <strong>Vivir Plenamente</strong> informamos, orientamos y acompañamos a personas mayores, sus familias y a quienes trabajan con ellas, brindando información clara, confiable y accesible para la toma de decisiones cotidianas vinculadas a salud, cuidados, recreación, trámites, jubilaciones y acceso a derechos.</p>
+            <p>Hacemos periodismo de servicio, con enfoque en derechos humanos, que busca transformar información compleja en contenidos comprensibles y útiles, explicados paso a paso, para reducir la desinformación y la incertidumbre que muchas veces atraviesan las personas mayores y sus entornos.</p>
+            <p>Nuestro trabajo se apoya en los principios de la Convención Interamericana sobre la Protección de los Derechos Humanos de las Personas Mayores (Ley Nacional N.º 27.360/17 de adhesión y Ley Nacional 27.700/22, que le otorga jerarquía constitucional) y promueve una mirada respetuosa, activa y empoderada de las personas mayores y los procesos de envejecimiento.</p>
+        </div>
+    </div>
+    <div class="intro__visual">
+        <img src={logoIcon.src} alt="Logo Vivir Plenamente">
+    </div>
+</article>
+
+<section class="vp__pilars">
+    <div class="pilars__container">
+        
+        <div class="pilar__mission">
+            <Icon name="mdi:format-quote-close" />
+            <h4 class="pilar__title">Nuestra misión</h4>
+            <p>Brindar información periodística confiable y orientación clara para que las personas mayores y sus familias puedan conocer, ejercer y defender sus derechos, y tomar decisiones informadas que mejoren su calidad de vida.</p>
+        </div>
+
+        <div class="pilar__vision">
+            <Icon name="mdi:eye-outline" />
+            <h4 class="pilar__title">Nuestra visión</h4>
+            <p>Ser un medio de referencia en comunicación sobre derecho de la vejez y personas mayores en Argentina, fortaleciendo el acceso a la información como un derecho y promoviendo una sociedad más justa, inclusiva y respetuosa, con espacio para todas las edades. </p>
+        </div>
+
+        <div class="pilar__audience">
+            <Icon name="mdi:earth" />
+            <h4 class="pilar__title">A quienes nos dirigimos</h4>
+            <p>Vivir Plenamente esta dirigido a:</p>
+            <ul class="pilar__list">
+                <li>Personas mayores que buscan información clara y accesible.</li>
+                <li>Familias y redes de apoyo que acompañan procesos de envejecimiento y cuidado.</li>
+                <li>Profesionales e instituciones vinculadas a la vejez y los derechos humanos.</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="vp__values">
+    <header class="values__header">
+        <h3>Valores editoriales</h3>
+        <p>Los pilares fundamentales que guian cada nota, entrevista y reporte.</p>
+    </header>
+
+    <div class="values__grid">
+        {editorialValues.map((item) => (
+            <div class="value__card">
+                <Icon name={item.icon} class="value__icon" />
+                <h5>{item.title}</h5>
+                <p>{item.description}</p>
+            </div>
+        ))}
+    </div>
+</section>
+
+<section class="vp__integrants">
+    <hr class="divisor">
+    <header class="vp-integrants__header">
+        <h2>Quienes hacemos Vivir Plenamente</h2>
+        <p>Un equipo multidisciplinario de periodistas, fotógrafos y editores apasionados por contar historias.</p>
+    </header>
+
+    <div class="team__grid">
+        {teamMembers.map((member) => (
+            <div class="team__card">
+                <div class="team__photo-placeholder">
+                    <img src={member.image.src} alt={`Foto de ${member.name}`} class="team__photo" />
+                </div>
+                <p class="team__name">{member.name}</p>
+                <p class="team__role">{member.role}</p>
+            </div>
+        ))}
+    </div>
+
+    <hr class="divisor">
+    <div class="subtitle">
+        <p>Vivir Plenamente informa para decidir, no solo para leer.</p>
+    </div>
+</section>
+
+<div class="emission-footer">
+    <BroadcastSchedules />
+</div>
