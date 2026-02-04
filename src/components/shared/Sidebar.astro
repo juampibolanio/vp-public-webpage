@@ -12,9 +12,14 @@
  *
  * This component is layout-oriented and reused across multiple pages.
  */
+// @ts-nocheck
 import { Icon } from 'astro-icon/components';
 import './Sidebar.css';
 import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
+import { getAdvertisements } from '../../services/advertisements.service';
+
+const { advertisements } = await getAdvertisements();
+
 ---
 
 <aside class="sidebar">
@@ -43,13 +48,12 @@ import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
         </div>
     </div>
 
-    <div class="sidebar-section sponsors-section"> <!-- Se debe modificar por datos de la api -->
-        <a href="https://arielsilvaseguros.com.ar/" class="sponsors-section__item">
-            <img src="https://arielsilvaseguros.com.ar/logotipoHorizontal/logotipo1.png" alt="Ariel Silva Asesores de Seguros" />
-        </a>
-        <a href="https://brello.com.ar/" class="sponsors-section__item">
-            <img src="https://brello.com.ar/wp-content/uploads/2024/03/MARCA-BRELLO-704X250-PX-1-.png" alt="CAMDECH" />
-        </a>
+    <div class="sidebar-section sponsors-section">
+        {advertisements.map((item) => (
+            <a href={item.link} class="sponsors-section__item">
+                <img src={item.media.url} alt={item.name} />
+            </a>
+        ))}
     </div>
 
     <div class="sidebar-section utils-phones">

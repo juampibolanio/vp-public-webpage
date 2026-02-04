@@ -39,15 +39,15 @@ export default function SponsorsCarousel({ sponsors }) {
     <div className="sponsors">
       <div className="sponsors__viewport" ref={emblaRef}>
         <div className="sponsors__container">
-          {sponsors.map((item, index) => (
-            <div className="sponsors__slide" key={index}>
+          {sponsors.map((item, id) => (
+            <div className="sponsors__slide" key={id}>
               <a
-                href={item.url}
+                href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="sponsors__link"
               >
-                <img src={item.logo} alt={item.name} />
+                <img src={item.media.url} alt={item.name} />
               </a>
             </div>
           ))}

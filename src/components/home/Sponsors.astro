@@ -10,23 +10,10 @@
  * - Intended to be replaced by API data in the future.
  */
 import SponsorsCarousel from "../../islands/SponsorsCarousel/SponsorsCarousel";
+import { getAdvertisements } from "../../services/advertisements.service";
 import "./Sponsors.css";
 
-
-// Los datos de los sponsors deben venir luego desde la API
-const sponsors = [
-  {
-    name: "Ariel Silva Asesores Seguros",
-    logo: "/src/assets/ariel-silva-logo.webp",
-    url: "https://arielsilvaseguros.com.ar/",
-  },
-  {
-    name: "Corrientes",
-    logo: "/src/assets/corrientes-logo.webp",
-    url: "https://www.corrientes.gob.ar/",
-  },
-
-];
+const { advertisements } = await getAdvertisements();
 ---
 
 <section class="sponsors-section">
@@ -39,7 +26,7 @@ const sponsors = [
     </div>
 
     <div class="sponsors-section__carousel-wrapper">
-        <SponsorsCarousel sponsors={sponsors} client:visible />    
+        <SponsorsCarousel sponsors={advertisements} client:visible />    
     </div>
 
 </section>
