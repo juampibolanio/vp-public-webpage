@@ -1,0 +1,166 @@
+---
+//@ts-nocheck
+import { Icon } from "astro-icon/components";
+import ContentHubCard from "../../components/family-section/ContentHubCard.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getContentHubsByCategory } from "../../services/content-hub.service";
+
+const tramitesDerechos = await getContentHubsByCategory(
+  "TRAMITES_DERECHOS",
+);
+const saludBienestar = await getContentHubsByCategory("SALUD_BIENESTAR");
+
+const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTURA");
+---
+
+<MainLayout>
+  <div class="family-section">
+    <div class="content-hub__section">
+      <div class="content-hub__header">
+        <h3 class="content-hub__title">Trámites y Derechos</h3>
+        <p class="content-hub__description">
+          Herramientas organizativas para simplificar el día a día y garantizar
+          el cuidado adecuado en el hogar o instituciones.
+        </p>
+      </div>
+
+      <div class="content-hub__body">
+        { tramitesDerechos.map((item) => <ContentHubCard {...item}/>)}
+      </div>
+    </div>
+
+    <div class="content-hub__section">
+      <div class="content-hub__header">
+        <h3 class="content-hub__title">Salud y Bienestar</h3>
+        <p class="content-hub__description">
+          Cuidar de otro comienza por cuidarse a uno mismo. Recursos para el
+          bienestar emocional del acompañante y la calidad de vida familiar.
+        </p>
+      </div>
+
+      <div class="content-hub__body">
+        { saludBienestar.map((item) => <ContentHubCard {...item}/>)}
+      </div>
+    </div>
+
+    <div class="content-hub__section">
+      <div class="content-hub__header">
+        <h3 class="content-hub__title">Participación y Cultura</h3>
+        <p class="content-hub__description">
+          Herramientas organizativas para simplificar el día a día y garantizar
+          el cuidado adecuado en el hogar o instituciones.
+        </p>
+      </div>
+
+      <div class="content-hub__body">
+        { participacionCultura.map((item) => <ContentHubCard {...item}/>)}
+      </div>
+    </div>
+
+    <div class="help-section">
+      <div class="help-section__body">
+        <h3 class="help-section__title">¿Necesitás orientación específica?</h3>
+        <p class="help-section__description">
+          Estamos construyendo este espacio contigo. Si tenes dudas sobre un
+          trámite específico o necesitas un recurso que no encuentras
+          escríbenos.
+        </p>
+      </div>
+
+      <a href="#" class="help-section__button">
+        <Icon class="help-section__icon" name="mdi:whatsapp" size={42} />
+        <span class="help-section__button-text">Whatsapp</span>
+      </a>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .family-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .content-hub__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .content-hub__header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-hub__title {
+    font-size: var(--font-size-xxl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid #e8e8e8;
+    margin: 0;
+  }
+
+  .content-hub__description {
+    font-size: var(--font-size-lg);
+    max-width: 1100px;
+  }
+
+  .content-hub__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxxl);
+  }
+
+  .help-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .help-section__body {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .help-section__title {
+    margin: 0;
+    font-size: var(--font-size-xxl);
+  }
+
+  .help-section__description {
+    max-width: 1000px;
+    font-size: var(--font-size-md);
+  }
+
+  .help-section__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-xxxl);
+    border-radius: var(--space-xl);
+    background-color: #25d366;
+    transition: transform 0.3s ease-in-out;
+    text-decoration: none;
+    margin-top: var(--space-sm);
+  }
+
+  .help-section__button:hover {
+    transform: translateY(-2px);
+  }
+
+  .help-section__icon {
+    color: var(--color-background);
+  }
+
+  .help-section__button-text {
+    font-size: var(--font-size-lg);
+    font-weight: 500;
+    color: var(--color-background);
+  }
+</style>
