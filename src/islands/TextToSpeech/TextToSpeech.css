@@ -1,0 +1,11 @@
+.meta-button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    background-color: var(--color-primary);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--space-xl);
+    color: var(--color-background);
+    font-weight: 500;
+    font-size: var(--font-size-md);
+}

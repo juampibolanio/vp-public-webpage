@@ -1,0 +1,79 @@
+---
+/**
+ * Pagination
+ *
+ * Pagination component for news listings.
+ *
+ * Responsibilities:
+ * - Render previous / next navigation.
+ * - Display page numbers based on total pages.
+ * - Highlight the current page.
+ *
+ * Accessibility:
+ * - Uses semantic <nav> and <aria-current>.
+ * - Disables navigation when limits are reached.
+ *
+ * Props:
+ * - currentPage: number — active page.
+ * - totalPages: number — total available pages.
+ */
+import "./Pagination.css";
+
+const { currentPage, totalPages } = Astro.props;
+
+const createPageUrl = (page: number) => `/noticias?page=${page}`;
+---
+<nav class="pagination" aria-label="Paginación de noticias">
+  <ul class="pagination__list">
+
+    <li class={`pagination__item ${currentPage === 1 ? "pagination__item--disabled" : ""}`}>
+      {currentPage === 1 ? (
+        <span aria-disabled="true">Anterior</span>
+      ) : (
+        <a
+          href={createPageUrl(currentPage - 1)}
+          data-astro-reload
+        >
+          Anterior
+        </a>
+      )}
+    </li>
+
+    {Array.from({ length: totalPages }, (_, i) => {
+      const page = i + 1;
+
+      return (
+        <li
+          class={`pagination__item ${
+            page === currentPage ? "pagination__item--active" : ""
+          }`}
+        >
+          {page === currentPage ? (
+            <span aria-current="page">{page}</span>
+          ) : (
+            <a
+              href={createPageUrl(page)}
+              data-astro-reload
+            >
+              {page}
+            </a>
+          )}
+        </li>
+      );
+    })}
+
+    <li class={`pagination__item ${currentPage === totalPages ? "pagination__item--disabled" : ""}`}>
+      {currentPage === totalPages ? (
+        <span aria-disabled="true">Siguiente</span>
+      ) : (
+        <a
+          href={createPageUrl(currentPage + 1)}
+          data-astro-reload
+        >
+          Siguiente
+        </a>
+      )}
+    </li>
+
+  </ul>
+</nav>

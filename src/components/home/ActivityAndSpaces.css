@@ -53,13 +53,14 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--space-sm) 6rem;
+    min-width: 280px;
+    padding: var(--space-sm) var(--space-xl);
     background-color: var(--color-primary);
     color: var(--color-background);
     border-radius: var(--space-md);
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.3s ease-in-out
+    transition: transform 0.3s ease-in-out;
 }
 
 .activity-container__button:hover {

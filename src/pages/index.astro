@@ -1,4 +1,28 @@
 ---
+/**
+ * Home Page
+ * ---------
+ * Main landing page of the site.
+ *
+ * Structure:
+ * - Composed entirely of presentational sections.
+ * - Each section is encapsulated in its own Astro component.
+ * - Wrapped by the MainLayout, which provides global layout,
+ *   navigation, and footer.
+ *
+ * Sections:
+ * - HelpCenterOptions: Entry points to key help topics.
+ * - DailyTools: Daily-use utilities.
+ * - NewsAndRights: Highlighted news and rights-related content.
+ * - AboutVivirPlenamente: Institutional and editorial overview.
+ * - ColaboratePeriodism: Call to collaborate with the media outlet.
+ * - ActivityAndSpaces: Activities, spaces, and community content.
+ * - Sponsors: Sponsors and supporting organizations.
+ *
+ * Notes:
+ * - This page contains no data fetching logic.
+ * - All data responsibility is delegated to child components.
+ */
 import MainLayout from '../layouts/MainLayout.astro';
 import HelpCenterOptions from '../components/home/HelpCenterOptions.astro';
 import DailyTools from '../components/home/DailyTools.astro';

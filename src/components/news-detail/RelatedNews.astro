@@ -1,0 +1,74 @@
+---
+//@ts-nocheck
+/**
+ * RelatedNews
+ * -----------
+ * Displays a grid of related news cards.
+ *
+ * Responsibilities:
+ * - Render a list of related news items.
+ * - Gracefully handle empty or missing data (returns null if no items).
+ * - Provide accessible links and optimized media rendering.
+ *
+ * Data expectations:
+ * - `relatedNews` must be an array of normalized news objects.
+ * - Each item may include:
+ *   - slug (string)
+ *   - title (string)
+ *   - category { label, slug } | null
+ *   - media { url, thumbnail, alt } | null
+ *
+ * Notes:
+ * - Uses the thumbnail when available, falling back to the original image.
+ * - Category links route to the category listing page.
+ * - Images are lazy-loaded and async-decoded for performance.
+ */
+import "./RelatedNews.css";
+
+const { relatedNews } = Astro.props;
+
+if (!relatedNews || relatedNews.length === 0) {
+  return null;
+}
+---
+
+<section class="related-news">
+  <h2 class="related-news__title">Noticias relacionadas</h2>
+
+  <div class="related-news__grid">
+    {
+      relatedNews.map((news) => (
+        <article class="related-news__card">
+          <a
+            href={`/noticias/${news.slug}`}
+            class="related-news__link"
+            aria-label={`Leer noticia: ${news.title}`}
+          />
+
+          {news.media ? (
+            <img
+              src={news.media.thumbnail || news.media.url}
+              alt={news.media.alt || news.title}
+              class="related-news__image"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="related-news__image related-news__image--placeholder" />
+          )}
+
+          {news.category && (
+            <a
+              href={`/noticias/categoria/${news.category}`}
+              class="related-news__category"
+            >
+              {news.category}
+            </a>
+          )}
+
+          <h3 class="related-news__headline">{news.title}</h3>
+        </article>
+      ))
+    }
+  </div>
+</section>

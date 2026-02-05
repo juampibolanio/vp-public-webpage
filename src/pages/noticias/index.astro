@@ -1,12 +1,166 @@
 ---
+// @ts-nocheck
+/**
+ * News Index Page
+ * ---------------
+ * Entry point for the news section.
+ *
+ * Responsibilities:
+ * - Fetch and render the featured news item.
+ * - Fetch and render a paginated list of news.
+ * - Build breadcrumb navigation based on the current page.
+ * - Compose the page layout using reusable components.
+ *
+ * Rendering strategy:
+ * - prerender disabled to support server-side pagination via query params.
+ * - Data is fetched at request time using the news service layer.
+ *
+ * Data flow:
+ * - getNews(): retrieves normalized news data from Strapi.
+ * - Featured news: first item of page 1 (pageSize = 1).
+ * - News list: paginated, driven by the "page" query parameter.
+ *
+ * Layout:
+ * - MainLayout provides global structure (header, footer).
+ * - Main content column contains:
+ *   - Breadcrumb navigation
+ *   - Page title
+ *   - Section description
+ *   - Featured news
+ *   - News grid
+ *   - Pagination controls
+ * - Sidebar is displayed only on desktop screens.
+ *
+ * Notes:
+ * - No UI logic is embedded here; all rendering is delegated to components.
+ * - Pagination state is derived exclusively from the URL.
+ */
+export const prerender = false;
+
+import NewsFeatured from "../../components/news/NewsFeatured.astro";
+import NewsList from "../../components/news/NewsList.astro";
+import Pagination from "../../components/news/Pagination.astro";
 import Sidebar from "../../components/shared/Sidebar.astro";
 import TitleBarTopPage from "../../components/shared/TitleBarTopPage.astro";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
+import { getNews } from "../../services/news.service";
 
+/* to get a news story to be featured */
+const { news: featuredResponse } = await getNews({
+  page: 1,
+  pageSize: 1,
+});
 
+const featuredNews = featuredResponse[0] || null;
+
+/* detect current page number for pagination */
+const pageParam = Astro.url.searchParams.get("page");
+const currentPage = pageParam ? Number(pageParam) : 1;
+
+/* get news to list */
+const { news: listNews, pagination } = await getNews({
+  page: currentPage,
+  pageSize: 4,
+});
+
+/* set items for the breadcrumb navigation */
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Noticias", href: "/noticias" },
+  { label: `Página ${currentPage}`, href: null },
+];
 ---
 
 <MainLayout>
+  <div class="news-layout">
+    <div class="news-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
     <TitleBarTopPage title={"Todas las noticias"} />
-    <Sidebar />
+
+    <div class="news-page-wrapper">
+      <div class="news-page__content">
+        <div class="news-page-description">
+          <p>Acceda a la última información sobre tus derechos, actividades, comunidades y mucho más. Descubre las últimas novedades y mantente al día con todo lo que necesitas saber.</p>
+        </div>
+
+        <div class="news-main">
+          <NewsFeatured news={featuredNews} />
+        </div>
+
+        <div class="news-grid">
+          <NewsList news={listNews} />
+        </div>
+
+        <Pagination
+          currentPage={pagination.page}
+          totalPages={pagination.pageCount}
+        />
+      </div>
+
+      <aside class="news-sidebar">
+        <Sidebar />
+      </aside>
+    </div>
+  </div>
+
+  <style>
+    .news-page-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+
+    .news-layout__header {
+      display: flex;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-sm) 0;
+      padding-left: var(--space-sm);
+    }
+
+    .news-page__content {
+      flex: 1;
+      max-width: 800px;
+
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .news-page-description p {
+      font-size: var(--font-size-lg);
+      color: #000;
+      line-height: 1.6;
+    }
+
+    .news-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .news-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 900px) {
+      .news-page-wrapper {
+        flex-direction: column;
+      }
+
+      .news-sidebar {
+        display: none;
+      }
+    }
+  </style>
 </MainLayout>

@@ -1,0 +1,69 @@
+---
+import { formatDate } from "../../utils/date";
+import "./NewsFeatured.css";
+
+const { news } = Astro.props;
+
+const { title, slug, excerpt, category, publishedDate, media, author } = news;
+
+const formattedDate = formatDate(publishedDate);
+---
+
+<section class="featured-new">
+  <div class="featured-new__container">
+    <a href={`/noticias/${slug}`} class="featured-new__image-wrapper">
+      {
+        media && (
+          <img
+            class="featured-new__image"
+            src={media.url}
+            alt={media.alt || title}
+            loading="eager"
+            decoding="async"
+          />
+        )
+      }
+    </a>
+
+    <div class="featured-new__meta">
+      <a href={`/noticias/categoria/${category}`} class="meta__category">
+        {category}
+      </a>
+      <span class="news-item__meta-divider"></span>
+      <span class="meta__date">
+        {formattedDate}
+      </span>
+    </div>
+
+    <a href={`/noticias/${slug}`} class="featured-new__content">
+      <!-- esto debe dirigir al detalle de la noticia -->
+      <h3 class="content__title">
+        {title}
+      </h3>
+
+      <p class="content__excerpt">
+        {excerpt}
+      </p>
+    </a>
+
+    <div class="featured-new__author">
+      {
+        author.avatar && (
+          <div class="author__avatar-wrapper">
+            <img
+              class="author__avatar"
+              src={author.avatar.url}
+              alt={author.avatar.alt}
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+
+      <div class="author__info">
+        <span class="author__name">{author.name}</span>
+        <span class="author__publication-date">{formattedDate}</span>
+      </div>
+    </div>
+  </div>
+</section>

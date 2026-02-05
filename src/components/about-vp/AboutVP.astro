@@ -4,6 +4,7 @@ import logoIcon from "../../assets/home-icon.webp";
 import { Icon } from "astro-icon/components";
 import miriamPhoto from "../../assets/miriam.webp"; 
 import marceloPhoto from "../../assets/marcelo.webp";
+import BroadcastSchedules from '../shared/BroadcastSchedules.astro';
 
 const editorialValues = [
     {
@@ -134,19 +135,6 @@ const teamMembers = [
     </div>
 </section>
 
-<!-- REEMPLAZAR POR COMPONENTE -->
 <div class="emission-footer">
-    <div class="emission-content">
-        <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="emission-logo" />
-        <div class="emission-text">
-            <h4 class="emission-title">Horarios de emisión</h4>
-            <div class="emission-info">
-                <Icon name="mdi:arrow-right-thick" class="arrow-icon" />
-                <p>
-                    Domingos de 8 a 10hs <br />
-                    <a href="https://www.radiosudamericana.com" target="_blank">www.radiosudamericana.com</a>
-                </p>
-            </div>
-        </div>
-    </div>
+    <BroadcastSchedules />
 </div>

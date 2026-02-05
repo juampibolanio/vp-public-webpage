@@ -1,5 +1,5 @@
 export const prerender = false;
-import { sendContactEmail } from '../../services/email.service.js';
+import { sendContactEmail } from './email.service.js';
 
 export const POST = async ({ request }) => {
     try {

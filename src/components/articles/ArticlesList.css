@@ -1,0 +1,23 @@
+.article-list {
+  width: 100%;
+}
+
+.article-list__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-xl);
+}
+
+@media (max-width: 1024px) {
+  .article-list__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+}
+
+@media (max-width: 640px) {
+  .article-list__grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+}

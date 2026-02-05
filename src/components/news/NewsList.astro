@@ -1,0 +1,30 @@
+---
+/**
+ * NewsList
+ *
+ * Renders a grid/list of news items.
+ *
+ * Responsibilities:
+ * - Receive an array of news items.
+ * - Render a limited subset for layout consistency.
+ *
+ * Props:
+ * - news: Array of normalized news objects.
+ *
+ * Notes:
+ * - Limits rendering to the first 4 items.
+ * - Delegates item rendering to NewsItem.
+ */
+import NewsItem from './NewsItem.astro';
+import './NewsList.css';
+
+const { news } = Astro.props;
+
+const items = Array.isArray(news) ? news.slice(0, 4) : [];
+---
+
+<section class="news-list">
+    {items.map((item) => (
+        <NewsItem news={item}/>
+    ))}
+</section>

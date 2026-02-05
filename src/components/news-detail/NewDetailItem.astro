@@ -1,0 +1,161 @@
+---
+/**
+ * NewsDetailItem
+ *
+ * Renders the full detail view of a single news article.
+ *
+ * Responsibilities:
+ * - Display category navigation and back link.
+ * - Render title, excerpt, author info, and publish date.
+ * - Provide text-to-speech accessibility for article content.
+ * - Render media gallery (slider) when media is available.
+ * - Render rich text content from the CMS.
+ * - Provide social sharing (WhatsApp, Facebook).
+ * - Display related news and broadcast schedules.
+ *
+ * Props:
+ * - news: normalized news object with full content.
+ * - relatedNews: array of normalized related news objects.
+ *
+ * Notes:
+ * - Media slider is loaded client-side on visibility.
+ * - Text-to-speech is loaded client-side for accessibility.
+ * - Plain text is derived from RichText blocks for TTS.
+ * - Share URLs are generated dynamically from the current page URL.
+ */
+
+// @ts-nocheck
+import "./NewDetailItem.css";
+import { Icon } from "astro-icon/components";
+import MediaSlider from "../../islands/MediaSlider/MediaSlider";
+import RelatedNews from "./RelatedNews.astro";
+import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
+import RichText from "../shared/RichText.astro";
+import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech.jsx";
+
+const { news, relatedNews } = Astro.props;
+
+const sliderItems = Array.isArray(news.media)
+  ? news.media.map((media: any) => ({
+      type: "image",
+      src: media.url,
+      alt: media.alt || news.title,
+    }))
+  : [];
+
+// extracting plain text from RichText
+const plainTextContent = Array.isArray(news.content)
+  ? news.content
+      .map((block) => block.children?.map((child) => child.text).join(" "))
+      .join("\n")
+  : "";
+
+// share options
+const tituloNoticia = news.title;
+const urlNoticia = Astro.url.href;
+const mensaje = `${tituloNoticia} ${urlNoticia}`;
+
+const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(urlNoticia)}`;
+---
+
+<section class="new-detail-wrapper">
+  <header class="new-detail__items">
+    {
+      news.category && (
+        <a
+          class="new-detail__button button--category"
+          href={`/noticias/categoria/${news.category.slug}`}
+        >
+          {news.category.label}
+        </a>
+      )
+    }
+
+    <a class="new-detail__button" href="/noticias"> Volver </a>
+  </header>
+
+  <article class="new-detail__content">
+    <div class="new-detail__header">
+      <h1 class="new-detail__title">{news.title}</h1>
+
+      <p class="new-detail__excerpt">{news.excerpt}</p>
+
+      <div class="new-detail__meta-wrapper">
+        {
+          news.author && (
+            <div class="meta-info">
+              {news.author.avatar && (
+                <div class="author__image-wrapper">
+                  <img
+                    class="author__image"
+                    src={news.author.avatar.url}
+                    alt={news.author.avatar.alt}
+                  />
+                </div>
+              )}
+
+              <div class="author__info-wrapper">
+                <span class="author__name">Por: {news.author.name}</span>
+
+                <span class="author__published-date">
+                  {new Date(news.publishedDate).toLocaleDateString("es-AR", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </span>
+              </div>
+            </div>
+          )
+        }
+
+        <TextToSpeech
+          client:load
+          text={`${news.title}. ${news.excerpt}. ${plainTextContent}`}
+        />
+      </div>
+    </div>
+
+    <div class="new-detail__body">
+      {
+        sliderItems.length > 0 && (
+          <MediaSlider client:visible items={sliderItems} />
+        )
+      }
+
+      <article class="news-detail__article">
+        <RichText content={news.content} />
+      </article>
+
+      <div class="new-detail__share">
+        <span class="share__title">Comparte esta noticia</span>
+        <div class="share-buttons-wrapper">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="share-button button--whatsapp"
+          >
+            <Icon class="share-icon" name="mdi:whatsapp" size={32} />
+            <span class="share-text">Whatsapp</span>
+          </a>
+
+          <a
+            href={facebookUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="share-button button--facebook"
+          >
+            <Icon class="share-icon" name="mdi:facebook" size={32} />
+            <span class="share-text">Facebook</span>
+          </a>
+        </div>
+      </div>
+
+      <RelatedNews relatedNews={relatedNews} />
+
+      <BroadcastSchedules />
+    </div>
+  </article>
+</section>

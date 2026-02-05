@@ -1,12 +1,20 @@
 ---
-import './TitleBarTopPage.css'
+/**
+ * TitleBarTopPage
+ *
+ * Renders a page title bar used at the top of section pages.
+ *
+ * Props:
+ * - title: string — Page title to display
+ */
+
+import './TitleBarTopPage.css';
 
 const { title } = Astro.props;
-
 ---
 
-<div class="bar-container">
-    <h2 class="bar__title">
-        {title}
-    </h2>
+<div class="title-bar">
+    <div class="title-bar__container">
+        <h2 class="title-bar__title">{title}</h2>
+    </div>
 </div>

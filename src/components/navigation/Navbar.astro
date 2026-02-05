@@ -1,4 +1,21 @@
 ---
+/**
+ * Navbar
+ *
+ * Main site navigation.
+ *
+ * Features:
+ * - Responsive navigation with mobile toggle.
+ * - Dropdown menus for grouped sections.
+ * - Accessible structure with semantic navigation roles.
+ *
+ * Behavior:
+ * - Mobile menu toggles via hamburger button.
+ * - Dropdowns work as accordions on smaller screens.
+ *
+ * Note:
+ * Links are progressively enabled as sections are implemented.
+ */
 import "./Navbar.css";
 ---
 
@@ -54,13 +71,18 @@ import "./Navbar.css";
         </div>
       </div>
 
-      <a class="navbar__link" href="#">Noticias</a>
+      <a class="navbar__link" href="/noticias">Noticias</a>
       <a class="navbar__link" href="/contacto">Contacto</a>
     </div>
   </div>
 </nav>
 
 <script>
+  /**
+   * Navbar interactions:
+   * - Toggle mobile menu visibility.
+   * - Toggle dropdown sections as accordions.
+   */
   const toggle = document.querySelector(".navbar__toggle");
   const links = document.querySelector(".navbar__links");
 
@@ -76,5 +98,3 @@ import "./Navbar.css";
     });
   });
 </script>
-
-<!-- Se deben añadir los links a medida que se van creando las demás secciones. -->

@@ -19,6 +19,10 @@ img {
   display: block;
 }
 
+a {
+  text-decoration: none;
+}
+
 /* lists */
 ul,
 ol {

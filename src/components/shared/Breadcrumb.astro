@@ -1,0 +1,43 @@
+---
+/**
+ * Breadcrumb
+ *
+ * Renders an accessible breadcrumb navigation trail.
+ *
+ * Props:
+ * - items: Array of breadcrumb objects
+ *   {
+ *     label: string,   // Text displayed
+ *     href?: string    // URL (optional for last/current item)
+ *   }
+ *
+ * Behavior:
+ * - The last item is rendered as plain text with aria-current="page"
+ * - Previous items are rendered as links
+ */
+
+//@ts-nocheck
+import './Breadcrumb.css';
+
+const { items = [] } = Astro.props;
+---
+
+<nav class="breadcrumb" aria-label="Breadcrumb">
+  <ol class="breadcrumb__list">
+    {
+      items.map((item, index) => {
+        const isLast = index === items.length - 1;
+
+        return (
+          <li class="breadcrumb__item">
+            {isLast ? (
+              <span aria-current="page">{item.label}</span>
+            ) : (
+              <a href={item.href}>{item.label}</a>
+            )}
+          </li>
+        );
+      })
+    }
+  </ol>
+</nav>

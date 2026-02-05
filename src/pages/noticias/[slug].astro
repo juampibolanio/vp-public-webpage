@@ -1,0 +1,126 @@
+---
+// @ts-nocheck
+/**
+ * News Detail Page
+ * ----------------
+ * Dynamic page for rendering a single news article.
+ *
+ * Responsibilities:
+ * - Resolve the news slug from the URL.
+ * - Fetch the full news item from the API.
+ * - Fetch related news based on the article category.
+ * - Build contextual breadcrumb navigation.
+ * - Compose the detail layout with main content and sidebar.
+ *
+ * Rendering strategy:
+ * - prerender disabled to allow dynamic routing by slug.
+ * - Data is fetched at request time via the news service layer.
+ *
+ * Data flow:
+ * - getNewBySlug(): retrieves the full news item.
+ * - getRelatedNews(): retrieves a limited list of related articles,
+ *   excluding the current one and optionally filtering by category.
+ *
+ * Error handling:
+ * - If the news item is not found, the user is redirected to /404.
+ *
+ * Layout:
+ * - MainLayout provides global layout elements.
+ * - Main content column:
+ *   - Breadcrumb navigation
+ *   - News detail component (article + media)
+ * - Sidebar is rendered on desktop and stacked on mobile.
+ *
+ * Notes:
+ * - This page contains no presentation logic.
+ * - All rendering and UI concerns are delegated to child components.
+ */
+export const prerender = false;
+
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import NewDetailItem from "../../components/news-detail/NewDetailItem.astro";
+import Sidebar from "../../components/shared/Sidebar.astro";
+import { getNewBySlug, getRelatedNews } from "../../services/news.service";
+
+const { slug } = Astro.params;
+
+const news = await getNewBySlug(slug);
+
+if (!news) {
+  return Astro.redirect("/404");
+}
+
+/* Get a list of related news by category */
+const relatedNews = await getRelatedNews({
+  category: news.category,
+  excludeSlug: news.slug,
+  limit: 3,
+});
+
+/* set items for the breadcrumb navigation */
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Noticias", href: "/noticias" },
+  news.category
+    ? {
+        label: news.category.label,
+        href: `/noticias/categoria/${news.category.slug}`,
+      }
+    : null,
+  { label: news.title, href: null },
+].filter(Boolean);
+---
+
+<MainLayout>
+  <div class="new-detail-layout">
+    <div class="new-detail-content">
+      <Breadcrumb items={breadcrumbItems} />
+
+      <NewDetailItem news={news} relatedNews={relatedNews} />
+    </div>
+
+    <aside class="new-detail-sidebar">
+      <Sidebar />
+    </aside>
+  </div>
+</MainLayout>
+
+<style>
+  .new-detail-layout {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .new-detail-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 1024px) {
+    .new-detail-layout {
+      flex-direction: column;
+      max-width: 100%;
+      padding: 1.5rem 1rem;
+    }
+
+    .new-detail-content {
+      width: 100%;
+    }
+
+    .new-detail-sidebar {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .new-detail-layout {
+      padding: 1rem;
+    }
+  }
+</style>
