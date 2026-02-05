@@ -1,13 +1,12 @@
 ---
+//@ts-nocheck
 import { Icon } from "astro-icon/components";
 import ContentHubCard from "../../components/family-section/ContentHubCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getContentHubsByCategory } from "../../services/content-hub.service";
 
-const gestionDependencia = await getContentHubsByCategory(
-  "GESTION_DEPENDENCIA",
-);
-console.log(gestionDependencia);
+const gestionDependenciaItems = await getContentHubsByCategory("GESTION_DEPENDENCIA");
+const vidaSocialItems = await getContentHubsByCategory("VIDA_SOCIAL");
 ---
 
 <MainLayout>
@@ -22,7 +21,7 @@ console.log(gestionDependencia);
       </div>
 
       <div class="content-hub__body">
-        <div>aca van el mapeo de todas las cards :()</div>
+        {gestionDependenciaItems.map((item) => <ContentHubCard {...item} />)}
       </div>
     </div>
 
@@ -35,7 +34,9 @@ console.log(gestionDependencia);
         </p>
       </div>
 
-      <div class="content-hub__body"></div>
+      <div class="content-hub__body">
+        {vidaSocialItems.map((item) => <ContentHubCard {...item} />)}
+      </div>
     </div>
 
     <div class="help-section">
@@ -70,6 +71,7 @@ console.log(gestionDependencia);
   .content-hub__section {
     display: flex;
     flex-direction: column;
+    gap: var(--space-md);
   }
 
   .content-hub__header {
@@ -85,7 +87,14 @@ console.log(gestionDependencia);
   }
 
   .content-hub__description {
-    font-size: var(--font-size-md);
+    font-size: var(--font-size-lg);
+    max-width: 1100px;
+  }
+
+  .content-hub__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxxl);
   }
 
   .help-section {
