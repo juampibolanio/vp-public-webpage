@@ -45,30 +45,25 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;       
+  display: block;     
+  object-position: center;  
 }
 
 .article__meta-info {
   display: flex;
-  align-items: center;
-  gap: var(--space-xs);
+  flex-direction: column;
+  gap: var(--space-xxs);
 }
 
 .meta-category {
-  font-size: var(--font-size-xs);
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--color-alternative);
 }
 
-.meta-divider {
-  width: 2px;
-  height: 18px;
-  background-color: var(--color-alternative);
-}
-
 .meta-date {
-  font-size: var(--font-size-xs);
+  font-size: 0.8rem;
   font-weight: 600;
   text-transform: uppercase;
   color: var(--color-alternative);
