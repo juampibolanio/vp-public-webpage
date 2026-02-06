@@ -25,7 +25,7 @@ const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTU
       </div>
 
       <div class="content-hub__body">
-        { tramitesDerechos.map((item) => <ContentHubCard {...item}/>)}
+        { tramitesDerechos.map((item) => <ContentHubCard {...item} basePath="/adultos-mayores"/>)}
       </div>
     </div>
 
@@ -39,7 +39,7 @@ const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTU
       </div>
 
       <div class="content-hub__body">
-        { saludBienestar.map((item) => <ContentHubCard {...item}/>)}
+        { saludBienestar.map((item) => <ContentHubCard {...item} basePath="/adultos-mayores"/>)}
       </div>
     </div>
 
@@ -53,7 +53,7 @@ const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTU
       </div>
 
       <div class="content-hub__body">
-        { participacionCultura.map((item) => <ContentHubCard {...item}/>)}
+        { participacionCultura.map((item) => <ContentHubCard {...item} basePath="adultos-mayores"/>)}
       </div>
     </div>
 
