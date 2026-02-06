@@ -1,0 +1,91 @@
+---
+//@ts-nocheck
+import { Icon } from "astro-icon/components";
+import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech";
+import "./ArticleDetail.css";
+import MediaSlider from "../../islands/MediaSlider/MediaSlider";
+import RichText from "../shared/RichText.astro";
+import Sponsors from "../home/Sponsors.astro";
+import FontSizeControls from "../../islands/FontSizeControls/FontSizeControls";
+
+const { articles } = Astro.props;
+
+const sliderItems = Array.isArray(articles.media)
+  ? articles.media.map((media) => ({
+      type: "image",
+      src: media.url,
+      alt: media.alt || articles.title,
+    }))
+  : [];
+
+const plainTextContent = Array.isArray(articles.content)
+  ? articles.content
+      .map((block) => block.children?.map((child) => child.text).join(" "))
+      .join("\n")
+  : "";
+---
+
+<section class="article-detail__wrapper">
+
+  <article class="article-detail__content">
+    <div class="article-detail__header">
+      <div class="article-header__content">
+        <h1 class="article-header__title">{articles.title}</h1>
+        <p class="article-header__excerpt">{articles.excerpt}</p>
+      </div>
+
+      <div class="article-header__meta-buttons">
+        <div class="meta-buttons__author">
+          <div class="author-image-wrapper">
+            <img
+              class="author-image"
+              src={articles.author.avatar.url}
+              alt={articles.author.avatar.alt || articles.author.name}
+            />
+          </div>
+          <div class="author__info-wrapper">
+            <span class="author__info-text">Por:</span>
+            <span class="author__info-name">{articles.author.name}</span>
+            <span class="date-listening__date">
+              Publicado el
+              {
+                new Date(articles.publishedDate).toLocaleDateString("es-AR", {
+                  day: "2-digit",
+                  month: "long",
+                  year: "numeric",
+                })
+              }
+            </span>
+          </div>
+        </div>
+
+        <div class="meta-buttons__meta-info">
+          <div class="meta-buttons__date-listening">
+            <TextToSpeech
+              client:load
+              text={`${articles.title}. ${articles.excerpt}. ${plainTextContent}`}
+            />
+          </div>
+
+          <div class="meta-buttons__buttons">
+            <FontSizeControls client:load />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="article-detail__body">
+      <article class="article-detail__article">
+        <RichText content={articles.content} />
+      </article>
+
+      <div class="article-detail__slider">
+        {
+          sliderItems.length > 0 && (
+            <MediaSlider client:visible items={sliderItems} />
+          )
+        }
+      </div>
+    </div>
+  </article>
+</section>
