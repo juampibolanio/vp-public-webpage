@@ -1,0 +1,153 @@
+---
+//@ts-nocheck
+export const prerender = false;
+import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
+import TitleBarTopPage from "../../../components/shared/TitleBarTopPage.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import Sidebar from "../../../components/shared/Sidebar.astro";
+import Pagination from "../../../components/news/Pagination.astro";
+import FeaturedArticle from "../../../components/articles/FeaturedArticle.astro";
+import ArticlesList from "../../../components/articles/ArticlesList.astro";
+import { getContentHubBySlug } from "../../../services/content-hub.service";
+import { getArticlesByHubSlug } from "../../../services/articles.service";
+
+const { hub } = Astro.params;
+
+const contentHubInfo = await getContentHubBySlug(hub);
+
+if (!contentHubInfo) {
+  throw new Error("Content hub not found");
+}
+
+const pageParam = Astro.url.searchParams.get("page");
+const currentPage = pageParam ? Number(pageParam) : 1;
+
+const featured = await getArticlesByHubSlug(hub, {
+  page: 1,
+  pageSize: 1,
+});
+
+const featuredArticle = featured.articles[0];
+
+const { articles, pagination } = await getArticlesByHubSlug(hub, {
+  page: currentPage,
+  pageSize: 6,
+});
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: contentHubInfo.title, href: `/familias/${contentHubInfo.slug}` },
+  { label: `${currentPage}`, href: null },
+];
+---
+
+<MainLayout>
+  <div class="articles-layout">
+    <div class="articles-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
+    <TitleBarTopPage title={contentHubInfo.title} />
+
+    <div class="articles-layout__wrapper">
+      <div class="articles-layout__description">
+        <p class="articles-layout__text">
+          {contentHubInfo.description}
+        </p>
+      </div>
+
+      <div class="articles-layout__featured">
+        <FeaturedArticle featArticle={featuredArticle} />
+      </div>
+
+      <div class="articles-layout__body">
+        <div class="articles-layout__content">
+          <div class="articles-layout__grid">
+            <ArticlesList articles={articles} />
+          </div>
+
+          <Pagination
+            currentPage={pagination.page}
+            totalPages={pagination.pageCount}
+            basePath={`/familias/${contentHubInfo.slug}`}
+          />
+        </div>
+
+        <aside class="articles-layout__sidebar">
+          <Sidebar />
+        </aside>
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .articles-layout__header {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: var(--space-sm);
+  }
+
+  .articles-layout__wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xxl) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+  }
+
+  .articles-layout__description {
+    max-width: 720px;
+  }
+
+  .articles-layout__text {
+    font-size: var(--font-size-md);
+    color: var(--color-text-secondary);
+  }
+
+  .articles-layout__featured {
+    width: 100%;
+  }
+
+  .articles-layout__body {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xl);
+    width: 100%;
+  }
+
+  .articles-layout__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .articles-layout__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+  }
+
+  .articles-layout__sidebar {
+    width: 300px;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 1024px) {
+    .articles-layout__sidebar {
+      width: 260px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .articles-layout__body {
+      flex-direction: column;
+    }
+
+    .articles-layout__sidebar {
+      display: none;
+    }
+  }
+</style>
