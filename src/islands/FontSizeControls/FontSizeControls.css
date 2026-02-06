@@ -1,0 +1,27 @@
+.font-size-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.font-size-controls__button {
+  padding: var(--space-xs) var(--space-xxxl);
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-radius: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 500;
+}
+
+.font-size-controls__button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .font-size-controls {
+        flex-direction: row;
+    }
+}
