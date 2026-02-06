@@ -1,17 +1,15 @@
 ---
+//@ts-nocheck
 import ArticleItem from "./ArticleItem.astro";
 import "./ArticlesList.css";
 
+const { articles } = Astro.props;
+
+const items = Array.isArray(articles) ? articles.slice(0, 6) : [];
 ---
 
 <section class="article-list">
   <div class="article-list__grid">
-    <ArticleItem />
-    <ArticleItem />
-    <ArticleItem />
-    <ArticleItem />
-    <ArticleItem />
-    <ArticleItem />
-
+    {items.map((article) => <ArticleItem articles={article} />)}
   </div>
 </section>
