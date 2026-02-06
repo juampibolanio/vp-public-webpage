@@ -1,0 +1,28 @@
+---
+import "./ContentHubCard.css";
+
+const { title, description, icon, slug, basePath = "" } = Astro.props;
+
+const href = `${basePath}/${slug}`;
+---
+
+<article class="content-hub-card">
+  <div class="content-hub__image-wrapper">
+    <img
+      class="content-hub__icon"
+      src={icon.url}
+      alt={icon.alt || icon.title || ""}
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+
+  <div class="content-hub__content">
+    <h3 class="content-hub__title">{title}</h3>
+    <p class="content-hub__description">{description}</p>
+  </div>
+
+  <a href={href} class="content-hub__button">
+    <span class="content-hub__button-text">Ver</span>
+  </a>
+</article>
