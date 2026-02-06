@@ -1,43 +1,52 @@
 ---
-import './FeaturedArticle.css'
+import { formatDate } from "../../utils/date";
+import "./FeaturedArticle.css";
 
+const { featArticle } = Astro.props;
+
+const { title, slug, excerpt, category, publishedDate, cover, author } =
+  featArticle;
+
+const formattedDate = formatDate(publishedDate);
 ---
 
 <section class="article-featured">
-    <div class="article-featured__content">
-        <div class="article__header">
-            <img class="article__image" src="https://www.radiosudamericana.com/notix/multimedia/imagenes/fotos/2025-05-29/924525.jpeg_nota.jpeg" alt=""
-            
-            >
-            <div class="article__author-info">
-                <span class="author-info__name">Mirian Blanchard</span>
-                <span class="author-info__role">Redactora</span>
-            </div>
-        </div>
-
-        <div class="article__body">
-            <h3 class="article__title">Recomendaciones para viajar seguros</h3>
-
-            <p class="article__description">Se acercan las vacaciones y muchos optamos el viaje de vacaciones en auto. Por ello es muy importante contar con toda información pertinente y las medidas de seguridad adecuadas para que sea un viaje seguro y no tengamos dolores de cabeza con alguna contingencia.</p>
-        </div>
-
-        <div class="article__footer">
-            <div class="article__meta">
-                <span class="article__category">Categoria</span>
-                <span class="article__divider"></span>
-                <span class="article__date">28 de Febrero de 2025</span>
-            </div>
-
-            <div class="article__read-button">
-                <span class="article__button">Leer</span>
-            </div>
-        </div>
+  <div class="article-featured__content">
+    <div class="article__header">
+      <img
+        class="article__image"
+        src={author.avatar.url}
+        alt={author.avatar.alt || author.name}
+      />
+      <div class="article__author-info">
+        <span class="author-info__text">Por</span>
+        <span class="author-info__name">{author.name}</span>
+      </div>
     </div>
 
-    <div class="article-featured__media">
-        <a class="article__image-wrapper" href=""> <!-- debe enviar al detalle del articulo -->
-            <img class="article__image" src="https://st5.depositphotos.com/62628780/65384/i/380/depositphotos_653848754-stock-photo-family-road-trips-fun-two.jpg" alt="foto familiar">
-        </a>
+    <div class="article__body">
+      <h3 class="article__title">{title}</h3>
+
+      <p class="article__description">{excerpt}</p>
     </div>
 
+    <div class="article__footer">
+      <div class="article__meta">
+        <span class="article__category">{category}</span>
+        <span class="article__divider"></span>
+        <span class="article__date">{formattedDate}</span>
+      </div>
+
+      <a href="#" class="article__read-button">
+        <span class="article__button">Leer</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="article-featured__media">
+    <a class="article__image-wrapper" href=`#`>
+      <!-- debe enviar al detalle del articulo -->
+      <img class="article__image" src={cover.url} alt={cover.alt || title} />
+    </a>
+  </div>
 </section>

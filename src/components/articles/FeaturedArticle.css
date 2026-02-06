@@ -33,7 +33,6 @@
 .article__author-info {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xxs);
 }
 
 .author-info__name {
@@ -42,7 +41,7 @@
     color: var(--color-text-primary);
 }
 
-.author-info__role {
+.author-info__text {
     font-size: var(--font-size-xs);
     color: var(--color-text-secondary);
 }
