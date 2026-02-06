@@ -50,12 +50,17 @@
     margin-bottom: var(--space-xl);
 }
 
+.article__body a {
+    text-decoration: none;
+}
+
 .article__title {
     font-size: var(--font-size-xxl);
     font-weight: 700;
     line-height: 1.2;
     color: var(--color-text-primary);
     margin: 0;
+    text-decoration: none;
 }
 
 .article__description {

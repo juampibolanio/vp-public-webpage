@@ -2,7 +2,7 @@
 import { formatDate } from "../../utils/date";
 import "./FeaturedArticle.css";
 
-const { featArticle } = Astro.props;
+const { featArticle, basePath } = Astro.props;
 
 const { title, slug, excerpt, category, publishedDate, cover, author } =
   featArticle;
@@ -12,7 +12,7 @@ const formattedDate = formatDate(publishedDate);
 
 <section class="article-featured">
   <div class="article-featured__content">
-    <div class="article__header">
+    <a href=`${basePath}/${slug}` class="article__header">
       <img
         class="article__image"
         src={author.avatar.url}
@@ -22,10 +22,13 @@ const formattedDate = formatDate(publishedDate);
         <span class="author-info__text">Por</span>
         <span class="author-info__name">{author.name}</span>
       </div>
-    </div>
+    </a>
 
     <div class="article__body">
-      <h3 class="article__title">{title}</h3>
+
+      <a href=`${basePath}/${slug}`>
+        <h3 class="article__title">{title}</h3>
+      </a>
 
       <p class="article__description">{excerpt}</p>
     </div>
@@ -37,7 +40,7 @@ const formattedDate = formatDate(publishedDate);
         <span class="article__date">{formattedDate}</span>
       </div>
 
-      <a href="#" class="article__read-button">
+      <a href=`${basePath}/${slug}` class="article__read-button">
         <span class="article__button">Leer</span>
       </a>
     </div>
