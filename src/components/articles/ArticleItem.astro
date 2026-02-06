@@ -2,9 +2,9 @@
 import { formatDate } from "../../utils/date";
 import "./ArticleItem.css";
 
-const { articles } = Astro.props;
+const { articles, href } = Astro.props;
 
-const { title, slug, excerpt, category, cover, publishedDate, author } =
+const { title, slug, excerpt, category, cover, publishedDate, author  } =
   articles;
 
 const formattedDate = formatDate(publishedDate);
@@ -27,7 +27,7 @@ const formattedDate = formatDate(publishedDate);
   </div>
 
   <div class="article__image-wrapper">
-    <a href="#" class="article__link">
+    <a href={href} class="article__link">
       <img
         class="article__image"
         src={cover.url}
@@ -46,13 +46,13 @@ const formattedDate = formatDate(publishedDate);
 
   <div class="article__body">
     <h3 class="article__body-title">
-      <a href="#" class="article__link article__link--title">
+      <a href={href} class="article__link article__link--title">
         {title}
       </a>
     </h3>
 
     <p class="article__body-description">
-      <a href="#" class="article__link article__link--excerpt">
+      <a href={href} class="article__link article__link--excerpt">
         {excerpt}
       </a>
     </p>
