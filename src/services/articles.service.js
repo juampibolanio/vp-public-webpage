@@ -1,5 +1,5 @@
 import { apiFetch } from "./api";
-import { normalizeArticleListItem } from "../utils/article-normalizer";
+import { normalizeArticleDetail, normalizeArticleListItem } from "../utils/article-normalizer";
 
 export async function getArticlesByHubSlug(
   hubSlug,
@@ -19,4 +19,18 @@ export async function getArticlesByHubSlug(
     articles: response.data.map(normalizeArticleListItem),
     pagination: response.meta.pagination,
   };
+}
+
+export async function getArticleBySlug(slug) {
+  const response = await apiFetch(
+    `/articles` +
+      `?filters[slug][$eq]=${slug}` +
+      `&populate[media]=true` +
+      `&populate[author][populate][avatar]=true`,
+  );
+
+  const article = response.data?.[0];
+  if (!article) return null;
+
+  return normalizeArticleDetail(article);
 }
