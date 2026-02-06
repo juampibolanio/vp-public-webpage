@@ -37,6 +37,7 @@ const options = [
     icon: "mdi:hail",
     image: optionImage1,
     alt: "Persona mayor",
+    link: "#"
   },
   {
     title: "Acompaño a un familiar",
@@ -45,6 +46,7 @@ const options = [
     icon: "mdi:people-group",
     image: optionImage2,
     alt: "Familia acompañando a una persona mayor",
+    link: "/familias"
   },
   {
     title: "Soy profesional",
@@ -53,6 +55,7 @@ const options = [
     icon: "mdi:person-tie",
     image: optionImage3,
     alt: "Profesional de la salud o área social",
+    link: "#"
   },
 ];
 ---
@@ -93,7 +96,7 @@ const options = [
           </div>
 
           <div class="option-card__actions">
-            <a href="#" class="option-card__button">
+            <a href={option.link} class="option-card__button">
               Ver recursos 
             </a>
           </div>

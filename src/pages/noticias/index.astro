@@ -83,7 +83,11 @@ const breadcrumbItems = [
     <div class="news-page-wrapper">
       <div class="news-page__content">
         <div class="news-page-description">
-          <p>Acceda a la última información sobre tus derechos, actividades, comunidades y mucho más. Descubre las últimas novedades y mantente al día con todo lo que necesitas saber.</p>
+          <p>
+            Acceda a la última información sobre tus derechos, actividades,
+            comunidades y mucho más. Descubre las últimas novedades y mantente
+            al día con todo lo que necesitas saber.
+          </p>
         </div>
 
         <div class="news-main">
@@ -97,6 +101,7 @@ const breadcrumbItems = [
         <Pagination
           currentPage={pagination.page}
           totalPages={pagination.pageCount}
+          basePath={`/noticias/`}
         />
       </div>
 
@@ -116,7 +121,6 @@ const breadcrumbItems = [
       margin: 0 auto;
       padding: 2rem 1.5rem;
     }
-
 
     .news-layout__header {
       display: flex;
