@@ -36,7 +36,7 @@
 .article__image-wrapper {
   width: 100%;
   aspect-ratio: 16 / 9; 
-  max-height: clamp(180px, 22vw, 280px);
+  max-height: clamp(180px, 22vw, 200px);
   overflow: hidden;
   border-radius: var(--radius-md);
 }
