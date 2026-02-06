@@ -119,13 +119,13 @@
     max-width: 32rem;
 }
 
-.article__image-wrapper {
+.article__featured-image-wrapper {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-.article-featured__media .article__image {
+.article-featured__media .article__featured-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
