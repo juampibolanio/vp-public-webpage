@@ -28,7 +28,7 @@
   color: var(--color-text-primary);
 }
 
-.author-info__role {
+.author-info__text {
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
 }

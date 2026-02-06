@@ -1,37 +1,37 @@
 ---
+import { formatDate } from "../../utils/date";
 import "./ArticleItem.css";
 
-const imageItem =
-  "https://vivirplenamente.com.ar/wp-content/uploads/2022/08/seguro-de-hogar.jpg";
+const { articles } = Astro.props;
 
-const authorImage =
-  "https://www.radiosudamericana.com/notix/multimedia/imagenes/fotos/2025-05-29/924525.jpeg_nota.jpeg";
+const { title, slug, excerpt, category, cover, publishedDate, author } =
+  articles;
 
-const href = "/articulos/cobertura-integral-hogar";
+const formattedDate = formatDate(publishedDate);
 ---
 
 <article class="article-item">
   <div class="article__author">
     <img
       class="article__author-image"
-      src={authorImage}
-      alt="Mirian Blanchard"
+      src={author.avatar.url}
+      alt={author.avatar.alt || author.name}
       loading="lazy"
       decoding="async"
     />
 
     <div class="article__author-info">
-      <span class="author-info__name">Mirian Blanchard</span>
-      <span class="author-info__role">Redactora</span>
+      <span class="author-info__text">Por</span>
+      <span class="author-info__name">{author.name}</span>
     </div>
   </div>
 
   <div class="article__image-wrapper">
-    <a href={href} class="article__link">
+    <a href="#" class="article__link">
       <img
         class="article__image"
-        src={imageItem}
-        alt="Cobertura Integral del Hogar"
+        src={cover.url}
+        alt={cover.alt || title}
         loading="lazy"
         decoding="async"
       />
@@ -39,22 +39,21 @@ const href = "/articulos/cobertura-integral-hogar";
   </div>
 
   <div class="article__meta-info">
-    <span class="meta-category">Categoría</span>
+    <span class="meta-category">{category}</span>
     <span class="meta-divider"></span>
-    <span class="meta-date">28 de febrero</span>
+    <span class="meta-date">{formattedDate}</span>
   </div>
 
   <div class="article__body">
     <h3 class="article__body-title">
-      <a href={href} class="article__link article__link--title">
-        Cobertura Integral del Hogar: ¿Qué alcance tiene?
+      <a href="#" class="article__link article__link--title">
+        {title}
       </a>
     </h3>
 
     <p class="article__body-description">
-      <a href={href} class="article__link article__link--excerpt">
-        Días atrás, en nuestra Ciudad, una pantalla gigante durante un show de
-        chamamé se desplomó sobre la artista que actuaba en el momento.
+      <a href="#" class="article__link article__link--excerpt">
+        {excerpt}
       </a>
     </p>
   </div>
