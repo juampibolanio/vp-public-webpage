@@ -1,0 +1,90 @@
+---
+import ArticleDetail from "../../../components/articles/ArticleDetail.astro";
+import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { getArticleBySlug } from "../../../services/articles.service";
+import { getContentHubBySlug } from "../../../services/content-hub.service";
+
+export const prerender = false;
+
+const { hub, slug } = Astro.params;
+
+const contentHubInfo = await getContentHubBySlug(hub);
+
+if (!contentHubInfo) {
+  throw new Error("Content hub not found");
+}
+const article = await getArticleBySlug(slug);
+
+if (!article) {
+  return Astro.redirect("/404");
+}
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Familias", href: "/familias" },
+  {
+    label: contentHubInfo.title,
+    href: `/familias/${contentHubInfo.slug}`,
+  },
+  {
+    label: article.title,
+    href: null,
+  },
+];
+---
+
+<MainLayout>
+  <div class="article-detail__layout">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="article-detail__items">
+      <span class="article-detail__button">
+        {article.category}
+      </span>
+
+      <a href={`/familias/${hub}`} class="article-detail__button button--back">
+        Volver
+      </a>
+
+      <!-- aca deberia redirigir al content hub tambien -->
+    </header>
+
+    <ArticleDetail articles={article} />
+  </div>
+</MainLayout>
+
+<style>
+  .article-detail__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* header buttons  */
+  .article-detail__items {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .article-detail__button {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--space-xs);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+
+  .button--category {
+    border-radius: var(--space-lg);
+  }
+</style>
