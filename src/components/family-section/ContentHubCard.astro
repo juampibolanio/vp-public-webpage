@@ -1,7 +1,7 @@
 ---
 import "./ContentHubCard.css";
 
-const { title, description, icon, href = "#" } = Astro.props;
+const { title, description, icon, slug } = Astro.props;
 ---
 
 <article class="content-hub-card">
@@ -20,7 +20,7 @@ const { title, description, icon, href = "#" } = Astro.props;
     <p class="content-hub__description">{description}</p>
   </div>
 
-  <a href={href} class="content-hub__button">
+  <a href={`/familias/${slug}`} class="content-hub__button">
     <span class="content-hub__button-text">Ver</span>
   </a>
 </article>
