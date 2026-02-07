@@ -1,4 +1,17 @@
 ---
+/**
+ * ContentHubCard
+ *
+ * Reusable card component representing a content hub entry.
+ *
+ * Responsibilities:
+ * - Displays hub icon, title, and short description.
+ * - Provides a clear call-to-action linking to the hub detail page.
+ *
+ * Data contract:
+ * - Expects normalized hub data (`title`, `description`, `icon`, `slug`).
+ * - `basePath` is optional and allows reuse across different sections.
+ */
 import "./ContentHubCard.css";
 
 const { title, description, icon, slug, basePath = "" } = Astro.props;

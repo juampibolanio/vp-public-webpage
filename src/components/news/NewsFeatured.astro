@@ -1,4 +1,20 @@
 ---
+/**
+ * NewsFeatured
+ *
+ * Featured news card used to highlight a primary article in listings.
+ *
+ * Responsibilities:
+ * - Displays a prominent image, category, publication date, and excerpt.
+ * - Acts as a primary entry point to the news detail page.
+ *
+ * Data contract:
+ * - Expects a normalized `news` object including media and author data.
+ *
+ * UX notes:
+ * - Uses eager loading for the featured image to prioritize LCP.
+ * - Author avatar rendering is conditional to avoid broken layouts.
+ */
 import { formatDate } from "../../utils/date";
 import "./NewsFeatured.css";
 
@@ -36,7 +52,6 @@ const formattedDate = formatDate(publishedDate);
     </div>
 
     <a href={`/noticias/${slug}`} class="featured-new__content">
-      <!-- esto debe dirigir al detalle de la noticia -->
       <h3 class="content__title">
         {title}
       </h3>
