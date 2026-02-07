@@ -1,4 +1,22 @@
 ---
+/**
+ * Adult Seniors – Content Hubs Page
+ *
+ * Page-level composition that groups multiple content hubs by category.
+ *
+ * Responsibilities:
+ * - Fetch content hubs from Strapi by predefined categories.
+ * - Organize hubs into thematic sections with contextual descriptions.
+ * - Reuse `ContentHubCard` for consistent presentation and navigation.
+ *
+ * Data notes:
+ * - Categories are resolved server-side at build/request time.
+ * - Assumes normalized hub data from `getContentHubsByCategory`.
+ *
+ * UX notes:
+ * - Sections are vertically stacked for readability.
+ * - Includes a final call-to-action block for direct user assistance.
+ */
 //@ts-nocheck
 import { Icon } from "astro-icon/components";
 import ContentHubCard from "../../components/shared/ContentHubCard.astro";

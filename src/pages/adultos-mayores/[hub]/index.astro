@@ -1,4 +1,24 @@
 ---
+/**
+ * Content Hub Articles Page
+ *
+ * Renders a paginated list of articles for a given content hub.
+ *
+ * Responsibilities:
+ * - Resolve hub metadata by slug.
+ * - Fetch featured article (first page, single item).
+ * - Fetch paginated articles list.
+ * - Build breadcrumb navigation dynamically.
+ *
+ * Rendering logic:
+ * - Shows a featured article when available.
+ * - Displays article grid with pagination.
+ * - Falls back to an empty state when no articles exist.
+ *
+ * Notes:
+ * - Server-side rendering enabled (`prerender = false`).
+ * - Pagination driven by `page` query param.
+ */
 //@ts-nocheck
 export const prerender = false;
 
