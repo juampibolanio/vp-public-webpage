@@ -1,0 +1,201 @@
+.procedures-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+    font-family: var(--font-family-base);
+    background-color: var(--color-background);
+}
+
+.procedures-header {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-xl);
+    margin-bottom: var(--space-xxl);
+}
+
+.header-text h1 {
+    color: var(--color-primary);
+    font-size: var(--font-size-xxl);
+    font-weight: 800;
+    margin-bottom: var(--space-sm);
+}
+
+.header-text p {
+    color: var(--color-text-secondary);
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+.search-bar-wrapper {
+    background-color: #F0EBE5; 
+    padding: var(--space-xs);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-input {
+    border: none;
+    background: transparent;
+    flex-grow: 1;
+    padding: 0 var(--space-sm);
+    color: var(--color-text-secondary);
+    outline: none;
+    font-size: var(--font-size-xs);
+}
+
+.search-btn {
+    background-color: #F4B083; 
+    color: var(--color-text-primary);
+    border: none;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--font-size-xs);
+    transition: opacity 0.2s;
+}
+
+.search-btn:hover {
+    opacity: 0.9;
+}
+
+.filters-container {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xl);
+    justify-content: center; 
+}
+
+.filter-pill {
+    background-color: #D9D9D9; 
+    border: none;
+    padding: var(--space-xs) var(--space-xl);
+    border-radius: 50px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: var(--font-size-sm);
+}
+
+.filter-pill:hover,
+.filter-pill.active {
+    background-color: #C0C0C0; 
+}
+
+.guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: var(--space-lg);
+}
+
+.guide-card {
+    position: relative;
+    background-color: var(--color-secondary); 
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer; 
+}
+
+.guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08); 
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--space-md);
+}
+
+.icon-box {
+    width: 45px;
+    height: 45px;
+    border: 1px solid rgba(0,0,0,0.1); 
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-text-primary);
+}
+
+.category-badge {
+    background-color: #F4B083; 
+    color: var(--color-text-primary);
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: var(--radius-sm);
+}
+
+.card-body h3 {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-sm);
+    color: var(--color-text-primary);
+}
+
+.card-body p {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.4;
+    margin-bottom: var(--space-lg);
+}
+
+.card-footer {
+    margin-top: auto;
+}
+
+.link-step {
+    color: var(--color-alternative); 
+    text-decoration: none;
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+}
+
+.link-step::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1; 
+}
+
+.guide-card:hover .link-step {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .procedures-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .search-bar-wrapper {
+        max-width: 100%;
+    }
+
+    .guides-grid {
+        grid-template-columns: 1fr; 
+    }
+}
