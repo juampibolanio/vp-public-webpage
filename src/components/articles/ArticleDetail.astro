@@ -18,17 +18,9 @@
  *   clean, linear text version for the text-to-speech feature.
  *
  * Architecture:
- * - Uses Astro for static structure and React islands (`TextToSpeech`,
- *   `FontSizeControls`, `MediaSlider`) for client-side interactivity.
+ * - Uses Astro for static structure and React islands for client-side interactivity.
  * - Keeps data transformation logic close to the component to avoid leaking
  *   presentation concerns into services or normalizers.
- *
- * Accessibility:
- * - Text-to-speech receives a consolidated string containing title, excerpt,
- *   and body text.
- * - Font size adjustments are applied globally via CSS variables.
- * - Semantic HTML (`section`, `article`, headings) improves screen reader
- *   navigation.
  *
  * Performance considerations:
  * - Media slider is conditionally rendered only when media is present.

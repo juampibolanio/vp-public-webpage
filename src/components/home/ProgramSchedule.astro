@@ -1,4 +1,25 @@
 ---
+/**
+ * ProgramSchedule
+ *
+ * Presentational component that highlights external media programs
+ * associated with the project.
+ *
+ * Responsibilities:
+ * - Displays a section header introducing the program schedule.
+ * - Renders a branded card with program name, broadcast time, and
+ *   an external link to the media outlet.
+ * 
+ * Assets:
+ * - Media logos are imported as static assets and rendered with
+ *   lazy loading and async decoding for performance.
+ *
+ * Assumptions:
+ * - Program data is currently static; if additional programs are added,
+ *   this component can be refactored into a reusable card-based layout
+ *   driven by props or a data source.
+ */
+
 import './ProgramSchedule.css'
 import radioSudamericana from '../../assets/radio-sudamericana-logo.webp'
 ---
