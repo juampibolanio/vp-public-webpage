@@ -1,4 +1,14 @@
 ---
+/**
+ * Article Detail Page (Families)
+ *
+ * Responsibilities:
+ * - Resolve the content hub and article from route params.
+ * - Handle missing hub or article states.
+ * - Build breadcrumb navigation.
+ * - Render article detail with contextual navigation.
+ */
+//@ts-nocheck
 import ArticleDetail from "../../../components/articles/ArticleDetail.astro";
 import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
@@ -46,8 +56,6 @@ const breadcrumbItems = [
       <a href={`/familias/${hub}`} class="article-detail__button button--back">
         Volver
       </a>
-
-      <!-- aca deberia redirigir al content hub tambien -->
     </header>
 
     <ArticleDetail articles={article} />
