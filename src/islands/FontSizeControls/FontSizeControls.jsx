@@ -1,3 +1,19 @@
+/**
+ * FontSizeControls
+ *
+ * Accessibility component that allows users to adjust the global
+ * font size of the site using a scale factor.
+ *
+ * - Applies the scale via a CSS custom property (`--reader-font-scale`)
+ *   on the root HTML element.
+ * - Persists the user preference in `localStorage` to keep it across sessions.
+ * - Enforces minimum and maximum limits to prevent layout or readability issues.
+ * - Provides accessible controls with proper `aria-labels` and disabled states
+ *   based on the current scale value.
+ *
+ * Designed to improve readability, especially for older users,
+ * without altering the core layout structure.
+ */
 import { useEffect, useState } from "react";
 import './FontSizeControls.css';
 
