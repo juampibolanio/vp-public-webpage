@@ -42,12 +42,24 @@ const breadcrumbItems = [
 
     <Breadcrumb items={breadcrumbItems}/>
 
+    <div class="old-adults__header">
+      <h1 class="old-adults__title">Adultos Mayores</h1>
+      <p class="old-adults__description">
+        Esta etapa de la vida está llena de oportunidades para mantenerse activo,
+        saludable y conectado. En esta sección, encontrarás información clave
+        sobre tus derechos y trámites importantes, junto con recursos para
+        cuidar tu salud y bienestar. Además, te ofrecemos ideas para que sigas
+        participando en actividades culturales y sociales que te enriquezcan.
+      </p>
+    </div>
+
+
     <div class="content-hub__section">
       <div class="content-hub__header">
         <h3 class="content-hub__title">Trámites y Derechos</h3>
         <p class="content-hub__description">
-          Herramientas organizativas para simplificar el día a día y garantizar
-          el cuidado adecuado en el hogar o instituciones.
+          Información clara y accesible sobre jubilaciones, pensiones,
+          beneficios y otros derechos para que puedas gestionarlos de forma sencilla.
         </p>
       </div>
 
@@ -60,8 +72,8 @@ const breadcrumbItems = [
       <div class="content-hub__header">
         <h3 class="content-hub__title">Salud y Bienestar</h3>
         <p class="content-hub__description">
-          Cuidar de otro comienza por cuidarse a uno mismo. Recursos para el
-          bienestar emocional del acompañante y la calidad de vida familiar.
+          Consejos, guías y recursos para promover un envejecimiento activo,
+          cuidar tu salud física y mental, y mantener tu autonomía.
         </p>
       </div>
 
@@ -74,13 +86,13 @@ const breadcrumbItems = [
       <div class="content-hub__header">
         <h3 class="content-hub__title">Participación y Cultura</h3>
         <p class="content-hub__description">
-          Herramientas organizativas para simplificar el día a día y garantizar
-          el cuidado adecuado en el hogar o instituciones.
+          Descubre propuestas y actividades para mantenerte conectado, disfrutar
+          de tu tiempo libre y seguir aprendiendo.
         </p>
       </div>
 
       <div class="content-hub__body">
-        { participacionCultura.map((item) => <ContentHubCard {...item} basePath="adultos-mayores"/>)}
+        { participacionCultura.map((item) => <ContentHubCard {...item} basePath="/adultos-mayores"/>)}
       </div>
     </div>
 
@@ -113,15 +125,33 @@ const breadcrumbItems = [
     padding: 2rem 1.5rem;
   }
 
-  .content-hub__section {
+  .old-adults__header {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
+  .old-adults__title {
+    font-weight: 600;
+    font-size: var(--font-size-xxxl);
+    margin: 0;
+  }
+
+  .old-adults__description {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .content-hub__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+  }
+
   .content-hub__header {
     display: flex;
     flex-direction: column;
+    gap: var(--space-md);
   }
 
   .content-hub__title {

@@ -16,31 +16,49 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import { getContentHubsByCategory } from "../../services/content-hub.service";
 import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 
-const gestionDependenciaItems = await getContentHubsByCategory("GESTION_DEPENDENCIA");
+const gestionDependenciaItems = await getContentHubsByCategory(
+  "GESTION_DEPENDENCIA",
+);
 const vidaSocialItems = await getContentHubsByCategory("VIDA_SOCIAL");
 
 const breadcrumbItems = [
   { label: "Inicio", href: "/" },
   { label: "Familias", href: "/familias" },
-]
+];
 ---
 
 <MainLayout>
   <div class="family-section">
-
     <Breadcrumb items={breadcrumbItems} />
+
+    <div class="family-section__header">
+      <h1 class="family-section__title">Familias</h1>
+      <p class="family-section__description">
+        Sabemos que acompañar a un ser querido en una situación de dependencia
+        es un camino lleno de desafíos y amor. En este espacio, queremos
+        brindarte el apoyo que necesitas. Aquí encontrarás herramientas
+        prácticas para la gestión del cuidado diario y recursos para fortalecer
+        tu bienestar emocional y el de tu familia.
+      </p>
+    </div>
 
     <div class="content-hub__section">
       <div class="content-hub__header">
         <h3 class="content-hub__title">Gestión de la dependencia</h3>
         <p class="content-hub__description">
-          Herramientas organizativas para simplificar el día a día y garantizar
-          el cuidado adecuado en el hogar o instituciones.
+          Encuentra guías y recursos prácticos para organizar el cuidado diario,
+          desde la gestión de trámites hasta la adaptación del hogar,
+          facilitando un entorno seguro y tranquilo tanto para ti como para tu
+          ser querido.
         </p>
       </div>
 
       <div class="content-hub__body">
-        {gestionDependenciaItems.map((item) => <ContentHubCard {...item} basePath="/familias" />)}
+        {
+          gestionDependenciaItems.map((item) => (
+            <ContentHubCard {...item} basePath="/familias" />
+          ))
+        }
       </div>
     </div>
 
@@ -48,13 +66,19 @@ const breadcrumbItems = [
       <div class="content-hub__header">
         <h3 class="content-hub__title">Vida Social y Bienestar</h3>
         <p class="content-hub__description">
-          Cuidar de otro comienza por cuidarse a uno mismo. Recursos para el
-          bienestar emocional del acompañante y la calidad de vida familiar.
+          El bienestar se construye en conjunto. En esta sección encontrarás
+          recursos y propuestas para fortalecer la salud emocional, los vínculos
+          sociales y la calidad de vida tanto de las personas mayores como de
+          quienes las acompañan en su día a día.
         </p>
       </div>
 
       <div class="content-hub__body">
-        {vidaSocialItems.map((item) => <ContentHubCard {...item} basePath="/familias" />)}
+        {
+          vidaSocialItems.map((item) => (
+            <ContentHubCard {...item} basePath="/familias" />
+          ))
+        }
       </div>
     </div>
 
@@ -81,21 +105,39 @@ const breadcrumbItems = [
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 3rem;
+    gap: 4rem;
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
   }
 
-  .content-hub__section {
+  .family-section__header {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
   }
 
+  .family-section__title {
+    font-weight: 600;
+    font-size: var(--font-size-xxxl);
+    margin: 0;
+  }
+
+  .family-section__description {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .content-hub__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xxl);
+  }
+
   .content-hub__header {
     display: flex;
     flex-direction: column;
+    gap: var(--space-md);
   }
 
   .content-hub__title {
