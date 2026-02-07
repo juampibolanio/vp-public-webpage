@@ -1,4 +1,34 @@
 ---
+/**
+ * ArticleItem
+ *
+ * Reusable presentation component for rendering an article card within
+ * listings, grids, or feeds.
+ *
+ * Responsibilities:
+ * - Displays core editorial information: author, category, publish date,
+ *   title, excerpt, and cover image.
+ * - Provides multiple, consistent navigation entry points to the article
+ *   detail view via the supplied `href`.
+ * - Maintains a clear visual separation between author identity, media,
+ *   metadata, and content body.
+ *
+ * Data contract:
+ * - Expects a normalized `articles` object with resolved author avatar,
+ *   cover media, and publication date.
+ * - Receives `href` externally to decouple routing logic from presentation.
+ *
+ * Performance & UX considerations:
+ * - Uses native lazy-loading and async decoding for images to optimize
+ *   list performance.
+ * - Keeps markup semantic (`<article>`) for SEO and accessibility.
+ *
+ * Design intent:
+ * - Designed to scale across different layouts (lists, carousels, grids)
+ *   without internal state or side effects.
+ * - Fully stateless and deterministic based on props.
+ */
+
 import { formatDate } from "../../utils/date";
 import "./ArticleItem.css";
 

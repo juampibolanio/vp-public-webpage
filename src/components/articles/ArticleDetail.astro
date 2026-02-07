@@ -1,4 +1,45 @@
 ---
+/**
+ * ArticleDetail
+ *
+ * Main detail view component for a single article.
+ *
+ * Responsibilities:
+ * - Renders the full article content, including title, excerpt, author data,
+ *   publication date, and rich text body.
+ * - Integrates accessibility-focused features such as text-to-speech and
+ *   font size controls.
+ * - Displays associated media in a slider when available.
+ *
+ * Data preparation:
+ * - `sliderItems` is derived from the article media array and normalized into
+ *   a format consumable by the MediaSlider island.
+ * - `plainTextContent` is extracted from the rich text blocks to provide a
+ *   clean, linear text version for the text-to-speech feature.
+ *
+ * Architecture:
+ * - Uses Astro for static structure and React islands (`TextToSpeech`,
+ *   `FontSizeControls`, `MediaSlider`) for client-side interactivity.
+ * - Keeps data transformation logic close to the component to avoid leaking
+ *   presentation concerns into services or normalizers.
+ *
+ * Accessibility:
+ * - Text-to-speech receives a consolidated string containing title, excerpt,
+ *   and body text.
+ * - Font size adjustments are applied globally via CSS variables.
+ * - Semantic HTML (`section`, `article`, headings) improves screen reader
+ *   navigation.
+ *
+ * Performance considerations:
+ * - Media slider is conditionally rendered only when media is present.
+ * - Client-side islands are loaded selectively (`client:load`, `client:visible`)
+ *   to minimize unnecessary JavaScript execution.
+ *
+ * Assumptions:
+ * - `articles` is a fully normalized article object with media, author,
+ *   and content fields already resolved.
+ */
+
 //@ts-nocheck
 import { Icon } from "astro-icon/components";
 import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech";

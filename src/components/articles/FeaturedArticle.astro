@@ -1,4 +1,32 @@
 ---
+/**
+ * FeaturedArticle
+ *
+ * Presentation component responsible for rendering a highlighted article
+ * with strong visual hierarchy and editorial emphasis.
+ *
+ * Responsibilities:
+ * - Displays author identity (avatar and name), publication metadata,
+ *   category, and formatted publish date.
+ * - Renders the article title and excerpt as primary entry points
+ *   linking to the article detail page.
+ * - Separates content and media areas to support responsive layouts
+ *   and future layout variations.
+ *
+ * Data contract:
+ * - Expects a fully normalized `featArticle` object (author, cover image,
+ *   category, slug, dates already validated upstream).
+ * - Receives `basePath` to remain routing-agnostic and reusable across
+ *   different content sections.
+ *
+ * Design considerations:
+ * - Optimized for editorial prominence (featured content).
+ * - Clear clickable areas to improve usability and accessibility.
+ * - Relies on external date formatting utility to keep presentation logic clean.
+ *
+ * This component is intentionally stateless and purely presentational.
+ */
+
 import { formatDate } from "../../utils/date";
 import "./FeaturedArticle.css";
 
@@ -47,8 +75,7 @@ const formattedDate = formatDate(publishedDate);
   </div>
 
   <div class="article-featured__media">
-    <a class="article__featured-image-wrapper" href=`#`>
-      <!-- debe enviar al detalle del articulo -->
+    <a class="article__featured-image-wrapper" href=`${basePath}/${slug}`>
       <img class="article__featured-image" src={cover.url} alt={cover.alt || title} />
     </a>
   </div>

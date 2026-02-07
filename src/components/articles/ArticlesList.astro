@@ -1,4 +1,33 @@
 ---
+/**
+ * ArticlesList
+ *
+ * Container component responsible for rendering a grid of article cards.
+ *
+ * Responsibilities:
+ * - Receives a collection of normalized article objects.
+ * - Limits the rendered output to a maximum of 6 items to control layout
+ *   density and visual hierarchy.
+ * - Delegates individual article rendering to the `ArticleItem` component.
+ *
+ * Data contract:
+ * - `articles`: Array of normalized article objects. If the value is not
+ *   an array, the component safely falls back to an empty list.
+ * - `basePath`: Base URL segment used to construct article detail links.
+ *
+ * Routing strategy:
+ * - Article URLs are composed externally using `basePath` and `article.slug`,
+ *   keeping routing logic explicit and predictable.
+ *
+ * Design & scalability:
+ * - Stateless, presentational component with no side effects.
+ * - Grid-based layout handled purely via CSS (`ArticlesList.css`).
+ * - Easily extensible to support pagination or dynamic limits if required.
+ *
+ * Accessibility & semantics:
+ * - Uses a semantic `<section>` wrapper to group related editorial content.
+ */
+
 //@ts-nocheck
 import ArticleItem from "./ArticleItem.astro";
 import "./ArticlesList.css";
