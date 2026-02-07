@@ -22,6 +22,7 @@ import { Icon } from "astro-icon/components";
 import ContentHubCard from "../../components/shared/ContentHubCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getContentHubsByCategory } from "../../services/content-hub.service";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 
 const tramitesDerechos = await getContentHubsByCategory(
   "TRAMITES_DERECHOS",
@@ -29,10 +30,18 @@ const tramitesDerechos = await getContentHubsByCategory(
 const saludBienestar = await getContentHubsByCategory("SALUD_BIENESTAR");
 
 const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTURA");
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Adultos Mayores", href: "/adultos-mayores" },
+]
 ---
 
 <MainLayout>
-  <div class="family-section">
+  <div class="old-adults-section">
+
+    <Breadcrumb items={breadcrumbItems}/>
+
     <div class="content-hub__section">
       <div class="content-hub__header">
         <h3 class="content-hub__title">Trámites y Derechos</h3>
@@ -94,7 +103,7 @@ const participacionCultura = await getContentHubsByCategory("PARTICIPACION_CULTU
 </MainLayout>
 
 <style>
-  .family-section {
+  .old-adults-section {
     display: flex;
     flex-direction: column;
     justify-content: center;

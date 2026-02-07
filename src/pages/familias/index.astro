@@ -14,13 +14,22 @@ import { Icon } from "astro-icon/components";
 import ContentHubCard from "../../components/shared/ContentHubCard.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getContentHubsByCategory } from "../../services/content-hub.service";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 
 const gestionDependenciaItems = await getContentHubsByCategory("GESTION_DEPENDENCIA");
 const vidaSocialItems = await getContentHubsByCategory("VIDA_SOCIAL");
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Familias", href: "/familias" },
+]
 ---
 
 <MainLayout>
   <div class="family-section">
+
+    <Breadcrumb items={breadcrumbItems} />
+
     <div class="content-hub__section">
       <div class="content-hub__header">
         <h3 class="content-hub__title">Gestión de la dependencia</h3>
