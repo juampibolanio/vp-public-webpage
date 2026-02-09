@@ -1,0 +1,140 @@
+---
+//@ts-nocheck
+import CourseSection from "../../components/professional-section/CourseSection.astro";
+import ProfessionalLawsSection from "../../components/professional-section/ProfessionalLawsSection.astro";
+import ProfessionalNewCard from "../../components/professional-section/ProfessionalNewCard.astro";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { getProfessionalArticles } from "../../services/professionals.service";
+
+const { articles: actualidadArticles } = await getProfessionalArticles({
+  category: "Actualidad Profesional",
+  pageSize: 3,
+});
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Profesionales", href: "/profesionales" },
+];
+---
+
+<MainLayout>
+  <div class="professional-section">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <div class="professional-section__content">
+      <div class="professional-section__header">
+        <h1 class="professional-section__title">Profesionales</h1>
+        <p class="professional-section__description">
+          Dedicado a quienes trabajan por el bienestar de los adultos mayores.
+          En esta sección, ofrecemos a los profesionales del sector de la salud
+          y el cuidado un punto de encuentro con información relevante, guías de
+          buenas prácticas y herramientas para potenciar su desarrollo
+          profesional y la calidad de la atención.
+        </p>
+      </div>
+
+      <div class="professional-section__news">
+        <div class="professional-section-title-wrapper">
+          <h3 class="professional-section__subtitle">Actualidad profesional</h3>
+          <a
+            class="professional-section__link"
+            href="/profesionales/articulos/actualidad-profesional"
+          >
+            Ver más
+          </a>
+        </div>
+
+        <div class="professional-section__news-wrapper">
+          {
+            actualidadArticles.map((article) => (
+              <ProfessionalNewCard article={article} />
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="professional-section__legal">
+        <ProfessionalLawsSection />
+      </div>
+
+      <div class="professional-section__courses">
+        <h3 class="professional-section__subtitle">
+          Capacitaciones y congresos
+        </h3>
+        <CourseSection />
+      </div>
+    </div>
+  </div>
+</MainLayout>
+
+<style>
+  .professional-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .professional-section__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .professional-section__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .professional-section__title {
+    font-weight: 600;
+    font-size: var(--font-size-xxxl);
+    margin: 0;
+  }
+
+  .professional-section-title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .professional-section__link {
+    color: var(--color-alternative);
+    font-weight: 600;
+  }
+
+  .professional-section__description {
+    margin: 0;
+    font-size: var(--font-size-lg);
+  }
+
+  .professional-section__news {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .professional-section__news-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-lg);
+    align-items: stretch;
+  }
+
+  .professional-section__subtitle {
+    font-size: var(--font-size-xxl);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  @media (max-width: 768px) {
+    .professional-section__news-wrapper {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

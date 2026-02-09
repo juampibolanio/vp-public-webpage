@@ -1,0 +1,90 @@
+---
+// @ts-nocheck
+import MainLayout from "../../layouts/MainLayout.astro";
+import Breadcrumb from "../../components/shared/Breadcrumb.astro";
+import ArticleDetail from "../../components/articles/ArticleDetail.astro";
+import { getArticleBySlug } from "../../services/articles.service";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+const article = await getArticleBySlug(slug);
+
+if (!article) {
+  return Astro.redirect("/404");
+}
+
+const categoryPath =
+  article.category === "Marco Normativo"
+    ? "/profesionales/articulos/marco-normativo"
+    : "/profesionales/articulos/actualidad-profesional";
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Profesionales", href: "/profesionales" },
+  {
+    label: article.category,
+    href: categoryPath,
+  },
+  {
+    label: article.title,
+    href: null,
+  },
+];
+---
+
+<MainLayout>
+  <div class="article-detail__layout">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="article-detail__items">
+      <span class="article-detail__button button--category">
+        {article.category}
+      </span>
+
+      <a
+        href={categoryPath}
+        class="article-detail__button button--back"
+      >
+        Volver
+      </a>
+    </header>
+
+    <ArticleDetail articles={article} />
+  </div>
+</MainLayout>
+
+<style>
+  .article-detail__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .article-detail__items {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .article-detail__button {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--space-xs);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+
+  .button--category {
+    border-radius: var(--space-lg);
+  }
+</style>

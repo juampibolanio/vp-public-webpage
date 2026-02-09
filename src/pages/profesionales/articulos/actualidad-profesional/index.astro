@@ -1,0 +1,150 @@
+---
+// @ts-nocheck
+import MainLayout from "../../../../layouts/MainLayout.astro";
+import Breadcrumb from "../../../../components/shared/Breadcrumb.astro";
+import TitleBarTopPage from "../../../../components/shared/TitleBarTopPage.astro";
+import ProfessionalNewCard from "../../../../components/professional-section/ProfessionalNewCard.astro";
+import Pagination from "../../../../components/news/Pagination.astro";
+import { getProfessionalArticles } from "../../../../services/professionals.service";
+
+const { articles, pagination } = await getProfessionalArticles({
+  category: "Actualidad Profesional",
+  pageSize: 9,
+});
+
+const hasArticles = articles.length > 0;
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Profesionales", href: "/profesionales" },
+  { label: "Actualidad profesional", href: null },
+];
+---
+
+<MainLayout>
+  <div class="articles-layout">
+    <div class="articles-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
+    <TitleBarTopPage title="Actualidad Profesional" />
+
+    <div class="articles-layout__wrapper">
+      <div class="articles-layout__description">
+        <p class="articles-layout__text">
+          Recursos para tu vida profesional al servicio de las personas mayores.
+        </p>
+      </div>
+
+      <div class="articles-layout__body">
+        <div class="articles-layout__content">
+          {
+            hasArticles ? (
+              <>
+                <div class="articles-layout__grid">
+                  {articles.map((article) => (
+                    <ProfessionalNewCard article={article} />
+                  ))}
+                </div>
+
+                {pagination && pagination.pageCount > 1 && (
+                  <Pagination
+                    currentPage={pagination.page}
+                    totalPages={pagination.pageCount}
+                    basePath="/profesionales/articulos/actualidad-profesional"
+                  />
+                )}
+              </>
+            ) : (
+              <div class="articles-empty">
+                <h2 class="articles-empty__title">
+                  Aún no hay artículos en esta sección
+                </h2>
+                <p class="articles-empty__text">
+                  Estamos trabajando en nuevos contenidos. Volvé a visitarnos
+                  pronto.
+                </p>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .articles-layout__header {
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: var(--space-sm);
+    }
+
+    .articles-layout__wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-xxl) var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xxl);
+    }
+
+    .articles-layout__description {
+      max-width: 720px;
+    }
+
+    .articles-layout__text {
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+    }
+
+    .articles-layout__body {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-xl);
+      width: 100%;
+    }
+
+    .articles-layout__content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .articles-layout__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+
+    .articles-empty {
+      padding: var(--space-xxl) var(--space-lg);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface-muted);
+      text-align: center;
+    }
+
+    .articles-empty__title {
+      margin: 0 0 var(--space-sm);
+      font-size: var(--font-size-lg);
+    }
+
+    .articles-empty__text {
+      margin: 0;
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 1024px) {
+      .articles-layout__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .articles-layout__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</MainLayout>
