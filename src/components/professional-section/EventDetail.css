@@ -1,0 +1,117 @@
+.event-detail__wrapper {
+  width: 100%;
+}
+
+.event-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.event-detail__header {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.event-header__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.event-header__title {
+  font-size: var(--font-size-xxl);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+.event-header__meta {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.event-meta__badge {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  padding: var(--space-xxs) var(--space-sm);
+  border-radius: var(--space-lg);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.event-meta__item {
+  background-color: var(--color-surface-muted);
+  color: var(--color-text-primary);
+  padding: var(--space-xxs) var(--space-sm);
+  border-radius: var(--space-lg);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+}
+
+.event-header__meta-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.event-meta__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.event-meta__info span {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.event-header__description-content {
+  color: #000;
+}
+
+.event-meta__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.event-detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.event-detail__article {
+  font-size: var(--font-size-base);
+  line-height: 1.7;
+  color: var(--color-text-primary);
+}
+
+.event-detail__slider {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.event-detail__slider img {
+  max-height: 360px;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .event-header__meta-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .event-meta__controls {
+    align-self: flex-start;
+  }
+}

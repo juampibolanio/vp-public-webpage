@@ -1,0 +1,121 @@
+---
+/**
+ * EventDetail
+ *
+ * Main detail view component for a single event / training.
+ *
+ * Responsibilities:
+ * - Renders full event information: title, description, dates, modality,
+ *   location, organizer, and rich text body.
+ * - Integrates accessibility features (text-to-speech, font size controls).
+ * - Displays associated media in a slider when available.
+ *
+ * Assumptions:
+ * - `event` is a fully normalized event object (Strapi v5).
+ */
+
+// @ts-nocheck
+import { Icon } from "astro-icon/components";
+import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech";
+import MediaSlider from "../../islands/MediaSlider/MediaSlider";
+import FontSizeControls from "../../islands/FontSizeControls/FontSizeControls";
+import RichText from "../shared/RichText.astro";
+import "./EventDetail.css";
+import { formatDate } from "../../utils/date";
+
+const { event } = Astro.props;
+
+const sliderItems = Array.isArray(event.media)
+  ? event.media.map((media) => ({
+      type: "image",
+      src: media.url,
+      alt: media.alt || event.title,
+    }))
+  : [];
+
+const plainTextContent = Array.isArray(event.description)
+  ? event.description
+      .map((block) => block.children?.map((child) => child.text).join(" "))
+      .join("\n")
+  : "";
+
+const startDateFormatted = formatDate(event.startDate) ;
+const endDateFormatted = formatDate(event.endDate) ;
+---
+
+<section class="event-detail__wrapper">
+  <article class="event-detail__content">
+    <div class="event-detail__header">
+      <div class="event-header__content">
+        <h1 class="event-header__title">{event.title}</h1>
+
+        <div class="event-header__meta">
+          {event.eventType && (
+            <span class="event-meta__badge">
+              {event.eventType}
+            </span>
+          )}
+
+          {event.modality && (
+            <span class="event-meta__item">
+              {event.modality}
+            </span>
+          )}
+        </div>
+
+        <div class="event-header__description">
+          <p class="event-header__description-content">{event.description}</p>
+        </div>
+      </div>
+
+      <div class="event-header__meta-buttons">
+        <div class="event-meta__info">
+          {startDateFormatted && (
+            <span class="event-meta__date">
+              <Icon name="mdi:calendar" />
+              {startDateFormatted}
+              {endDateFormatted && ` al ${endDateFormatted}`}
+            </span>
+          )}
+
+          {event.location && (
+            <span class="event-meta__location">
+              <Icon name="mdi:map-marker" />
+              {event.location}
+            </span>
+          )}
+
+          {event.organizer && (
+            <span class="event-meta__organizer">
+              <Icon name="mdi:account-group" />
+              {event.organizer}
+            </span>
+          )}
+        </div>
+
+        <div class="event-meta__controls">
+          <TextToSpeech
+            client:load
+            text={`${event.title}. ${plainTextContent}`}
+          />
+
+          <FontSizeControls client:load />
+        </div>
+      </div>
+    </div>
+
+    <div class="event-detail__body">
+      <article class="event-detail__article">
+        <RichText content={event.content} />
+      </article>
+
+      {
+        sliderItems.length > 0 && (
+          <div class="event-detail__slider">
+            <MediaSlider client:visible items={sliderItems} />
+          </div>
+        )
+      }
+    </div>
+  </article>
+</section>
