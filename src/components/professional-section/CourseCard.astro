@@ -1,0 +1,38 @@
+---
+//@ts-nocheck
+import { getEventBySlug } from "../../services/event-service";
+import { formatDate } from "../../utils/date";
+import "./CourseCard.css";
+
+const { slug } = Astro.props;
+
+const event = await getEventBySlug(slug);
+
+const startFormattedDate = formatDate(event.startDate);
+
+const partStart = startFormattedDate.split(' '); 
+
+const day = partStart[0];    
+const month = partStart[2]; 
+const year = partStart[4]; 
+
+---
+
+<div class="course-card">
+  <div class="course-card__date-wrapper">
+    <span class="course-card__date-day">{day}</span>
+    <span class="course-card__date-month">{month}</span>
+    <span class="course-card__date-year">{year}</span>
+  </div>
+  <div class="course-card__info-wrapper">
+    <div class="course-card__meta-wrapper">
+      <span class="course-card__meta-type">{event.eventType}</span>
+      <span class="course-card__meta-location">{event.location}</span>
+    </div>
+    <div class="course-card__description-wrapper">
+      <h3 class="course-card__description-title">{event.title}</h3>
+      <p class="course-card__description-text">{event.description}</p>
+    </div>
+  </div>
+  <a class="course-card__button" href=`/profesionales/capacitaciones-y-congresos/${event.slug}`>Ver</a>
+</div>
