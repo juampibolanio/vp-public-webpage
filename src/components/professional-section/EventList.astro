@@ -1,0 +1,13 @@
+---
+//@ts-nocheck
+import EventCard from "./EventCard.astro";
+import './EventList.css';
+
+const { events = [] } = Astro.props;
+---
+
+<div class="event-list">
+  {events.map((event) => (
+    <EventCard event={event} />
+  ))}
+</div>
