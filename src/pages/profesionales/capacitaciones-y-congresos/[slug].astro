@@ -1,0 +1,94 @@
+---
+/**
+ * Event Detail Page (Capacitaciones)
+ *
+ * Responsibilities:
+ * - Resolve event from route params.
+ * - Handle missing event state.
+ * - Build breadcrumb navigation.
+ * - Render event detail with contextual navigation.
+ */
+// @ts-nocheck
+
+import EventDetail from "../../../components/professional-section/EventDetail.astro";
+import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { getEventBySlug } from "../../../services/event-service";
+
+export const prerender = false;
+
+const { slug } = Astro.params;
+
+const event = await getEventBySlug(slug);
+
+if (!event) {
+  return Astro.redirect("/404");
+}
+
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Capacitaciones", href: "/profesionales/capacitaciones-y-congresos" },
+  {
+    label: event.title,
+    href: null,
+  },
+];
+---
+
+<MainLayout>
+  <div class="event-detail__layout">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <header class="event-detail__items">
+      {event.eventType && (
+        <span class="event-detail__button button--category">
+          {event.eventType}
+        </span>
+      )}
+
+      <a
+        href="/capacitaciones"
+        class="event-detail__button button--back"
+      >
+        Volver
+      </a>
+    </header>
+
+    <EventDetail event={event} />
+  </div>
+</MainLayout>
+
+<style>
+  .event-detail__layout {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+
+  /* header buttons */
+  .event-detail__items {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .event-detail__button {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: var(--space-xs);
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+  }
+
+  .button--category {
+    border-radius: var(--space-lg);
+  }
+</style>

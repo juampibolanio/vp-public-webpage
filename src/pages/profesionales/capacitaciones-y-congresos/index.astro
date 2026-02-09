@@ -1,0 +1,170 @@
+---
+// @ts-nocheck
+/**
+ * Capacitaciones Index Page
+ * -------------------------
+ * Entry point for the professional trainings and events section.
+ *
+ * Responsibilities:
+ * - Fetch and render a paginated list of trainings/events.
+ * - Build breadcrumb navigation.
+ * - Compose the page layout using shared layout patterns.
+ *
+ * Rendering strategy:
+ * - prerender disabled to support server-side pagination.
+ *
+ * Notes:
+ * - UI and data responsibilities are delegated to components.
+ */
+
+export const prerender = false;
+
+import MainLayout from "../../../layouts/MainLayout.astro";
+import Breadcrumb from "../../../components/shared/Breadcrumb.astro";
+import TitleBarTopPage from "../../../components/shared/TitleBarTopPage.astro";
+import Sidebar from "../../../components/shared/Sidebar.astro";
+import Pagination from "../../../components/news/Pagination.astro";
+import EventList from "../../../components/professional-section/EventList.astro";
+import { getEvents } from "../../../services/event-service";
+
+/* detect current page number */
+const pageParam = Astro.url.searchParams.get("page");
+const currentPage = pageParam ? Number(pageParam) : 1;
+
+/* fetch events */
+const { events, pagination } = await getEvents({
+  page: currentPage,
+  pageSize: 6,
+});
+
+/* breadcrumb */
+const breadcrumbItems = [
+  { label: "Inicio", href: "/" },
+  { label: "Profesionales", href: "/profesionales" },
+  { label: "Capacitaciones", href: null },
+];
+---
+
+<MainLayout>
+  <div class="events-layout">
+    <div class="events-layout__header">
+      <Breadcrumb items={breadcrumbItems} />
+    </div>
+
+    <TitleBarTopPage title="Capacitaciones y congresos" />
+
+    <div class="events-page-wrapper">
+      <div class="events-page__content">
+        <div class="events-page__description">
+          <p>
+            Actividades, congresos y espacios de formación destinados a
+            profesionales que trabajan con personas mayores. Encontrá
+            oportunidades para capacitarte, intercambiar experiencias y
+            fortalecer tu práctica profesional.
+          </p>
+        </div>
+
+        <div class="events-page__list">
+          {events.length ? (
+            <>
+              <EventList events={events} />
+
+              <Pagination
+                currentPage={pagination.page}
+                totalPages={pagination.pageCount}
+                basePath="/capacitaciones"
+              />
+            </>
+          ) : (
+            <div class="events-empty">
+              <h2 class="events-empty__title">
+                Aún no hay capacitaciones publicadas
+              </h2>
+              <p class="events-empty__text">
+                Estamos trabajando en nuevos eventos. Volvé a visitarnos pronto.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <aside class="events-sidebar">
+        <Sidebar />
+      </aside>
+    </div>
+  </div>
+
+  <style>
+    .events-layout__header {
+      display: flex;
+      justify-content: flex-start;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-sm) 0;
+      padding-left: var(--space-sm);
+    }
+
+    .events-page-wrapper {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    .events-page__content {
+      flex: 1;
+      max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .events-page__description p {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .events-page__list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .events-sidebar {
+      width: 320px;
+      flex-shrink: 0;
+    }
+
+    .events-empty {
+      padding: var(--space-xxl) var(--space-lg);
+      border-radius: var(--radius-md);
+      background-color: var(--color-surface-muted);
+      text-align: center;
+    }
+
+    .events-empty__title {
+      margin: 0 0 var(--space-sm);
+      font-size: var(--font-size-lg);
+    }
+
+    .events-empty__text {
+      margin: 0;
+      font-size: var(--font-size-md);
+      color: var(--color-text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .events-page-wrapper {
+        flex-direction: column;
+      }
+
+      .events-sidebar {
+        display: none;
+      }
+    }
+  </style>
+</MainLayout>

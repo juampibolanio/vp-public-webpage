@@ -6,10 +6,15 @@ import ProfessionalNewCard from "../../components/professional-section/Professio
 import Breadcrumb from "../../components/shared/Breadcrumb.astro";
 import MainLayout from "../../layouts/MainLayout.astro";
 import { getProfessionalArticles } from "../../services/professionals.service";
+import { getEvents } from "../../services/event-service";
 
 const { articles: actualidadArticles } = await getProfessionalArticles({
   category: "Actualidad Profesional",
   pageSize: 3,
+});
+
+const { events, pagination } = await getEvents({
+  pageSize: 2,
 });
 
 const breadcrumbItems = [
@@ -46,11 +51,9 @@ const breadcrumbItems = [
         </div>
 
         <div class="professional-section__news-wrapper">
-          {
-            actualidadArticles.map((article) => (
-              <ProfessionalNewCard article={article} />
-            ))
-          }
+          {actualidadArticles.map((article) => (
+            <ProfessionalNewCard article={article} />
+          ))}
         </div>
       </div>
 
@@ -62,7 +65,7 @@ const breadcrumbItems = [
         <h3 class="professional-section__subtitle">
           Capacitaciones y congresos
         </h3>
-        <CourseSection />
+        <CourseSection courses={events} />
       </div>
     </div>
   </div>
@@ -72,7 +75,6 @@ const breadcrumbItems = [
   .professional-section {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 2rem;
     max-width: 1280px;
     margin: 0 auto;
@@ -101,6 +103,8 @@ const breadcrumbItems = [
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
   .professional-section__link {
@@ -111,6 +115,7 @@ const breadcrumbItems = [
   .professional-section__description {
     margin: 0;
     font-size: var(--font-size-lg);
+    line-height: 1.5;
   }
 
   .professional-section__news {
@@ -132,9 +137,39 @@ const breadcrumbItems = [
     border-bottom: 1px solid #e8e8e8;
   }
 
-  @media (max-width: 768px) {
+  .professional-section__legal,
+  .professional-section__courses {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  @media (max-width: 1024px) {
     .professional-section__news-wrapper {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .professional-section {
+      padding: 1.5rem 1rem;
+    }
+
+    .professional-section__title {
+      font-size: var(--font-size-xxl);
+    }
+
+    .professional-section__subtitle {
+      font-size: var(--font-size-xl);
+    }
+
+    .professional-section__news-wrapper {
+      grid-template-columns: 1fr;
+    }
+
+    .professional-section-title-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 </style>
