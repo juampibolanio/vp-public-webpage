@@ -5,6 +5,7 @@
     border-radius: var(--space-md);
     padding: var(--space-md) var(--space-lg);
     gap: var(--space-lg);
+    flex-wrap: wrap;
 }
 
 .course-card__date-wrapper {
@@ -14,8 +15,9 @@
     align-items: center;
     text-align: center;
     gap: var(--space-xs);
-    padding:  0 var(--space-xl);
+    padding: 0 var(--space-xl);
     border-right: 1px solid #000;
+    min-width: 80px;
 }
 
 .course-card__date-day {
@@ -30,16 +32,23 @@
     font-weight: 600;
 }
 
+.course-card__date-year {
+    font-size: var(--font-size-sm);
+    color: #555;
+}
+
 .course-card__info-wrapper {
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
+    flex: 1 1 200px;
 }
 
 .course-card__meta-wrapper {
     display: flex;
     gap: var(--space-lg);
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .course-card__meta-type {
@@ -64,17 +73,67 @@
 
 .course-card__description-title {
     margin: 0;
-    font-size: var(--space-lg);
+    font-size: var(--font-size-md);
+    font-weight: 600;
 }
 
 .course-card__description-text {
     margin: 0;
-    font-size: var(--font-size-sm)
+    font-size: var(--font-size-sm);
+    color: #333;
 }
 
 .course-card__button {
     background-color: #000;
     color: var(--color-background);
-    padding: var(--space-xs) 5rem;
+    padding: var(--space-xs) 3rem;
     border-radius: var(--space-lg);
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.3s ease-in-out;
+    white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+    .course-card__date-wrapper {
+        padding: 0 var(--space-lg);
+        border-right: 1px solid #000;
+    }
+
+    .course-card__button {
+        padding: var(--space-xs) 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .course-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-sm);
+        gap: var(--space-md);
+    }
+
+    .course-card__date-wrapper {
+        flex-direction: row;
+        border-right: none;
+        border-bottom: 1px solid #000;
+        width: 100%;
+        padding: var(--space-xs) 0;
+        justify-content: flex-start;
+        gap: var(--space-md);
+    }
+
+    .course-card__info-wrapper {
+        width: 100%;
+    }
+
+    .course-card__meta-wrapper {
+        gap: var(--space-md);
+    }
+
+    .course-card__button {
+        width: 100%;
+        padding: var(--space-sm);
+        text-align: center;
+    }
 }

@@ -1,20 +1,12 @@
 ---
+// @ts-nocheck
 /**
  * EventDetail
  *
  * Main detail view component for a single event / training.
- *
- * Responsibilities:
- * - Renders full event information: title, description, dates, modality,
- *   location, organizer, and rich text body.
- * - Integrates accessibility features (text-to-speech, font size controls).
- * - Displays associated media in a slider when available.
- *
- * Assumptions:
- * - `event` is a fully normalized event object (Strapi v5).
  */
 
-// @ts-nocheck
+// imports
 import { Icon } from "astro-icon/components";
 import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech";
 import MediaSlider from "../../islands/MediaSlider/MediaSlider";
@@ -25,6 +17,23 @@ import { formatDate } from "../../utils/date";
 
 const { event } = Astro.props;
 
+/**
+ * Extract plain text from Strapi v5 rich text blocks
+ */
+const extractPlainText = (blocks = []) => {
+  if (!Array.isArray(blocks)) return "";
+
+  return blocks
+    .map((block) => {
+      if (!block.children) return "";
+      return block.children
+        .map((child) => child.text || "")
+        .join(" ");
+    })
+    .join("\n");
+};
+
+/* media slider items */
 const sliderItems = Array.isArray(event.media)
   ? event.media.map((media) => ({
       type: "image",
@@ -33,14 +42,18 @@ const sliderItems = Array.isArray(event.media)
     }))
   : [];
 
-const plainTextContent = Array.isArray(event.description)
-  ? event.description
-      .map((block) => block.children?.map((child) => child.text).join(" "))
-      .join("\n")
-  : "";
+/* full text for text-to-speech */
+const fullTextToRead = `
+${event.title}
 
-const startDateFormatted = formatDate(event.startDate) ;
-const endDateFormatted = formatDate(event.endDate) ;
+${event.description || ""}
+
+${extractPlainText(event.content)}
+`;
+
+/* formatted dates */
+const startDateFormatted = formatDate(event.startDate);
+const endDateFormatted = formatDate(event.endDate);
 ---
 
 <section class="event-detail__wrapper">
@@ -63,9 +76,13 @@ const endDateFormatted = formatDate(event.endDate) ;
           )}
         </div>
 
-        <div class="event-header__description">
-          <p class="event-header__description-content">{event.description}</p>
-        </div>
+        {event.description && (
+          <div class="event-header__description">
+            <p class="event-header__description-content">
+              {event.description}
+            </p>
+          </div>
+        )}
       </div>
 
       <div class="event-header__meta-buttons">
@@ -96,7 +113,7 @@ const endDateFormatted = formatDate(event.endDate) ;
         <div class="event-meta__controls">
           <TextToSpeech
             client:load
-            text={`${event.title}. ${plainTextContent}`}
+            text={fullTextToRead}
           />
 
           <FontSizeControls client:load />
@@ -109,13 +126,11 @@ const endDateFormatted = formatDate(event.endDate) ;
         <RichText content={event.content} />
       </article>
 
-      {
-        sliderItems.length > 0 && (
-          <div class="event-detail__slider">
-            <MediaSlider client:visible items={sliderItems} />
-          </div>
-        )
-      }
+      {sliderItems.length > 0 && (
+        <div class="event-detail__slider">
+          <MediaSlider client:visible items={sliderItems} />
+        </div>
+      )}
     </div>
   </article>
 </section>

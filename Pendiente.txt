@@ -1,5 +1,0 @@
-Hacer hoy: 6/2
-
-detalle de articulo (cualquiera, probar con la seccion de familias)
-seccion de adultos mayores (tramites y derechos, prestaciones, etc)
-corregir estilos de card de adaptacion del hogar (y todos los que lo usen) en las imagenes q se ven mal o cortadas.

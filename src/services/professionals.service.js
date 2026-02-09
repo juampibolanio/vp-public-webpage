@@ -7,7 +7,7 @@ export async function getProfessionalArticles({
   pageSize = 6,
 } = {}) {
   if (!category) {
-    throw new Error("getProfessionalArticles requiere una categoría");
+    throw new Error("getProfessionalArticles require a category");
   }
 
   const endpoint =

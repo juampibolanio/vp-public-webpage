@@ -7,6 +7,7 @@
 .courses-cards__button-wrapper {
     max-width: 300px;
     margin-top: var(--space-md);
+    align-self: flex-start;
 }
 
 .courses-cards__button {
@@ -14,5 +15,31 @@
     color: var(--color-background);
     background-color: #000;
     border-radius: var(--space-lg); 
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-block;
+    text-align: center;
     transition: transform 0.3s ease-in-out;
+}
+
+@media (max-width: 1024px) {
+    .courses-cards__button-wrapper {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .courses-cards-wrapper {
+        gap: var(--space-md);
+    }
+
+    .courses-cards__button-wrapper {
+        align-self: center;
+        margin-top: var(--space-sm);
+    }
+
+    .courses-cards__button {
+        width: 100%;
+        padding: var(--space-sm);
+    }
 }

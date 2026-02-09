@@ -11,7 +11,7 @@
 }
 
 .professional-new-card:hover {
-    transform: translateY(-3px)
+    transform: translateY(-3px);
 }
 
 .professional-new-card__header {
@@ -86,6 +86,7 @@
     font-weight: 600;
     font-size: var(--font-size-sm);
     text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .professional-new-card__read-button:hover {
@@ -108,9 +109,10 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .professional-new-card {
         padding: var(--space-md);
+        gap: var(--space-sm);
     }
 
     .professional-new-card__header {
@@ -125,5 +127,26 @@
 
     .professional-new-card__excerpt {
         font-size: var(--font-size-sm);
+    }
+
+    .professional-new-card__footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+
+    .professional-new-card__read-button {
+        width: 100%;
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+    .professional-new-card__title {
+        font-size: var(--font-size-sm);
+    }
+
+    .professional-new-card__excerpt {
+        font-size: var(--font-size-xs);
     }
 }

@@ -2,6 +2,7 @@
 // @ts-nocheck
 import MainLayout from "../../../../layouts/MainLayout.astro";
 import Breadcrumb from "../../../../components/shared/Breadcrumb.astro";
+import Sidebar from "../../../../components/shared/Sidebar.astro";
 import TitleBarTopPage from "../../../../components/shared/TitleBarTopPage.astro";
 import ProfessionalNewCard from "../../../../components/professional-section/ProfessionalNewCard.astro";
 import Pagination from "../../../../components/news/Pagination.astro";
@@ -68,6 +69,9 @@ const breadcrumbItems = [
             )
           }
         </div>
+        <aside class="news-sidebar">
+          <Sidebar />
+        </aside>
       </div>
     </div>
   </div>
@@ -144,6 +148,10 @@ const breadcrumbItems = [
     @media (max-width: 768px) {
       .articles-layout__grid {
         grid-template-columns: 1fr;
+      }
+
+      .news-sidebar {
+        display: none;
       }
     }
   </style>

@@ -5,26 +5,26 @@ const laws = [
   {
     title: "Convención centroamericana",
     subtitle: "Ley 27.360 - Jerarquía Constitucional",
-    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
+    href: "http://localhost:1337/uploads/tratados_multilaterales_interamericanos_a_70_derechos_humanos_personas_mayores_c4a60f867a.pdf",
     download: "tratado-interamericano-derechos-personas-mayores.pdf",
   },
   {
     title: "Ley de Salud Mental",
     subtitle: "Ley Nacional 26.657",
-    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
-    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+    href: "http://localhost:1337/uploads/ley_de_salud_mental_1b3b0e2cc5.pdf",
+    download: "ley-salud-mental.pdf",
   },
   {
     title: "Derechos del paciente",
     subtitle: "Ley 26.529 y modificaciones",
-    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
-    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+    href: "http://localhost:1337/uploads/ley_derechos_paciente_99df48d609.pdf",
+    download: "derechos-del-paciente.pdf",
   },
   {
     title: "Regulación de residencias",
     subtitle: "Marco regulatorio básico",
-    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
-    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+    href: "http://localhost:1337/uploads/resolucion_3315_residencias_1a771623c3.pdf",
+    download: "regulacion-residencias.pdf",
   },
 ];
 ---
@@ -45,7 +45,7 @@ const laws = [
         <div class="professional-laws__archive">
           <h4 class="professional-laws__archive-title">{law.title}</h4>
           <span class="professional-laws__archive-subtitle">{law.subtitle}</span>
-          <a class="professional-laws__archive-download" href={law.href} download={law.download}>
+          <a class="professional-laws__archive-download" href={law.href} download={law.download} rel="noopener noreferrer" target="_blank">
             Descargar PDF
           </a>
         </div>

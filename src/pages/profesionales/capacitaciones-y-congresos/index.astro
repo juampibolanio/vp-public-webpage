@@ -65,26 +65,29 @@ const breadcrumbItems = [
         </div>
 
         <div class="events-page__list">
-          {events.length ? (
-            <>
-              <EventList events={events} />
+          {
+            events.length ? (
+              <>
+                <EventList events={events} />
 
-              <Pagination
-                currentPage={pagination.page}
-                totalPages={pagination.pageCount}
-                basePath="/capacitaciones"
-              />
-            </>
-          ) : (
-            <div class="events-empty">
-              <h2 class="events-empty__title">
-                Aún no hay capacitaciones publicadas
-              </h2>
-              <p class="events-empty__text">
-                Estamos trabajando en nuevos eventos. Volvé a visitarnos pronto.
-              </p>
-            </div>
-          )}
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.pageCount}
+                  basePath="/capacitaciones"
+                />
+              </>
+            ) : (
+              <div class="events-empty">
+                <h2 class="events-empty__title">
+                  Aún no hay capacitaciones publicadas
+                </h2>
+                <p class="events-empty__text">
+                  Estamos trabajando en nuevos eventos. Volvé a visitarnos
+                  pronto.
+                </p>
+              </div>
+            )
+          }
         </div>
       </div>
 
@@ -111,10 +114,11 @@ const breadcrumbItems = [
       max-width: 1280px;
       margin: 0 auto;
       padding: 2rem 1.5rem;
+      flex-wrap: wrap;
     }
 
     .events-page__content {
-      flex: 1;
+      flex: 1 1 600px;
       max-width: 800px;
       display: flex;
       flex-direction: column;
@@ -157,13 +161,49 @@ const breadcrumbItems = [
       color: var(--color-text-secondary);
     }
 
+    @media (max-width: 1024px) {
+      .events-page-wrapper {
+        gap: 2rem;
+      }
+
+      .events-page__content {
+        flex: 1 1 100%;
+      }
+
+      .events-sidebar {
+        width: 100%;
+        max-width: none;
+      }
+    }
+
     @media (max-width: 900px) {
       .events-page-wrapper {
         flex-direction: column;
+        gap: var(--space-lg);
+        padding: var(--space-lg);
       }
 
       .events-sidebar {
         display: none;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .events-page__description p {
+        font-size: var(--font-size-md);
+        line-height: 1.4;
+      }
+
+      .events-empty {
+        padding: var(--space-lg);
+      }
+
+      .events-empty__title {
+        font-size: var(--font-size-md);
+      }
+
+      .events-empty__text {
+        font-size: var(--font-size-sm);
       }
     }
   </style>

@@ -5,6 +5,7 @@ import Breadcrumb from "../../../../components/shared/Breadcrumb.astro";
 import TitleBarTopPage from "../../../../components/shared/TitleBarTopPage.astro";
 import ProfessionalNewCard from "../../../../components/professional-section/ProfessionalNewCard.astro";
 import Pagination from "../../../../components/news/Pagination.astro";
+import Sidebar from "../../../../components/shared/Sidebar.astro";
 import { getProfessionalArticles } from "../../../../services/professionals.service";
 
 const { articles, pagination } = await getProfessionalArticles({
@@ -47,13 +48,11 @@ const breadcrumbItems = [
                   ))}
                 </div>
 
-                {pagination && pagination.pageCount > 1 && (
-                  <Pagination
-                    currentPage={pagination.page}
-                    totalPages={pagination.pageCount}
-                    basePath="/profesionales/articulos/actualidad-profesional"
-                  />
-                )}
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.pageCount}
+                  basePath="/profesionales/articulos/actualidad-profesional"
+                />
               </>
             ) : (
               <div class="articles-empty">
@@ -68,6 +67,9 @@ const breadcrumbItems = [
             )
           }
         </div>
+        <aside class="news-sidebar">
+          <Sidebar />
+        </aside>
       </div>
     </div>
   </div>
@@ -113,7 +115,7 @@ const breadcrumbItems = [
 
     .articles-layout__grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: var(--space-xl);
     }
 
@@ -142,6 +144,9 @@ const breadcrumbItems = [
     }
 
     @media (max-width: 768px) {
+      .news-sidebar {
+        display: none;
+      }
       .articles-layout__grid {
         grid-template-columns: 1fr;
       }

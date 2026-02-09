@@ -27,7 +27,10 @@ if (!event) {
 
 const breadcrumbItems = [
   { label: "Inicio", href: "/" },
-  { label: "Capacitaciones", href: "/profesionales/capacitaciones-y-congresos" },
+  {
+    label: "Capacitaciones",
+    href: "/profesionales/capacitaciones-y-congresos",
+  },
   {
     label: event.title,
     href: null,
@@ -40,16 +43,15 @@ const breadcrumbItems = [
     <Breadcrumb items={breadcrumbItems} />
 
     <header class="event-detail__items">
-      {event.eventType && (
-        <span class="event-detail__button button--category">
-          {event.eventType}
-        </span>
-      )}
+      {
+        event.eventType && (
+          <span class="event-detail__button button--category">
+            {event.eventType}
+          </span>
+        )
+      }
 
-      <a
-        href="/capacitaciones"
-        class="event-detail__button button--back"
-      >
+      <a href="/profesionales/capacitaciones-y-congresos" class="event-detail__button button--back">
         Volver
       </a>
     </header>
@@ -68,7 +70,6 @@ const breadcrumbItems = [
     padding: 2rem 1.5rem;
   }
 
-  /* header buttons */
   .event-detail__items {
     display: flex;
     justify-content: space-between;
@@ -86,9 +87,44 @@ const breadcrumbItems = [
     font-weight: 500;
     font-size: var(--font-size-sm);
     white-space: nowrap;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .event-detail__button:hover {
+    transform: translateY(-2px);
   }
 
   .button--category {
     border-radius: var(--space-lg);
+  }
+
+  @media (max-width: 1024px) {
+    .event-detail__layout {
+      padding: 2rem 1rem;
+    }
+
+    .event-detail__button {
+      font-size: var(--font-size-xs);
+      padding: var(--space-xxs) var(--space-md);
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    .event-detail__button {
+      text-align: center;
+      white-space: normal;
+      padding: var(--space-sm);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .event-detail__layout {
+      padding: var(--space-lg) var(--space-sm);
+    }
+
+    .event-detail__button {
+      font-size: var(--font-size-xs);
+    }
   }
 </style>
