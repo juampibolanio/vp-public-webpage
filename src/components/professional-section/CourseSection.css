@@ -1,0 +1,18 @@
+.courses-cards-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.courses-cards__button-wrapper {
+    max-width: 300px;
+    margin-top: var(--space-md);
+}
+
+.courses-cards__button {
+    padding: var(--space-md);
+    color: var(--color-background);
+    background-color: #000;
+    border-radius: var(--space-lg); 
+    transition: transform 0.3s ease-in-out;
+}
