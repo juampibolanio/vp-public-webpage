@@ -1,0 +1,67 @@
+.professional-laws {
+    display: flex;
+    justify-content: space-between;
+}
+
+.professional-laws__content {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-xxl);
+}
+
+.professional-laws__title {
+    align-self: flex-start;
+    font-size: var(--font-size-xxl);
+    margin: 0;
+}
+
+.professional-laws__description {
+    margin: 0;
+    max-width: 400px;
+    font-size: var(--font-size-md);
+}
+
+.professional-laws__archives-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+}
+
+.professional-laws__button {
+    padding: var(--space-xs) var(--space-xxl);
+    border: 2px solid #A78A70;
+    border-radius: var(--space-lg);
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.professional-laws__archive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-md) var(--space-xxl);
+    border: 2px solid #A78A70;
+    border-radius: var(--space-md);
+    text-align: center;
+}
+
+.professional-laws__archive-title {
+    margin: 0;
+    font-size: var(--font-size-sm);
+}   
+
+.professional-laws__archive-subtitle {
+    margin: 0;
+    font-size: var(--font-size-xs);
+}
+
+.professional-laws__archive-download {
+    margin: 0;
+    font-size: var(--font-size-md);
+    text-transform: uppercase;
+    color: var(--color-alternative);
+    font-weight: 600;
+}

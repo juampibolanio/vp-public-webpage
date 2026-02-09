@@ -1,0 +1,55 @@
+---
+import "./ProfessionalLawsSection.css";
+
+const laws = [
+  {
+    title: "Convención centroamericana",
+    subtitle: "Ley 27.360 - Jerarquía Constitucional",
+    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
+    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+  },
+  {
+    title: "Ley de Salud Mental",
+    subtitle: "Ley Nacional 26.657",
+    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
+    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+  },
+  {
+    title: "Derechos del paciente",
+    subtitle: "Ley 26.529 y modificaciones",
+    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
+    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+  },
+  {
+    title: "Regulación de residencias",
+    subtitle: "Marco regulatorio básico",
+    href: "../../assets/laws-documents/tratados_multilaterales_interamericanos_a-70_derechos_humanos_personas_mayores.pdf",
+    download: "tratado-interamericano-derechos-personas-mayores.pdf",
+  },
+];
+---
+
+<section class="professional-laws">
+  <div class="professional-laws__content">
+    <h3 class="professional-laws__title">Marco Normativo y Leyes</h3>
+    <p class="professional-laws__description">
+      Comprendido actualizado de leyes Nacionales, provinciales y tratados
+      internacionales que rigen los derechos de las personas mayores
+    </p>
+    <a class="professional-laws__button" href="/profesionales/articulos/marco-normativo">Ver artículos relacionados</a>
+  </div>
+
+  <div class="professional-laws__archives-wrapper">
+    {
+      laws.map((law) => (
+        <div class="professional-laws__archive">
+          <h4 class="professional-laws__archive-title">{law.title}</h4>
+          <span class="professional-laws__archive-subtitle">{law.subtitle}</span>
+          <a class="professional-laws__archive-download" href={law.href} download={law.download}>
+            Descargar PDF
+          </a>
+        </div>
+      ))
+    }
+  </div>
+</section>
