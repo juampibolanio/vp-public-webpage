@@ -1,93 +1,133 @@
 ---
-/**
- * NewsAndRights
- *
- * Homepage section that highlights recent news focused on
- * current affairs and rights of older adults.
- *
- * Structure:
- * - One featured article (most recent).
- * - A secondary list of related articles.
- *
- * Data:
- * - Fetched via news service (paginated, limited to 4 items).
- *
- * Responsibilities:
- * - Emphasize editorial priority content.
- * - Provide clear navigation to categories and full articles.
- *
- * Accessibility notes:
- * - Descriptive alt text for images.
- * - Aria-labels for links and navigation clarity.
- *
- * Notes:
- * - Assumes at least one news item is returned.
- * - Category is rendered as a navigable filter.
- */
 //@ts-nocheck
-import './NewsAndRights.css';
-import { formatDate } from '../../utils/date.js'
-import { getNews } from '../../services/news.service';
+import "./NewsAndRights.css";
+import { formatDate } from "../../utils/date.js";
+import { getNews } from "../../services/news.service";
 
-/* get news to list */
-const { news: listNews } = await getNews({
+const { news: listNews = [] } = await getNews({
   page: 1,
   pageSize: 4,
 });
 
+const hasNews = Array.isArray(listNews) && listNews.length > 0;
+const hasSecondaryNews = listNews.length > 1;
 ---
 
 <section class="container-news-rights">
-    <div class="container__header">
-        <h2 class="header__title">Actualidad y derechos</h2>
+  <div class="container__header">
+    <h2 class="header__title">Actualidad y derechos</h2>
+    <p class="header__subtitle">
+      Información, análisis y debates que impactan en la vida cotidiana de las
+      personas mayores.
+    </p>
+  </div>
 
-        <p class="header__subtitle">Información, análisis y debates que impactan en la vida cotidiana de las personas mayores. </p>
-    </div>
-
-    <div class="container__news-section">
-        
+  {
+    hasNews ? (
+      <div class="container__news-section">
         <article class="news-featured">
-            <div class="news-featured__image-container">
-                <img src={listNews[0].media.url || listNews[0].media.thumbnail} alt={listNews[0].media.alt || listNews[0].title} class="news-featured__image" />
+          <div class="news-featured__image-container">
+            <img
+              src={listNews[0].media?.url || listNews[0].media?.thumbnail}
+              alt={listNews[0].media?.alt || listNews[0].title}
+              class="news-featured__image"
+              loading="lazy"
+            />
+          </div>
+
+          <div class="news-featured__meta">
+            <div class="meta__content">
+              <span class="news-featured__date">
+                {formatDate(listNews[0].publishedDate)}
+              </span>
+
+              <a
+                href={`/noticias/categoria/${listNews[0].category}`}
+                class="news-featured__category"
+                aria-label={`Categoría: ${listNews[0].category}`}
+              >
+                {listNews[0].category}
+              </a>
             </div>
 
-            <div class="news-featured__meta">
-                <div class="meta__content">
-                    <span class="news-featured__date">
-                        {formatDate(listNews[0].publishedDate)}
-                    </span>
-                    <a href={`/noticias/categoria/${listNews[0].category}`} aria-label={`Categoría: ${listNews[0].category}`} class="news-featured__category">{listNews[0].category}</a>
-                </div>
+            <span class="news-featured__author">
+              Por: {listNews[0].author?.name}
+            </span>
+          </div>
 
-                <span class="news-featured__author">Por: {listNews[0].author.name}</span>
-            </div>
+          <a
+            href={`/noticias/${listNews[0].slug}`}
+            class="news-featured__title"
+            aria-label={`Ver noticia: ${listNews[0].title}`}
+          >
+            {listNews[0].title}
+          </a>
 
-            <a href={`/noticias/${listNews[0].slug}`}  aria-label={`Ver noticia: ${listNews[0].title}`} class="news-featured__title">{listNews[0].title}</a>
-
-            <p class="news-featured__summary">{listNews[0].excerpt}</p>
+          <p class="news-featured__summary">{listNews[0].excerpt}</p>
         </article>
 
-        <aside class="news-list">
-            {listNews.slice(1).map(item => (
-                <article class="news-list__item">
-                    <div class="item__image-wrapper">
-                        <img src={item.media.url || item.media.thumbnail} alt={item.media.alt || item.title} class="item__image-img" />
-                    </div>
+        {hasSecondaryNews && (
+          <aside class="news-list">
+            {listNews.slice(1).map((item) => (
+              <article class="news-list__item">
+                <div class="item__image-wrapper">
+                  <img
+                    src={item.media?.url || item.media?.thumbnail}
+                    alt={item.media?.alt || item.title}
+                    class="item__image-img"
+                    loading="lazy"
+                  />
+                </div>
 
-                    <div class="item__content">
-                        <a aria-label={`Categoría: ${item.category}`} href={`/noticias/categoria/${item.category}`} class="content__category">{item.category}</a>
-                        <a aria-label={`Ver noticia: ${item.title}`} href={`/noticias/${item.slug}`} class="content__title">{item.title}</a>
+                <div class="item__content">
+                  <a
+                    href={`/noticias/categoria/${item.category}`}
+                    class="content__category"
+                    aria-label={`Categoría: ${item.category}`}
+                  >
+                    {item.category}
+                  </a>
 
-                        <span class="content__author">Por: {item.author.name}</span>
-                        <span class="content__date">
-                            {formatDate(item.publishedDate)}
-                        </span>
-                    </div>
-                </article>
+                  <a
+                    href={`/noticias/${item.slug}`}
+                    class="content__title"
+                    aria-label={`Ver noticia: ${item.title}`}
+                  >
+                    {item.title}
+                  </a>
+
+                  <span class="content__author">Por: {item.author?.name}</span>
+
+                  <span class="content__date">
+                    {formatDate(item.publishedDate)}
+                  </span>
+                </div>
+              </article>
             ))}
 
-            <a href="/noticias" class="news-list__more" aria-label="Ver todas las noticias">Ver todas las noticias</a>
-        </aside>
-    </div>
+            <a
+              href="/noticias"
+              class="news-list__more"
+              aria-label="Ver todas las noticias"
+            >
+              Ver todas las noticias
+            </a>
+          </aside>
+        )}
+      </div>
+    ) : (
+      <div class="news-fallback">
+        <h3 class="news-fallback__title">Próximamente nuevas noticias</h3>
 
+        <p class="news-fallback__text">
+          Estamos preparando contenidos sobre actualidad, derechos y calidad de
+          vida de las personas mayores. Volvé a visitarnos pronto.
+        </p>
+
+        <a href="/noticias" class="news-fallback__button">
+          Ir a noticias
+        </a>
+      </div>
+    )
+  }
 </section>
