@@ -1,0 +1,63 @@
+---
+import './EventCard.css';
+import { Icon } from 'astro-icon/components';
+
+const { event } = Astro.props;
+
+---
+
+<article class="event-item">
+  <div class="event__image-wrapper">
+    <a href={`/profesionales/capacitaciones-y-congresos/${event.slug}`} class="event__link">
+      <img
+        class="event__image"
+        src={event.media[0]?.url || '/placeholder-event.jpg'}
+        alt={event.media[0]?.alt || event.title}
+        loading="lazy"
+        decoding="async"
+      />
+    </a>
+  </div>
+
+  <div class="event__meta-info">
+    <span class="meta-date">
+      <Icon name="mdi:calendar-range" class="meta-icon" />
+      Del {event.startDate} al {event.endDate}
+    </span>
+  </div>
+
+  <div class="event__body">
+    <h3 class="event__body-title">
+      <a href={`/profesionales/capacitaciones-y-congresos/${event.slug}`} class="event__link event__link--title">
+        {event.title}
+      </a>
+    </h3>
+
+    {event.excerpt && (
+      <p class="event__body-description">
+        <a href={`/profesionales/capacitaciones-y-congresos/${event.slug}`} class="event__link event__link--excerpt">
+          {event.excerpt}
+        </a>
+      </p>
+    )}
+
+    <div class="event__details">
+      <p class="event__location">
+        <Icon name="mdi:map-marker" class="detail-icon" />
+        {event.location}
+      </p>
+      <p class="event__organizer">
+        <Icon name="mdi:domain" class="detail-icon" />
+        <strong>Organiza:</strong> {event.organizer}
+      </p>
+      <p class="event__modality">
+        <Icon name="mdi:laptop" class="detail-icon" />
+        <strong>Modalidad:</strong> {event.modality}
+      </p>
+      <p class="event__type">
+        <Icon name="mdi:calendar-star" class="detail-icon" />
+        <strong>Tipo de evento:</strong> {event.eventType}
+      </p>
+    </div>
+  </div>
+</article>
