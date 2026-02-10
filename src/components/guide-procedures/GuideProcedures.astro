@@ -1,0 +1,84 @@
+---
+import './GuideProcedures.css';
+import { Icon } from 'astro-icon/components';
+import { getGuideProcedures } from '../../services/guide-procedures.service';
+import { getAvailableCategories } from '../../utils/guide-procedures-normalizer';
+
+const { data: guides, error } = await getGuideProcedures();
+const categories = getAvailableCategories();
+---
+
+<section class="procedures-container" id="procedures-section">
+  
+  <div class="procedures-header">
+    <div class="header-text">
+      <p>Información clara, oficial y paso a paso para realizar tus gestiones en Corrientes y la región del NEA</p>
+    </div>
+
+    <div class="search-bar-wrapper">
+      <input 
+        type="text" 
+        id="search-input" 
+        placeholder="Buscar trámite, organismo o servicio..." 
+        class="search-input" 
+      />
+      <button class="search-btn">Buscar</button>
+    </div>
+  </div>
+
+  <div class="filters-container">
+    {categories.map((cat: any, index: any) => (
+      <button 
+        class={`filter-pill ${index === 0 ? 'active' : ''}`} 
+        data-filter={cat.slug}
+      >
+        {cat.label}
+      </button>
+    ))}
+  </div>
+
+  {error && <p class="error-msg text-center" style="color: red;">{error}</p>}
+
+  <div class="guides-grid" id="guides-grid">
+    {guides.map((guide: any) => (
+      <article 
+        class="guide-card" 
+        data-category={guide.categorySlug} 
+        data-title={guide.title.toLowerCase()} 
+      >
+        
+        <div class="card-header">
+          <div class="icon-box">
+            <Icon name={guide.icon || 'mdi:file'} class="guide-icon" />
+          </div>
+          <span class="category-badge">{guide.categoryLabel}</span>
+        </div>
+
+        <div class="card-body">
+          <h3>{guide.title}</h3>
+          <p>{guide.description}</p>
+        </div>
+
+        <div class="card-footer">
+          <a href={guide.url} class="link-step">
+            Ver guía paso a paso
+          </a>
+        </div>
+
+      </article>
+    ))}
+    
+    <div id="no-results-msg" style="display: none; text-align: center; width: 100%; grid-column: 1 / -1; color: #666;">
+        <p>No se encontraron trámites que coincidan con tu búsqueda.</p>
+    </div>
+  </div>
+
+</section>
+
+<script>
+  import { initGuideFilters } from '../../utils/guide-filter-handler';
+
+  document.addEventListener('astro:page-load', initGuideFilters);
+  
+  document.addEventListener('DOMContentLoaded', initGuideFilters);
+</script>

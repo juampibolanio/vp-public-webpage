@@ -1,0 +1,99 @@
+---
+import './UsefulPhones.css';
+import { Icon } from 'astro-icon/components';
+import { getUsefulPhones } from '../../services/useful-phones.service';
+
+const { data, error: fetchError } = await getUsefulPhones();
+---
+
+<main class="page-container">
+    
+    <header class="page-header">
+        <div class="header-content">
+        <p class="header-desc">
+            Guía completa de contacto de servicios públicos, emergencias y organismos oficiales para Corrientes y la región del NEA.
+        </p>
+        </div>
+    </header>
+
+    {fetchError && (
+        <div style="text-align: center; color: red; padding: 2rem;">
+        <p>{fetchError}</p>
+        </div>
+    )}
+
+    <div class="phones-content">
+        {data.map((category: any) => {
+        if (category.cards.length === 0) return null;
+
+        const isEmergency = category.slug === 'EMERGENCY';
+
+        return (
+            <section class="category-section">
+            
+            <div class="category-header">
+                <h2>{category.categoryTitle}</h2>
+                <div class="header-line"></div>
+            </div>
+            
+            <div class="cards-grid">
+                {category.cards.map((card: any) => (
+                <article class={`phone-card ${isEmergency ? 'card-emergency' : 'card-standard'}`}>
+                    
+                    <div class="card-top">
+                    {isEmergency ? (
+                        <div class="icon-circle emergency-bg-icon">
+                        <Icon name={card.icon || 'mdi:alert'} class="card-icon-svg" />
+                        </div>
+                    ) : (
+                        <div class="logo-wrapper">
+                        {card.logo ? (
+                            <img src={card.logo} alt={`Logo ${card.name}`} class="card-img-logo" />
+                        ) : (
+                            <div class="icon-circle standard-bg-icon">
+                            <Icon name={card.icon || "mdi:phone"} class="card-icon-svg" />
+                            </div>
+                        )}
+                        </div>
+                    )}
+
+                    {card.tag && (
+                        <span class={`status-tag ${card.tag === 'URGENCIA' ? 'tag-red' : 'tag-blue'}`}>
+                        {card.tag}
+                        </span>
+                    )}
+                    </div>
+
+                    <div class="card-body">
+                    <h3 class="card-name">{card.name}</h3>
+                    
+                    {card.description && <p class="card-desc">{card.description}</p>}
+                    
+                    {card.subtitle && <p class="card-subtitle">{card.subtitle}</p>}
+
+                    <div class="phone-display">
+                        <span class="number-text">{card.phone}</span>
+                    </div>
+                    </div>
+
+                    <div class="card-actions">
+                    {card.actions.map((action: any) => (
+                        <a 
+                        href={action.label === 'Sitio-Web' ? action.value : `tel:${action.value}`} 
+                        target={action.label === 'Sitio-Web' ? '_blank' : '_self'}
+                        class={`btn-action ${isEmergency ? 'btn-black' : 'btn-orange'}`}
+                        >
+                        {action.label !== 'Sitio-Web' && <Icon name="mdi:phone" class="btn-icon-small" />}
+                        {action.label}
+                        </a>
+                    ))}
+                    </div>
+
+                </article>
+                ))}
+            </div>
+            </section>
+        );
+        })}
+    </div>
+</main>

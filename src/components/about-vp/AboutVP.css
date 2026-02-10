@@ -326,3 +326,42 @@
     color: #000;
     margin-top: var(--space-lg);
 }
+
+@media (max-width: 768px) {
+    
+    .about-vp__intro {
+        display: flex;
+        flex-direction: column-reverse; 
+        gap: var(--space-lg);
+        padding-top: var(--space-xl);
+        padding-bottom: var(--space-xl);
+        text-align: center; 
+    }
+
+    .intro__visual {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: var(--space-md);
+    }
+
+    .intro__visual img {
+        max-width: 180px; 
+        height: auto;
+    }
+
+    .intro__content {
+        gap: var(--space-md);
+    }
+
+    .intro__title {
+        font-size: 1.25rem; 
+        line-height: 1.4;
+    }
+
+    .intro__texts {
+        text-align: left; 
+        font-size: 0.95rem;
+    }
+    
+}

@@ -1,0 +1,241 @@
+*, *::before, *::after {
+    box-sizing: border-box; 
+}
+
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%; 
+    height: auto;
+}
+
+.donate-page {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-family-base);
+    line-height: 1.5;
+    padding-bottom: var(--space-xxxl);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.section-title {
+    font-size: var(--font-size-xxl);
+    font-weight: 600;
+    margin-bottom: var(--space-lg);
+    text-align: center;
+}
+
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xl);
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+}
+
+@media (min-width: 768px) {
+    .hero-section {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: var(--space-xxxl);
+    }
+}
+
+.hero-image-wrapper {
+    flex: 1;
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl); 
+    object-fit: cover;
+}
+
+.hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-title {
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+    line-height: 1.2;
+}
+
+.hero-title span {
+    color: var(--color-primary);
+    display: block; 
+}
+
+@media (min-width: 768px) {
+    .hero-title span {
+        display: inline;
+    }
+}
+
+.hero-description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xl);
+    font-size: var(--font-size-md);
+}
+
+.donation-actions {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.action-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    flex: 1;
+    min-width: 140px;
+}
+
+.disabled-group {
+    opacity: 0.5; 
+    filter: grayscale(100%); 
+    pointer-events: none; 
+    user-select: none; 
+    cursor: not-allowed;
+}
+
+.mini-logo {
+    height: 45px; 
+    width: auto;  
+    object-fit: contain;
+    margin-bottom: var(--space-xxs); 
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-md); 
+    font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    width: 100%;
+    text-align: center;
+    font-size: var(--font-size-sm);
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: #fff;
+}
+
+.bank-section {
+    padding-bottom: var(--space-xxxl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.bank-card {
+    width: 100%;
+    max-width: 500px; 
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.bank-field {
+    width: 100%;
+    border: 1px solid var(--color-text-primary); 
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-sm);
+    background-color: transparent;
+    color: var(--color-text-primary);
+    text-transform: uppercase;
+}
+
+.why-support-section {
+    background-color: var(--color-secondary); 
+    padding: var(--space-xxxl) 0;
+    margin-bottom: var(--space-xxxl);
+}
+
+.support-text {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.support-text p {
+    margin-bottom: var(--space-md);
+}
+
+.footer-cta-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-lg);
+    padding-bottom: var(--space-xxxl);
+}
+
+.footer-logo {
+    max-width: 250px;
+    height: auto;
+}
+
+.cta-text {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    max-width: 600px;
+}
+
+.btn-whatsapp {
+    background-color: var(--color-primary);
+    color: white;
+    width: fit-content; 
+    margin: 0 auto;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s ease, opacity 0.2s;
+}
+
+.btn-whatsapp:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.icon-ws {
+    font-size: 1.2em;
+}

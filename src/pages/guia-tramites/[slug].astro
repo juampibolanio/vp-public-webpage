@@ -1,0 +1,21 @@
+---
+export const prerender = true;
+import MainLayout from "../../layouts/MainLayout.astro";
+import GuideSteps from "../../components/guide-steps/GuideSteps.astro";
+import { getAllGuideSlugs, getGuideBySlug } from "../../services/guide-steps.service";
+export async function getStaticPaths() {
+  const paths = await getAllGuideSlugs();
+  return paths;
+}
+
+const { slug } = Astro.params;
+const { data: guideData } = await getGuideBySlug(slug);
+
+if (!guideData) {
+  return Astro.redirect('/404');
+}
+---
+
+<MainLayout title={guideData.title}>
+    <GuideSteps guideData={guideData} />
+</MainLayout>

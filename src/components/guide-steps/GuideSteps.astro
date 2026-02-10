@@ -1,0 +1,159 @@
+---
+import './GuideSteps.css';
+import { Icon } from 'astro-icon/components';
+
+const { guideData } = Astro.props;
+const guide = guideData || {
+  title: "Trámite no disponible",
+  description: "No se pudo cargar la información.",
+  steps: [],
+  requirements: [],
+  info: {},
+  contact: {}
+};
+---
+
+<div class="detail-container">
+  
+  <header class="detail-header">
+    <div class="breadcrumb">
+      <span>Inicio / Guía trámites / {guide.category} / {guide.title}</span>
+    </div>
+
+    <div class="title-row">
+      <h1>{guide.title}</h1>
+      <div class="badges-wrapper">
+        <a href="/guia-tramites" class="btn-back">VOLVER A LA GUÍA</a>
+        {guide.updatedAt && (
+            <span class="badge-update">Actualizado: {guide.updatedAt}</span>
+        )}
+      </div>
+    </div>
+
+    <p class="header-desc">{guide.description}</p>
+  </header>
+
+  <section class="info-grid">
+    <div class="info-item">
+      <Icon name="mdi:office-building" class="info-icon" />
+      <span class="info-label">ORGANISMO</span>
+      <span class="info-value">{guide.info?.organization || 'Oficial'}</span>
+    </div>
+    <div class="info-item">
+      <Icon name="mdi:map-marker" class="info-icon" />
+      <span class="info-label">PROVINCIA</span>
+      <span class="info-value">{guide.info?.province || 'Regional'}</span>
+    </div>
+    <div class="info-item">
+      <Icon name="mdi:clock-outline" class="info-icon" />
+      <span class="info-label">TIEMPO</span>
+      <span class="info-value">{guide.info?.time}</span>
+      <span class="info-sub">{guide.info?.delivery}</span>
+    </div>
+    <div class="info-item">
+      <Icon name="mdi:laptop" class="info-icon" />
+      <span class="info-label">MODALIDAD</span>
+      <span class="info-value">{guide.info?.modality}</span>
+      <span class="info-sub">{guide.info?.appointment}</span>
+    </div>
+    <div class="info-item">
+      <Icon name="mdi:currency-usd" class="info-icon" />
+      <span class="info-label">COSTO</span>
+      <span class="info-value">{guide.info?.cost}</span>
+    </div>
+  </section>
+
+  <div class="content-layout">
+    
+    <div class="main-content">
+      
+      {guide.requirements?.length > 0 && (
+        <section class="section-block bg-cream">
+            <h2>Requisitos</h2>
+            <ul class="requirements-list">
+            {guide.requirements.map((req: any) => (
+                <li>
+                <Icon name="mdi:check-circle-outline" class="check-icon" />
+                <span>{req}</span>
+                </li>
+            ))}
+            </ul>
+        </section>
+      )}
+
+      {guide.steps?.length > 0 && (
+          <section class="section-block">
+            <h2>Pasos a Seguir</h2>
+            <div class="steps-timeline">
+            {guide.steps.map((step: any) => (
+                <div class="step-item">
+                <div class="step-number">{step.number}</div>
+                <div class="step-content">
+                    <h3>{step.title}</h3>
+                    <p>{step.desc}</p>
+                </div>
+                </div>
+            ))}
+            </div>
+        </section>
+      )}
+
+      {guide.tips?.length > 0 && (
+        <section class="section-block tips-box">
+            <div class="tips-header">
+            <Icon name="mdi:lightbulb-on-outline" class="bulb-icon" />
+            <h3>Recomendaciones Prácticas</h3>
+            </div>
+            <ul class="tips-list">
+            {guide.tips.map((tip: any) => (
+                <li>{tip}</li>
+            ))}
+            </ul>
+        </section>
+      )}
+
+    </div>
+
+    <aside class="sidebar">
+      <div class="contact-card bg-cream">
+        <h2>Contacto y Ayuda</h2>
+        <div class="divider"></div>
+        
+        <div class="contact-row">
+          <span class="contact-label">CONSULTAS GENERALES</span>
+          <div class="contact-value highlight">
+            <Icon name="mdi:phone" class="sidebar-icon" />
+            {guide.contact?.phone}
+          </div>
+          <span class="contact-sub">{guide.contact?.hours}</span>
+        </div>
+
+        {guide.contact?.website && (
+            <div class="contact-row">
+            <span class="contact-label">SITIO OFICIAL</span>
+            <div class="contact-value">
+                <Icon name="mdi:web" class="sidebar-icon" />
+                <a href={`https://${guide.contact.website.replace('https://', '')}`} target="_blank" rel="noopener noreferrer">
+                {guide.contact.website}
+                </a>
+            </div>
+            </div>
+        )}
+
+        <div class="contact-row">
+          <span class="contact-label">OFICINA CENTRAL</span>
+          <div class="contact-value">
+            <Icon name="mdi:map-marker-radius" class="sidebar-icon" />
+            {guide.contact?.address}
+          </div>
+        </div>
+
+        <div class="sidebar-actions">
+          <button class="btn-primary">Sacar turno Online</button>
+          <a href="/guia-tramites" class="btn-secondary">Volver al listado</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+</div>
