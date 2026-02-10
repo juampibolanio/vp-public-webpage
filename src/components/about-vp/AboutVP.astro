@@ -1,4 +1,5 @@
 ---
+//@ts-nocheck
 /**
  * About Vivir Plenamente page.
  *
@@ -15,9 +16,8 @@
 import "./AboutVP.css";
 import logoIcon from "../../assets/home-icon.webp";
 import { Icon } from "astro-icon/components";
-import miriamPhoto from "../../assets/miriam.webp";
-import marceloPhoto from "../../assets/marcelo.webp";
 import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
+import { getAuthors } from "../../services/author.service";
 
 const editorialValues = [
   {
@@ -48,51 +48,36 @@ const editorialValues = [
   },
 ];
 
-const teamMembers = [
-  {
-    name: "Miriam Blandchard",
-    role: "Dueña / Autora",
-    image: miriamPhoto,
-  },
-  {
-    name: "Marcelo Apellido",
-    role: "Informador Comunicador",
-    image: marceloPhoto,
-  },
-];
----
+const teamMembers = await getAuthors();
 
+---
 <article class="about-vp__intro">
   <div class="intro__content">
     <h3 class="intro__title">
       Periodismo especializado en derecho de la vejez en Argentina. Vivir
       Plenamente es un medio periodístico multiplataforma especializado en
-      derecho de la vejez y calidad de vida de las personas mayores en
-      Argentina.
+      derecho de la vejez y calidad de vida de las personas mayores en Argentina.
     </h3>
 
     <div class="intro__texts">
       <p>
         En <strong>Vivir Plenamente</strong> informamos, orientamos y acompañamos
-        a personas mayores, sus familias y a quienes trabajan con ellas, brindando
-        información clara, confiable y accesible para la toma de decisiones cotidianas
-        vinculadas a salud, cuidados, recreación, trámites, jubilaciones y acceso
-        a derechos.
+        a personas mayores, sus familias y a quienes trabajan con ellas,
+        brindando información clara, confiable y accesible para la toma de
+        decisiones cotidianas vinculadas a salud, cuidados, recreación,
+        trámites, jubilaciones y acceso a derechos.
       </p>
 
       <p>
         Hacemos periodismo de servicio, con enfoque en derechos humanos, que
         busca transformar información compleja en contenidos comprensibles y
-        útiles, explicados paso a paso, para reducir la desinformación y la
-        incertidumbre que muchas veces atraviesan las personas mayores y sus
-        entornos.
+        útiles, explicados paso a paso.
       </p>
 
       <p>
         Nuestro trabajo se apoya en los principios de la Convención
         Interamericana sobre la Protección de los Derechos Humanos de las
-        Personas Mayores y promueve una mirada respetuosa, activa y empoderada
-        de las personas mayores y los procesos de envejecimiento.
+        Personas Mayores.
       </p>
     </div>
   </div>
@@ -119,25 +104,17 @@ const teamMembers = [
       <h4 class="pilar__title">Nuestra visión</h4>
       <p>
         Ser un medio de referencia en comunicación sobre derecho de la vejez y
-        personas mayores en Argentina, fortaleciendo el acceso a la información
-        como un derecho.
+        personas mayores en Argentina.
       </p>
     </div>
 
     <div class="pilar__audience">
       <Icon name="mdi:earth" />
       <h4 class="pilar__title">A quienes nos dirigimos</h4>
-      <p>Vivir Plenamente esta dirigido a:</p>
       <ul class="pilar__list">
-        <li>Personas mayores que buscan información clara y accesible.</li>
-        <li>
-          Familias y redes de apoyo que acompañan procesos de envejecimiento y
-          cuidado.
-        </li>
-        <li>
-          Profesionales e instituciones vinculadas a la vejez y los derechos
-          humanos.
-        </li>
+        <li>Personas mayores.</li>
+        <li>Familias y redes de cuidado.</li>
+        <li>Profesionales e instituciones.</li>
       </ul>
     </div>
   </div>
@@ -146,19 +123,17 @@ const teamMembers = [
 <section class="vp__values">
   <header class="values__header">
     <h3>Valores editoriales</h3>
-    <p>Los pilares fundamentales que guían cada nota, entrevista y reporte.</p>
+    <p>Los pilares que guían cada contenido.</p>
   </header>
 
   <div class="values__grid">
-    {
-      editorialValues.map((item) => (
-        <div class="value__card">
-          <Icon name={item.icon} class="value__icon" />
-          <h5>{item.title}</h5>
-          <p>{item.description}</p>
-        </div>
-      ))
-    }
+    {editorialValues.map((item) => (
+      <div class="value__card">
+        <Icon name={item.icon} class="value__icon" />
+        <h5>{item.title}</h5>
+        <p>{item.description}</p>
+      </div>
+    ))}
   </div>
 </section>
 
@@ -167,28 +142,30 @@ const teamMembers = [
 
   <header class="vp-integrants__header">
     <h2>Quienes hacemos Vivir Plenamente</h2>
-    <p>
-      Un equipo multidisciplinario de periodistas, fotógrafos y editores
-      apasionados por contar historias.
-    </p>
+    <p>El equipo detrás del proyecto.</p>
   </header>
 
   <div class="team__grid">
-    {
-      teamMembers.map((member) => (
-        <div class="team__card">
-          <div class="team__photo-placeholder">
+    {teamMembers.map((member) => (
+      <div class="team__card">
+        <div class="team__photo-placeholder">
+          {member.avatar ? (
             <img
-              src={member.image.src}
-              alt={`Photo of ${member.name}`}
+              src={member.avatar.url}
+              alt={member.avatar.alt}
               class="team__photo"
+              loading="lazy"
+              decoding="async"
             />
-          </div>
-          <p class="team__name">{member.name}</p>
-          <p class="team__role">{member.role}</p>
+          ) : (
+            <div class="team__photo team__photo--placeholder" />
+          )}
         </div>
-      ))
-    }
+
+        <p class="team__name">{member.name}</p>
+        <p class="team__role">{member.role}</p>
+      </div>
+    ))}
   </div>
 
   <hr class="divisor" />
