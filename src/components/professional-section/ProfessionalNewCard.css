@@ -54,6 +54,10 @@
     color: var(--color-alternative);
 }
 
+.professional-new-card__title a {
+    color: var(--color-alternative);
+}
+
 .professional-new-card__excerpt {
     margin: 0;
     font-size: var(--font-size-sm);

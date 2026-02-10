@@ -21,10 +21,20 @@ import "./Navbar.css";
 
 <nav class="navbar" aria-label="Navegación principal">
   <div class="navbar__container">
-    <button class="navbar__toggle" aria-label="Abrir menú"> ☰ </button>
+    <button
+      class="navbar__toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="navbar-links"
+    >
+      ☰
+    </button>
 
-    <div class="navbar__links">
-      <a class="navbar__link link--double-line link--important" href="https://wa.link/2s0wl1">
+    <div class="navbar__links" id="navbar-links">
+      <a
+        class="navbar__link link--double-line link--important"
+        href="https://wa.link/2s0wl1"
+      >
         <span class="link__text">Ayuda</span>
         <span class="link__text">Inmediata</span>
       </a>
@@ -32,42 +42,81 @@ import "./Navbar.css";
       <a class="navbar__link" href="/">Inicio</a>
 
       <div class="navbar__item navbar__item--dropdown">
-        <button class="navbar__link link--double-line navbar__accordion-toggle">
+        <button
+          class="navbar__link link--double-line navbar__accordion-toggle"
+          aria-expanded="false"
+        >
           <span class="link__text">Personas</span>
           <span class="link__text">Mayores</span>
         </button>
 
         <div class="dropdown">
-          <a class="dropdown__link" href="/guia-tramites">Trámites paso a paso</a>
+          <a class="dropdown__link" href="/guia-tramites"
+            >Trámites paso a paso</a
+          >
           <a class="dropdown__link" href="/adultos-mayores">Tus derechos</a>
-          <a class="dropdown__link" href="/telefonos-utiles">Teléfonos útiles</a>
-          <a class="dropdown__link" href="/adultos-mayores/clubes-y-centros">Actividades y clubes</a>
-          <a class="dropdown__link" href="/adultos-mayores/tu-salud">Salud y cuidados</a>
-          <a class="dropdown__link" href="/adultos-mayores/talleres-y-cursos">Talleres y cursos</a>
+          <a class="dropdown__link" href="/telefonos-utiles">Teléfonos útiles</a
+          >
+          <a class="dropdown__link" href="/adultos-mayores/clubes-y-centros"
+            >Actividades y clubes</a
+          >
+          <a class="dropdown__link" href="/adultos-mayores/tu-salud"
+            >Salud y cuidados</a
+          >
+          <a class="dropdown__link" href="/adultos-mayores/talleres-y-cursos"
+            >Talleres y cursos</a
+          >
         </div>
       </div>
 
       <div class="navbar__item navbar__item--dropdown">
-        <button class="navbar__link navbar__accordion-toggle">Familias</button>
+        <button
+          class="navbar__link navbar__accordion-toggle"
+          aria-expanded="false"
+        >
+          Familias
+        </button>
 
         <div class="dropdown">
-          <a class="dropdown__link" href="/familias/primeros-pasos">Primeros pasos</a>
-          <a class="dropdown__link" href="/familias/residencias-y-estadias">Residencias</a>
-          <a class="dropdown__link" href="/familias/salud-de-las-personas-mayores">Salud y cuidado</a>
-          <a class="dropdown__link" href="/familias/salud-del-cuidador">Salud del cuidador</a>
+          <a class="dropdown__link" href="/familias/primeros-pasos"
+            >Primeros pasos</a
+          >
+          <a class="dropdown__link" href="/familias/residencias-y-estadias"
+            >Residencias</a
+          >
+          <a
+            class="dropdown__link"
+            href="/familias/salud-de-las-personas-mayores">Salud y cuidado</a
+          >
+          <a class="dropdown__link" href="/familias/salud-del-cuidador"
+            >Salud del cuidador</a
+          >
           <a class="dropdown__link" href="/familias/cuidadores">Cuidadores</a>
         </div>
       </div>
 
       <div class="navbar__item navbar__item--dropdown">
-        <button class="navbar__link navbar__accordion-toggle"
-          >Profesionales</button
+        <button
+          class="navbar__link navbar__accordion-toggle"
+          aria-expanded="false"
         >
+          Profesionales
+        </button>
 
         <div class="dropdown">
-          <a class="dropdown__link" href="/profesionales/capacitaciones-y-congresos">Capacitaciones</a>
-          <a class="dropdown__link" href="/profesionales/articulos/actualidad-profesioal">Actualidad Profesional</a>
-          <a class="dropdown__link" href="/profesionales/articulos/marco-normativo">Marco normativo</a>
+          <a
+            class="dropdown__link"
+            href="/profesionales/capacitaciones-y-congresos">Capacitaciones</a
+          >
+          <a
+            class="dropdown__link"
+            href="/profesionales/articulos/actualidad-profesioal"
+            >Actualidad Profesional</a
+          >
+          <a
+            class="dropdown__link"
+            href="/profesionales/articulos/marco-normativo">Marco normativo</a
+          >
         </div>
       </div>
 
@@ -78,23 +127,21 @@ import "./Navbar.css";
 </nav>
 
 <script>
-  /**
-   * Navbar interactions:
-   * - Toggle mobile menu visibility.
-   * - Toggle dropdown sections as accordions.
-   */
   const toggle = document.querySelector(".navbar__toggle");
   const links = document.querySelector(".navbar__links");
 
   if (toggle && links) {
     toggle.addEventListener("click", () => {
-      links.classList.toggle("is-open");
+      const isOpen = links.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
     });
   }
 
   document.querySelectorAll(".navbar__accordion-toggle").forEach((btn) => {
     btn.addEventListener("click", () => {
-      btn.parentElement?.classList.toggle("is-open");
+      const parent = btn.parentElement;
+      const isOpen = parent?.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded", String(isOpen));
     });
   });
 </script>

@@ -2,17 +2,23 @@
 import "./ProfessionalNewCard.css";
 
 const { article } = Astro.props;
-
 ---
 
 <article class="professional-new-card">
   <div class="professional-new-card__header">
-    <span class="professional-new-card__date">{article.publishedDate}</span>
+    <time
+      class="professional-new-card__date"
+      datetime={article.publishedDateISO}
+    >
+      {article.publishedDate}
+    </time>
   </div>
 
   <div class="professional-new-card__body">
     <h3 class="professional-new-card__title">
-      {article.title}
+      <a href={`/profesionales/${article.slug}`}>
+        {article.title}
+      </a>
     </h3>
 
     <p class="professional-new-card__excerpt">
@@ -21,8 +27,16 @@ const { article } = Astro.props;
   </div>
 
   <div class="professional-new-card__footer">
-    <span class="professional-new-card__author">Por {article.author}</span>
+    <span class="professional-new-card__author">
+      Por {article.author}
+    </span>
 
-    <a class="professional-new-card__read-button" href=`/profesionales/${article.slug}`>Leer</a>
+    <a
+      class="professional-new-card__read-button"
+      href={`/profesionales/${article.slug}`}
+      aria-label={`Leer artículo ${article.title}`}
+    >
+      Leer
+    </a>
   </div>
 </article>

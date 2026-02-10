@@ -1,48 +1,49 @@
 ---
-/**
- * NewsFeatured
- *
- * Featured news card used to highlight a primary article in listings.
- *
- * Responsibilities:
- * - Displays a prominent image, category, publication date, and excerpt.
- * - Acts as a primary entry point to the news detail page.
- *
- * Data contract:
- * - Expects a normalized `news` object including media and author data.
- *
- * UX notes:
- * - Uses eager loading for the featured image to prioritize LCP.
- * - Author avatar rendering is conditional to avoid broken layouts.
- */
 import { formatDate } from "../../utils/date";
 import "./NewsFeatured.css";
 
 const { news } = Astro.props;
 
-const { title, slug, excerpt, category, publishedDate, media, author } = news;
+const {
+  title,
+  slug,
+  excerpt,
+  category,
+  publishedDate,
+  media,
+  author
+} = news;
 
 const formattedDate = formatDate(publishedDate);
 ---
 
 <section class="featured-new">
   <div class="featured-new__container">
-    <a href={`/noticias/${slug}`} class="featured-new__image-wrapper">
+    <a
+      href={`/noticias/${slug}`}
+      class="featured-new__image-wrapper"
+    >
       {
         media && (
           <img
             class="featured-new__image"
             src={media.url}
             alt={media.alt || title}
+            width="800"
+            height="450"
             loading="eager"
             decoding="async"
+            fetchpriority="high"
           />
         )
       }
     </a>
 
     <div class="featured-new__meta">
-      <a href={`/noticias/categoria/${category}`} class="meta__category">
+      <a
+        href={`/noticias/categoria/${category}`}
+        class="meta__category"
+      >
         {category}
       </a>
       <span class="news-item__meta-divider"></span>
@@ -51,7 +52,10 @@ const formattedDate = formatDate(publishedDate);
       </span>
     </div>
 
-    <a href={`/noticias/${slug}`} class="featured-new__content">
+    <a
+      href={`/noticias/${slug}`}
+      class="featured-new__content"
+    >
       <h3 class="content__title">
         {title}
       </h3>
@@ -63,21 +67,28 @@ const formattedDate = formatDate(publishedDate);
 
     <div class="featured-new__author">
       {
-        author.avatar && (
+        author?.avatar && (
           <div class="author__avatar-wrapper">
             <img
               class="author__avatar"
               src={author.avatar.url}
-              alt={author.avatar.alt}
+              alt={author.avatar.alt || author.name}
+              width="48"
+              height="48"
               loading="lazy"
+              decoding="async"
             />
           </div>
         )
       }
 
       <div class="author__info">
-        <span class="author__name">{author.name}</span>
-        <span class="author__publication-date">{formattedDate}</span>
+        <span class="author__name">
+          {author.name}
+        </span>
+        <span class="author__publication-date">
+          {formattedDate}
+        </span>
       </div>
     </div>
   </div>

@@ -3,12 +3,13 @@
  * Main application layout.
  * ------
  * Provides global styles, metadata, and the base page structure.
- * Includes Navbar, Hero, and Footer components shared across all pages.
+ * Includes Hero, Navbar, Hero, and Footer components shared across all pages.
  *
  * - Loads global CSS (fonts, variables, typography, globals)
  * - Sets default and dynamic page title
  * - Defines SEO and PWA-related meta tags
  */
+
 import "../styles/fonts.css";
 import "../styles/variables.css";
 import "../styles/typography.css";
@@ -27,7 +28,10 @@ const title = Astro.props.title
 <html lang="es-ar">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
     <meta
       name="description"
       content="Vivir Plenamente - Recursos y apoyo para una vida saludable y feliz."
@@ -38,11 +42,20 @@ const title = Astro.props.title
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body>
 
-	<Navbar />
-  <Hero />
-    <slot />
-  <Footer />
+  <body>
+    <a href="#content" class="skip-link">
+      Saltar al contenido principal
+    </a>
+
+    <Navbar />
+
+    <Hero />
+
+    <main id="content">
+      <slot />
+    </main>
+
+    <Footer />
   </body>
 </html>

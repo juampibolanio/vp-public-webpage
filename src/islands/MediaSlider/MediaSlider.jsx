@@ -24,24 +24,20 @@ import "./MediaSlider.css";
 
 export default function MediaSlider({ items = [] }) {
 
-    // initialize Embla and expose the carousel API
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: false,
         align: "start",
     });
 
-    // navigation status to enable/disable arrows
     const [canPrev, setCanPrev] = useState(false);
     const [canNext, setCanNext] = useState(false);
 
-    // updates the status of the controls according to the current position
     const updateControls = useCallback(() => {
         if (!emblaApi) return;
         setCanPrev(emblaApi.canScrollPrev());
         setCanNext(emblaApi.canScrollNext());
     }, [emblaApi]);
 
-    // subscribe the controls to embla events
     useEffect(() => {
         if (!emblaApi) return;
         updateControls();
@@ -61,12 +57,20 @@ export default function MediaSlider({ items = [] }) {
                                 <img
                                     src={item.src}
                                     alt={item.alt || ""}
+                                    width="800"
+                                    height="450"
                                     loading="lazy"
+                                    decoding="async"
                                 />
                             )}
 
                             {item.type === "video" && item.provider === "file" && (
-                                <video controls preload="metadata">
+                                <video
+                                    controls
+                                    preload="metadata"
+                                    width="800"
+                                    height="450"
+                                >
                                     <source src={item.src} type="video/mp4" />
                                 </video>
                             )}
@@ -75,6 +79,7 @@ export default function MediaSlider({ items = [] }) {
                                 <iframe
                                     src={item.src}
                                     title={item.title || "Video"}
+                                    loading="lazy"
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                 />
