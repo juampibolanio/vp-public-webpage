@@ -1,16 +1,6 @@
 /**
  * Useful Phones Normalizer
- * ------------------------
- * Utility module responsible for transforming raw API data into UI-ready structures.
- *
- * Responsibilities:
- * - Hold the static configuration for categories and assets.
- * - Map raw database records to frontend assets (icons/logos).
- * - Handle specific business logic (splitting phone numbers, special buttons).
- * - Return a clean, nested structure ready for the Astro component loop.
  */
-
-
 import aguasCorrientes from '../assets/aguas-corrientes-logo.webp';
 import anses from '../assets/anses-logo.webp';
 import defensaAlConsumidor from '../assets/defensa-al-consumidor-logo.webp';
@@ -45,9 +35,6 @@ const ASSET_MAP = {
     'Asistencia Personas Mayores': { logo: logoChaco.src, subtitle: 'Solo Chaco' }
 };
 
-/**
- * Configuration: Categories Order
- */
 const CATEGORIES_CONFIG = [
     { title: "Emergencias", slug: "EMERGENCY" },
     { title: "Salud Pública", slug: "PUBLIC_HEALTH" },
@@ -55,38 +42,40 @@ const CATEGORIES_CONFIG = [
     { title: "Teléfonos importantes", slug: "IMPORTANT" }
 ];
 
-/**
- * Transforms a raw array of phone objects from Strapi into grouped categories.
- *
- * @param {Array<any>} rawPhones - The raw data array from the API response.
- * @returns {Array<any>} structured data grouped by category with hydrated assets.
- */
 export function normalizeUsefulPhones(rawPhones) {
     if (!Array.isArray(rawPhones)) return [];
 
     return CATEGORIES_CONFIG.map(catConfig => {
         const phonesInCategory = rawPhones.filter((item) => {
             const attr = item.attributes || item; 
-            return attr.category === catConfig.slug;
+            const category = typeof attr.category === 'object' ? attr.category?.slug : attr.category;
+            return category === catConfig.slug || attr.category === catConfig.slug;
         });
 
         const processedCards = phonesInCategory.map((item) => {
             const attr = item.attributes || item;
-            
             const assets = ASSET_MAP[attr.name] || {};
 
-            const phoneList = attr.phone
+            const rawPhoneList = attr.phone
                 ? attr.phone.split(',').map((p) => p.trim())
                 : [];
 
-            const actions = phoneList.map((num, index) => ({
-                label: index === 0 ? "Llamar" : `Llamar ${index + 1}`,
-                value: num,
-                type: 'orange'
-            }));
+            const actions = rawPhoneList.map((num, index) => {
+                const cleanValue = num.replace(/[^\d+]/g, '');
+                return {
+                    label: index === 0 ? "Llamar" : `Llamar ${index + 1}`,
+                    displayValue: num,      
+                    linkValue: cleanValue,  
+                    type: 'orange'
+                };
+            });
 
             if (attr.name === 'IOSCOR') {
-                actions.push({ label: 'Sitio-Web', value: 'https://ioscor.gob.ar', type: 'orange' });
+                actions.push({ 
+                    label: 'Sitio-Web', 
+                    linkValue: 'https://ioscor.gob.ar', 
+                    type: 'orange' 
+                });
             }
 
             return {
@@ -94,7 +83,7 @@ export function normalizeUsefulPhones(rawPhones) {
                 name: attr.name,
                 description: attr.description,
                 province: attr.province,
-                phone: phoneList[0] || '', 
+                phone: rawPhoneList[0] || '', 
                 logo: assets.logo || null,
                 icon: assets.icon || null,
                 tag: assets.tag || null,

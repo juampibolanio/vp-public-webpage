@@ -77,16 +77,21 @@ const { data, error: fetchError } = await getUsefulPhones();
                     </div>
 
                     <div class="card-actions">
-                    {card.actions.map((action: any) => (
-                        <a 
-                        href={action.label === 'Sitio-Web' ? action.value : `tel:${action.value}`} 
-                        target={action.label === 'Sitio-Web' ? '_blank' : '_self'}
-                        class={`btn-action ${isEmergency ? 'btn-black' : 'btn-orange'}`}
-                        >
-                        {action.label !== 'Sitio-Web' && <Icon name="mdi:phone" class="btn-icon-small" />}
-                        {action.label}
-                        </a>
-                    ))}
+                    {card.actions.map((action: any) => {
+                        const isWeb = action.label === 'Sitio-Web';
+                        const cleanValue = isWeb ? action.value : `tel:${action.value.replace(/[^\d+]/g, '')}`;
+                        
+                        return (
+                            <a 
+                            href={cleanValue} 
+                            target={isWeb ? '_blank' : '_self'}
+                            class={`btn-action ${isEmergency ? 'btn-black' : 'btn-orange'}`}
+                            >
+                            {!isWeb && <Icon name="mdi:phone" class="btn-icon-small" />}
+                            {action.label}
+                            </a>
+                        );
+                    })}
                     </div>
 
                 </article>
