@@ -1,5 +1,3 @@
-/*  Contenedor Principal */
-
 .contact-section {
     padding-block: var(--space-xxl);
     background-color: var(--color-background); 
@@ -16,8 +14,6 @@
     max-width: 1200px;
     width: 90%;
 }
-
-/*  Introducción y Formulario */
 
 .contact-intro {
     font-size: var(--font-size-lg);
@@ -61,8 +57,6 @@
     font-size: var(--font-size-sm);
 }
 
-/* Inputs  */
-
 .form-field input,
 .form-field select,
 .form-field textarea {
@@ -91,8 +85,6 @@
 .form-field textarea {
     resize: none; 
 }
-
-/*  Aside  */
 
 .contact-sidebar {
     display: flex;
@@ -137,8 +129,6 @@
     text-decoration: none;
     font-weight: 500;
 }
-
-/* Redes y Emergencias */
 
 .social-list {
     list-style: none;
@@ -186,62 +176,11 @@
     min-width: 1.2rem;
 }
 
-/* Sección de Horarios  */
-
 .emission-footer {
     width: 100%;
     display: flex;
     justify-content: center;
     padding-bottom: var(--space-xl);
-}
-
-.emission-content {
-    display: flex;
-    align-items: center;
-    gap: var(--space-lg);
-}
-
-.emission-logo {
-    width: 130px;
-    height: auto;
-}
-
-.emission-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.emission-title {
-    font-size: var(--font-size-md);
-    font-weight: bold;
-    color: var(--color-text-primary);
-    margin: 0;
-}
-
-.emission-info {
-    display: flex;
-    gap: var(--space-xs);
-    align-items: flex-start;
-}
-
-.arrow-icon {
-    color: var(--color-alternative);
-    width: 18px;
-    height: 18px;
-    margin-top: 4px;
-}
-
-.emission-info p {
-    margin: 0;
-    font-size: var(--font-size-xs);
-    font-weight: 500;
-    line-height: 1.4;
-    color: var(--color-text-primary);
-}
-
-.emission-info a {
-    color: var(--color-text-secondary);
-    text-decoration: none;
 }
 
 @media (max-width: 900px) {
@@ -256,14 +195,7 @@
     .contact-sidebar {
         order: 2; 
     }
-
-    .emission-content {
-        flex-direction: column;
-        text-align: center;
-    }
 }
-
-/* Boton enviar mensaje */
 
 .contact-form__button {
     display: inline-flex;
@@ -288,12 +220,6 @@
     background-color: var(--color-alternative); 
 }
 
-.contact-form__button:active {
-    transform: translateY(0); 
-}
-
-/* Validaciones */
-
 .form-status {
     margin-top: var(--space-md);
     padding: var(--space-md);
@@ -302,10 +228,7 @@
     font-weight: 600;
     text-align: center;
     display: none; 
-    transition: all 0.3s ease;
 }
-
-/* Estados */
 
 .form-status.sending {
     display: block;

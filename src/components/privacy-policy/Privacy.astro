@@ -1,0 +1,123 @@
+---
+import "./Privacy.css";
+import { Icon } from "astro-icon/components";
+import logoIcon from "../../assets/home-icon.webp";
+
+const lastUpdate = "11 de Febrero, 2026";
+
+const summaryPoints = [
+    "Puede navegar sin registrarse ni crear cuentas.",
+    "No utilizamos cookies ni sistemas de seguimiento.",
+    "Solo recibimos datos si usted nos escribe voluntariamente.",
+    "No compartimos su información con terceros."
+];
+---
+
+<section class="vp-policy__section">
+    <div class="vp-policy__container">
+        
+        <header class="vp-policy__header">
+            <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="vp-policy__logo" />
+            <span class="vp-policy__badge">Última actualización: {lastUpdate}</span>
+            <h1 class="vp-policy__title">Su confianza es lo primero</h1>
+            <p class="vp-policy__intro">
+                En <strong>Vivir Plenamente</strong> respetamos su privacidad. Nuestro sitio web funciona
+                como un portal de noticias y contenidos editoriales. Usted puede acceder a toda la
+                información sin necesidad de crear una cuenta ni registrarse.
+            </p>
+        </header>
+
+        <div class="vp-policy__summary-card">
+            <div class="vp-policy__summary-header">
+                <Icon name="mdi:lightning-bolt-circle" class="vp-policy__summary-icon" />
+                <h2>Resumen Rápido</h2>
+            </div>
+            <div class="vp-policy__summary-grid">
+                {summaryPoints.map((point) => (
+                    <div class="vp-policy__check-item">
+                        <Icon name="mdi:check-circle" />
+                        <span>{point}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div class="vp-policy__grid">
+        
+            <div class="vp-policy__card">
+                <div class="vp-policy__icon-box">
+                    <Icon name="mdi:folder-account" />
+                </div>
+                <h3>¿Qué datos recopilamos?</h3>
+                <p>
+                    No recopilamos datos personales para permitirle leer nuestras noticias.
+                    Únicamente recibimos información si usted decide contactarnos por correo electrónico
+                    o mediante un formulario de contacto.
+                </p>
+                <ul class="vp-policy__list">
+                    <li>Nombre (si usted lo indica).</li>
+                    <li>Correo electrónico (si nos escribe).</li>
+                    <li>Contenido del mensaje que usted envía.</li>
+                    <li>Datos técnicos mínimos necesarios para el funcionamiento del sitio.</li>
+                </ul>
+            </div>
+
+            <div class="vp-policy__card">
+                <div class="vp-policy__icon-box">
+                    <Icon name="mdi:shield-check" />
+                </div>
+                <h3>Uso de tecnologías de seguimiento</h3>
+                <p>
+                    No utilizamos cookies, píxeles de seguimiento ni herramientas de análisis de tráfico.
+                    Su navegación es completamente anónima.
+                </p>
+            </div>
+
+            <div class="vp-policy__card">
+                <div class="vp-policy__icon-box">
+                    <Icon name="mdi:gavel" />
+                </div>
+                <h3>Sus Derechos</h3>
+                <p>
+                    Usted tiene derecho a solicitar información sobre los datos personales que
+                    pudiéramos tener, a pedir su corrección o eliminación, y a oponerse a su uso.
+                </p>
+                <a id="policy-email-link" class="vp-policy__link">
+                    Solicitar información <Icon name="mdi:arrow-right" />
+                </a>
+            </div>
+
+            <div class="vp-policy__card">
+                <div class="vp-policy__icon-box">
+                    <Icon name="mdi:lock" />
+                </div>
+                <h3>Seguridad Digital</h3>
+                <p>
+                    Aplicamos medidas técnicas y organizativas razonables para proteger la información
+                    que recibimos, evitando accesos no autorizados o usos indebidos.
+                </p>
+            </div>
+
+        </div>
+
+        <footer class="vp-policy__footer">
+            <p>¿Tiene dudas sobre esta Política de Privacidad? <a id="policy-email-footer"></a></p>
+        </footer>
+
+    </div>
+</section>
+
+<script>
+    const email = ["vivirplenamente2014", "gmail.com"].join("@");
+    const link1 = document.getElementById("policy-email-link") as HTMLAnchorElement | null;
+    const link2 = document.getElementById("policy-email-footer") as HTMLAnchorElement | null;
+
+    if (link1) {
+        link1.href = `mailto:${email}`;
+    }
+
+    if (link2) {
+        link2.textContent = email;
+        link2.href = `mailto:${email}`;
+    }
+</script>

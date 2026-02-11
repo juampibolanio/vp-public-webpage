@@ -1,0 +1,160 @@
+---
+import "./Terms.css";
+import { Icon } from "astro-icon/components";
+import logoIcon from "../../assets/home-icon.webp";
+
+const lastUpdate = "11 de Febrero, 2026";
+
+const summaryPoints = [
+    "Este sitio es informativo y orientado a personas mayores y sus familias.",
+    "Puede compartir nuestros contenidos citando siempre la fuente.",
+    "No se permite el uso indebido del sitio ni la alteración de sus contenidos.",
+    "Nos regimos por las leyes de la República Argentina."
+];
+---
+
+<section class="vp-terms__section">
+    <div class="vp-terms__container">
+        
+        <header class="vp-terms__header">
+            <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="vp-terms__logo" />
+            <span class="vp-terms__badge">Última actualización: {lastUpdate}</span>
+            <h1 class="vp-terms__title">Términos y Condiciones de Uso</h1>
+            <p class="vp-terms__intro">
+                En <strong>Vivir Plenamente</strong> brindamos información, noticias y contenidos editoriales
+                orientados a personas mayores, jubilados, pensionados y sus familias.
+                Al navegar por este sitio web, usted acepta las siguientes condiciones.
+            </p>
+        </header>
+
+        <div class="vp-terms__summary-card">
+            <div class="vp-terms__summary-header">
+                <Icon name="mdi:text-box-check-outline" class="vp-terms__summary-icon" />
+                <h2>Resumen rápido</h2>
+            </div>
+            <div class="vp-terms__summary-grid">
+                {summaryPoints.map((point) => (
+                    <div class="vp-terms__check-item">
+                        <Icon name="mdi:check-circle" />
+                        <span>{point}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+
+        <div class="vp-terms__grid">
+        
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:web" />
+                </div>
+                <h3>Uso del sitio</h3>
+                <p>
+                    Este portal tiene fines informativos, educativos y comunitarios. Usted puede navegar
+                    libremente sin necesidad de registrarse ni crear una cuenta.
+                </p>
+                <p>
+                    No está permitido utilizar el sitio para fines ilegales, modificar su contenido,
+                    intentar vulnerar su funcionamiento o copiarlo de forma automatizada.
+                </p>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:copyright" />
+                </div>
+                <h3>Propiedad de los contenidos</h3>
+                <p>
+                    Los artículos, textos, imágenes, videos y materiales publicados en
+                    <strong>Vivir Plenamente</strong> son de producción propia o cuentan con autorización
+                    para su publicación.
+                </p>
+                <p>
+                    Usted puede compartir los contenidos citando la fuente y enlazando al sitio,
+                    sin modificarlos ni utilizarlos con fines comerciales sin autorización.
+                </p>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:alert-circle-outline" />
+                </div>
+                <h3>Alcance de la información</h3>
+                <p>
+                    La información publicada es de carácter general y orientativo.
+                    No constituye asesoramiento médico, legal, previsional ni financiero personalizado.
+                </p>
+                <div class="vp-terms__note">
+                    <strong>Importante:</strong> Ante situaciones de salud, trámites jubilatorios o cuestiones legales,
+                    consulte siempre con profesionales o con los organismos oficiales correspondientes.
+                </div>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:hand-heart" />
+                </div>
+                <h3>Colaboraciones y donaciones</h3>
+                <p>
+                    El sitio puede ofrecer enlaces o medios para realizar colaboraciones voluntarias
+                    o donaciones. Estas contribuciones no generan relación contractual ni obligación
+                    alguna entre el usuario y <strong>Vivir Plenamente</strong>.
+                </p>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:link-variant" />
+                </div>
+                <h3>Enlaces a otros sitios</h3>
+                <p>
+                    Podemos incluir enlaces a páginas externas (organismos públicos, instituciones o medios).
+                    <strong>Vivir Plenamente</strong> no se responsabiliza por los contenidos ni por las políticas
+                    de privacidad de dichos sitios.
+                </p>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:scale-balance" />
+                </div>
+                <h3>Marco legal</h3>
+                <p>
+                    Estos términos se rigen por las leyes de la República Argentina.
+                    Cualquier conflicto relacionado con el uso del sitio será tratado por los tribunales
+                    competentes de la ciudad de Resistencia, provincia del Chaco.
+                </p>
+            </div>
+
+            <div class="vp-terms__card">
+                <div class="vp-terms__icon-box">
+                    <Icon name="mdi:update" />
+                </div>
+                <h3>Cambios en estos términos</h3>
+                <p>
+                    Estos términos pueden actualizarse para adaptarse a mejoras del sitio o a nuevas normativas.
+                    La fecha de actualización será indicada al inicio de esta página.
+                </p>
+            </div>
+
+        </div>
+
+        <footer class="vp-terms__footer">
+            <p>
+                ¿Tiene dudas sobre estas condiciones?
+                <a id="terms-email-link"></a>
+            </p>
+        </footer>
+
+    </div>
+</section>
+
+<script>
+    const email = ["vivirplenamente2014", "gmail.com"].join("@");
+    const link1 = document.getElementById("terms-email-link") as HTMLAnchorElement | null;
+
+    if (link1) {
+        link1.textContent = email;
+        link1.href = `mailto:${email}`;
+    }
+</script>

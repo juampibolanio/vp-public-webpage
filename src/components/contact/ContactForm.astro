@@ -6,11 +6,6 @@
  * - Render the public contact form.
  * - Display contact details, social links, and emergency numbers.
  * - Initialize client-side form handling for validation and submission.
- *
- * Notes:
- * - Form submission is handled via a client-side helper (`initContactForm`)
- *   that communicates with the backend API.
- * - This component is presentational; no business logic is handled here.
  */
 import "./ContactForm.css";
 import { Icon } from "astro-icon/components";
@@ -31,23 +26,11 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
         <div class="form-group__row">
           <div class="form-field">
             <label for="name">Nombre y apellido</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              placeholder="Tu nombre completo"
-            />
+            <input type="text" id="name" name="name" required placeholder="Tu nombre completo" />
           </div>
           <div class="form-field">
             <label for="email">Correo electrónico</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              required
-              placeholder="Tu mail@ejemplo.com"
-            />
+            <input type="email" id="email" name="email" required placeholder="Tu mail@ejemplo.com" />
           </div>
         </div>
 
@@ -63,18 +46,10 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
 
         <div class="form-field">
           <label for="message">Mensaje</label>
-          <textarea
-            id="message"
-            name="message"
-            rows="15"
-            required
-            placeholder="Escribí tu mensaje aquí..."></textarea>
+          <textarea id="message" name="message" rows="15" required placeholder="Escribí tu mensaje aquí..."></textarea>
         </div>
 
-        <button type="submit" class="contact-form__button">
-          Enviar mensaje
-        </button>
-
+        <button type="submit" class="contact-form__button">Enviar mensaje</button>
         <div id="form-status" class="form-status"></div>
       </form>
     </div>
@@ -82,24 +57,20 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
     <aside class="contact-sidebar">
       <div class="sidebar-group">
         <h3 class="sidebar-title">Información de contacto</h3>
+
         <div class="sidebar-item">
           <Icon name="mdi:email-outline" class="contact-icon" />
           <div class="item-content">
             <span class="item-label">Correo electrónico</span>
-            <a href="mailto:vivirplenamente2014@gmail.com" class="item-link"
-              >vivirplenamente2014@gmail.com</a
-            >
+            <a id="contact-email" class="item-link"></a>
           </div>
         </div>
+
         <div class="sidebar-item">
           <Icon name="mdi:whatsapp" class="contact-icon" />
           <div class="item-content">
             <span class="item-label">Whatsapp</span>
-            <a  
-              href="https://wa.link/2s0wl1"
-              class="item-link"
-              target="_blank">+54 9 3794 74-0543</a
-            >
+            <a id="contact-whatsapp" class="item-link" target="_blank"></a>
           </div>
         </div>
       </div>
@@ -107,21 +78,10 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
       <div class="sidebar-group">
         <h3 class="sidebar-title">Nuestras redes</h3>
         <ul class="social-list">
-          <li>
-            <a href="https://www.facebook.com/vivirplenamentetv/" class="social-link"
-              ><Icon name="mdi:facebook" /> Facebook</a>
-          </li>
-          <li>
-            <a href="https://www.instagram.com/vivirplenamente/?hl=es" class="social-link"
-              ><Icon name="mdi:instagram" /> Instagram</a>
-          </li>
-          <li>
-            <a href="https://www.youtube.com/c/VivirPlenamente" class="social-link"
-              ><Icon name="mdi:youtube" /> Youtube</a>
-          </li>
-          <li>
-            <a href="https://x.com/ViviPlenamente" class="social-link"><Icon name="mdi:twitter" /> X</a>
-          </li>
+          <li><a href="https://www.facebook.com/vivirplenamentetv/" class="social-link"><Icon name="mdi:facebook" /> Facebook</a></li>
+          <li><a href="https://www.instagram.com/vivirplenamente/?hl=es" class="social-link"><Icon name="mdi:instagram" /> Instagram</a></li>
+          <li><a href="https://www.youtube.com/c/VivirPlenamente" class="social-link"><Icon name="mdi:youtube" /> Youtube</a></li>
+          <li><a href="https://x.com/ViviPlenamente" class="social-link"><Icon name="mdi:twitter" /> X</a></li>
         </ul>
       </div>
 
@@ -131,13 +91,9 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
           <li><span class="emergency-num">1</span> 107 - EMERGENCIAS</li>
           <li><span class="emergency-num">2</span> 911 - POLICÍA</li>
           <li><span class="emergency-num">3</span> 103 - DEFENSA CIVIL</li>
-          <li>
-            <span class="emergency-num">4</span> 102 - AYUDA AL NIÑO Y ADOLESCENTE
-          </li>
+          <li><span class="emergency-num">4</span> 102 - AYUDA AL NIÑO Y ADOLESCENTE</li>
           <li><span class="emergency-num">5</span> 100 - BOMBEROS</li>
-          <li>
-            <span class="emergency-num">6</span> 108 - ASIS. PERSONAS MAYORES (CHACO)
-          </li>
+          <li><span class="emergency-num">6</span> 108 - ASIS. PERSONAS MAYORES (CHACO)</li>
           <li><span class="emergency-num">7</span> 130 - ANSES</li>
         </ul>
       </div>
@@ -150,12 +106,18 @@ import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
 </section>
 
 <script>
-  /**
-   * Initializes client-side contact form behavior:
-   * - Prevents default submission
-   * - Sends data to the API
-   * - Displays status feedback to the user
-   */
   import { initContactForm } from "../../utils/contact-handler.js";
   initContactForm();
+  const email = ["vivirplenamente2014", "gmail.com"].join("@");
+  const emailEl = document.getElementById("contact-email") as HTMLAnchorElement | null;
+  if (emailEl) {
+    emailEl.textContent = email;
+    emailEl.href = `mailto:${email}`;
+  }
+  const waRaw = "5493794740543";
+  const waEl = document.getElementById("contact-whatsapp") as HTMLAnchorElement | null;
+  if (waEl) {
+    waEl.textContent = "+54 9 3794 74-0543";
+    waEl.href = `https://wa.me/${waRaw}`;
+  }
 </script>
