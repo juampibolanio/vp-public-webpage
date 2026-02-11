@@ -79,11 +79,13 @@ const { data, error: fetchError } = await getUsefulPhones();
                     <div class="card-actions">
                     {card.actions.map((action: any) => {
                         const isWeb = action.label === 'Sitio-Web';
-                        const cleanValue = isWeb ? action.value : `tel:${action.value.replace(/[^\d+]/g, '')}`;
+                        const rawData = action.linkValue || action.value || '';
+                        if (!rawData) return null;
+                        const finalHref = isWeb ? rawData : `tel:${rawData.replace(/[^\d+]/g, '')}`;
                         
                         return (
                             <a 
-                            href={cleanValue} 
+                            href={finalHref} 
                             target={isWeb ? '_blank' : '_self'}
                             class={`btn-action ${isEmergency ? 'btn-black' : 'btn-orange'}`}
                             >
