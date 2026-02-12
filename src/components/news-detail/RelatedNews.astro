@@ -1,33 +1,12 @@
 ---
 //@ts-nocheck
-/**
- * RelatedNews
- * -----------
- * Displays a grid of related news cards.
- *
- * Responsibilities:
- * - Render a list of related news items.
- * - Gracefully handle empty or missing data (returns null if no items).
- * - Provide accessible links and optimized media rendering.
- *
- * Data expectations:
- * - `relatedNews` must be an array of normalized news objects.
- * - Each item may include:
- *   - slug (string)
- *   - title (string)
- *   - category { label, slug } | null
- *   - media { url, thumbnail, alt } | null
- *
- * Notes:
- * - Uses the thumbnail when available, falling back to the original image.
- * - Category links route to the category listing page.
- * - Images are lazy-loaded and async-decoded for performance.
- */
 import "./RelatedNews.css";
 
-const { relatedNews } = Astro.props;
+const { relatedNews = [] } = Astro.props;
 
-if (!relatedNews || relatedNews.length === 0) {
+const safeNews = relatedNews.filter((item) => item?.slug && item?.title);
+
+if (safeNews.length === 0) {
   return null;
 }
 ---
@@ -37,38 +16,52 @@ if (!relatedNews || relatedNews.length === 0) {
 
   <div class="related-news__grid">
     {
-      relatedNews.map((news) => (
-        <article class="related-news__card">
-          <a
-            href={`/noticias/${news.slug}`}
-            class="related-news__link"
-            aria-label={`Leer noticia: ${news.title}`}
-          />
+      safeNews.map((news) => {
+        const hasImage = news.media?.thumbnail || news.media?.url;
 
-          {news.media ? (
-            <img
-              src={news.media.thumbnail || news.media.url}
-              alt={news.media.alt || news.title}
-              class="related-news__image"
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <div class="related-news__image related-news__image--placeholder" />
-          )}
+        const categorySlug =
+          typeof news.category === "string"
+            ? news.category.toLowerCase()
+            : news.category?.slug;
 
-          {news.category && (
+        const categoryLabel =
+          typeof news.category === "string"
+            ? news.category
+            : news.category?.label;
+
+        return (
+          <article class="related-news__card">
             <a
-              href={`/noticias/categoria/${news.category}`}
-              class="related-news__category"
-            >
-              {news.category}
-            </a>
-          )}
+              href={`/noticias/${news.slug}`}
+              class="related-news__link"
+              aria-label={`Leer noticia: ${news.title}`}
+            />
 
-          <h3 class="related-news__headline">{news.title}</h3>
-        </article>
-      ))
+            {hasImage ? (
+              <img
+                src={news.media.thumbnail || news.media.src}
+                alt={news.media?.alt || news.title}
+                class="related-news__image"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="related-news__image related-news__image--placeholder" />
+            )}
+
+            {categorySlug && (
+              <a
+                href={`/noticias/categoria/${categorySlug}`}
+                class="related-news__category"
+              >
+                {categoryLabel}
+              </a>
+            )}
+
+            <h3 class="related-news__headline">{news.title}</h3>
+          </article>
+        );
+      })
     }
   </div>
 </section>

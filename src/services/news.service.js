@@ -124,7 +124,7 @@ export async function getRelatedNews({
   if (!response?.data?.length) {
     return [];
   }
-
+  
   return response.data.map(normalizeNewsListItem);
 }
 
