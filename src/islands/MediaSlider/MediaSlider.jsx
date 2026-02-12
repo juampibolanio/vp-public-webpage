@@ -23,7 +23,6 @@ import useEmblaCarousel from "embla-carousel-react";
 import "./MediaSlider.css";
 
 export default function MediaSlider({ items = [] }) {
-
     const [emblaRef, emblaApi] = useEmblaCarousel({
         loop: false,
         align: "start",
@@ -57,8 +56,6 @@ export default function MediaSlider({ items = [] }) {
                                 <img
                                     src={item.src}
                                     alt={item.alt || ""}
-                                    width="800"
-                                    height="450"
                                     loading="lazy"
                                     decoding="async"
                                 />
@@ -68,8 +65,6 @@ export default function MediaSlider({ items = [] }) {
                                 <video
                                     controls
                                     preload="metadata"
-                                    width="800"
-                                    height="450"
                                 >
                                     <source src={item.src} type="video/mp4" />
                                 </video>
