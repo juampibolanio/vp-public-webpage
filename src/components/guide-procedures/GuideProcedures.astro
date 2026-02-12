@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components';
 import { getGuideProcedures } from '../../services/guide-procedures.service';
 import { getAvailableCategories } from '../../utils/guide-procedures-normalizer';
 
-const { data: guides, error } = await getGuideProcedures();
+const { data: guides = [], error } = await getGuideProcedures();
 const categories = getAvailableCategories();
 ---
 
@@ -12,7 +12,10 @@ const categories = getAvailableCategories();
   
   <div class="procedures-header">
     <div class="header-text">
-      <p>Información clara, oficial y paso a paso para realizar tus gestiones en Corrientes y la región del NEA</p>
+      <p>
+        Información clara, oficial y paso a paso para realizar tus gestiones 
+        en Corrientes y la región del NEA
+      </p>
     </div>
 
     <div class="search-bar-wrapper">
@@ -27,7 +30,7 @@ const categories = getAvailableCategories();
   </div>
 
   <div class="filters-container">
-    {categories.map((cat: any, index: any) => (
+    {categories.map((cat: any, index: number) => (
       <button 
         class={`filter-pill ${index === 0 ? 'active' : ''}`} 
         data-filter={cat.slug}
@@ -37,40 +40,61 @@ const categories = getAvailableCategories();
     ))}
   </div>
 
-  {error && <p class="error-msg text-center" style="color: red;">{error}</p>}
+  {error && (
+    <p class="error-msg text-center">
+      {error}
+    </p>
+  )}
 
   <div class="guides-grid" id="guides-grid">
-    {guides.map((guide: any) => (
-      <article 
-        class="guide-card" 
-        data-category={guide.categorySlug} 
-        data-title={guide.title.toLowerCase()} 
-      >
-        
-        <div class="card-header">
-          <div class="icon-box">
-            <Icon name={guide.icon || 'mdi:file'} class="guide-icon" />
+
+    {guides.length === 0 ? (
+
+      <div class="no-guides-fallback">
+        <Icon name="mdi:file-alert-outline" class="fallback-icon" />
+        <h3>No hay trámites disponibles</h3>
+        <p>
+          Actualmente no hay guías cargadas en esta sección.
+          Intente nuevamente más tarde.
+        </p>
+      </div>
+
+    ) : (
+
+      guides.map((guide: any) => (
+        <article 
+          class="guide-card" 
+          data-category={guide.categorySlug} 
+          data-title={guide.title.toLowerCase()} 
+        >
+          <div class="card-header">
+            <div class="icon-box">
+              <Icon name={guide.icon || 'mdi:file'} class="guide-icon" />
+            </div>
+            <span class="category-badge">
+              {guide.categoryLabel}
+            </span>
           </div>
-          <span class="category-badge">{guide.categoryLabel}</span>
-        </div>
 
-        <div class="card-body">
-          <h3>{guide.title}</h3>
-          <p>{guide.description}</p>
-        </div>
+          <div class="card-body">
+            <h3>{guide.title}</h3>
+            <p>{guide.description}</p>
+          </div>
 
-        <div class="card-footer">
-          <a href={guide.url} class="link-step">
-            Ver guía paso a paso
-          </a>
-        </div>
+          <div class="card-footer">
+            <a href={guide.url} class="link-step">
+              Ver guía paso a paso
+            </a>
+          </div>
+        </article>
+      ))
 
-      </article>
-    ))}
-    
-    <div id="no-results-msg" style="display: none; text-align: center; width: 100%; grid-column: 1 / -1; color: #666;">
-        <p>No se encontraron trámites que coincidan con tu búsqueda.</p>
+    )}
+
+    <div id="no-results-msg" class="no-results-msg">
+      <p>No se encontraron trámites que coincidan con tu búsqueda.</p>
     </div>
+
   </div>
 
 </section>
@@ -79,6 +103,5 @@ const categories = getAvailableCategories();
   import { initGuideFilters } from '../../utils/guide-filter-handler';
 
   document.addEventListener('astro:page-load', initGuideFilters);
-  
   document.addEventListener('DOMContentLoaded', initGuideFilters);
 </script>
