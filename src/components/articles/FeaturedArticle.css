@@ -132,6 +132,20 @@
     border-radius: var(--radius-md);
 }
 
+.article__author-placeholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e5e5e5;
+}
+
+.article__featured-placeholder {
+  width: 100%;
+  height: 320px;
+  background: #e5e5e5;
+}
+
+
 @media (max-width: 1024px) {
     .article-featured {
         flex-direction: column;

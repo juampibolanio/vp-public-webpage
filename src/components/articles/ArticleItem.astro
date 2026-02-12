@@ -26,37 +26,55 @@ import "./ArticleItem.css";
 
 const { articles, href } = Astro.props;
 
-const { title, slug, excerpt, category, cover, publishedDate, author  } =
+const { title, slug, excerpt, category, cover, publishedDate, author } =
   articles;
 
-const formattedDate = formatDate(publishedDate);
+const formattedDate = publishedDate ? formatDate(publishedDate) : null;
+
+const coverUrl = cover?.url ?? null;
+const coverAlt = cover?.alt ?? title ?? "Imagen del artículo";
+
+const authorAvatarUrl = author?.avatar?.url ?? null;
+const authorAvatarAlt = author?.avatar?.alt ?? author?.name ?? "Autor";
 ---
 
 <article class="article-item">
   <div class="article__author">
-    <img
-      class="article__author-image"
-      src={author.avatar.url}
-      alt={author.avatar.alt || author.name}
-      loading="lazy"
-      decoding="async"
-    />
+    {
+      authorAvatarUrl ? (
+        <img
+          class="article__author-image"
+          src={authorAvatarUrl}
+          alt={authorAvatarAlt}
+          loading="lazy"
+          decoding="async"
+        />
+      ) : (
+        <div class="article__author-placeholder" />
+      )
+    }
 
     <div class="article__author-info">
       <span class="author-info__text">Por</span>
-      <span class="author-info__name">{author.name}</span>
+      <span class="author-info__name">{author?.name ?? "—"}</span>
     </div>
   </div>
 
   <div class="article__image-wrapper">
     <a href={href} class="article__link">
-      <img
-        class="article__image"
-        src={cover.url}
-        alt={cover.alt || title}
-        loading="lazy"
-        decoding="async"
-      />
+      {
+        coverUrl ? (
+          <img
+            class="article__image"
+            src={coverUrl}
+            alt={coverAlt}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="article__image-placeholder" />
+        )
+      }
     </a>
   </div>
 
@@ -72,10 +90,16 @@ const formattedDate = formatDate(publishedDate);
       </a>
     </h3>
 
-    <p class="article__body-description">
-      <a href={href} class="article__link article__link--excerpt">
-        {excerpt}
-      </a>
-    </p>
+    {
+      excerpt && (
+        <p class="article__body-description">
+          {" "}
+          <a href={href} class="article__link article__link--excerpt">
+            {" "}
+            {excerpt}{" "}
+          </a>{" "}
+        </p>
+      )
+    }
   </div>
 </article>

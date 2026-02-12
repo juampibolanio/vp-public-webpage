@@ -135,17 +135,17 @@
 .article-detail__article h1,
 .article-detail__article h2,
 .article-detail__article h3 {
-  line-height: 1.3;
+    line-height: 1.3;
 }
 
 .article-detail__article p:first-of-type::first-letter {
-  float: left;
-  font-size: calc(var(--font-size-xxxl) * var(--reader-font-scale));
-  line-height: 1;
-  font-weight: 700;
-  color: var(--color-alternative);
-  margin-right: 0.5rem;
-  margin-top: 0.1rem;
+    float: left;
+    font-size: calc(var(--font-size-xxxl) * var(--reader-font-scale));
+    line-height: 1;
+    font-weight: 700;
+    color: var(--color-alternative);
+    margin-right: 0.5rem;
+    margin-top: 0.1rem;
 }
 
 /* slider */

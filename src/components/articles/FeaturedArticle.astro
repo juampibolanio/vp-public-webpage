@@ -1,80 +1,105 @@
 ---
-/**
- * FeaturedArticle
- *
- * Presentation component responsible for rendering a highlighted article
- * with strong visual hierarchy and editorial emphasis.
- *
- * Responsibilities:
- * - Displays author identity (avatar and name), publication metadata,
- *   category, and formatted publish date.
- * - Renders the article title and excerpt as primary entry points
- *   linking to the article detail page.
- * - Separates content and media areas to support responsive layouts
- *   and future layout variations.
- *
- * Data contract:
- * - Expects a fully normalized `featArticle` object (author, cover image,
- *   category, slug, dates already validated upstream).
- * - Receives `basePath` to remain routing-agnostic and reusable across
- *   different content sections.
- *
- * Design considerations:
- * - Optimized for editorial prominence (featured content).
- * - Clear clickable areas to improve usability and accessibility.
- * - Relies on external date formatting utility to keep presentation logic clean.
- */
-
 import { formatDate } from "../../utils/date";
 import "./FeaturedArticle.css";
 
 const { featArticle, basePath } = Astro.props;
 
-const { title, slug, excerpt, category, publishedDate, cover, author } =
-  featArticle;
+const safeArticle = featArticle ?? {};
 
-const formattedDate = formatDate(publishedDate);
+const {
+  title,
+  slug,
+  excerpt,
+  category,
+  publishedDate,
+  cover,
+  author,
+} = safeArticle;
+
+const formattedDate = publishedDate ? formatDate(publishedDate) : null;
+
+// Safe author
+const authorName = author?.name ?? "Autor";
+const authorAvatarUrl = author?.avatar?.url ?? null;
+const authorAvatarAlt = author?.avatar?.alt ?? authorName;
+
+// Safe cover
+const coverUrl = cover?.url ?? null;
+const coverAlt = cover?.alt ?? title ?? "Imagen del artículo";
+
+// Safe link
+const articleHref = slug ? `${basePath}/${slug}` : "#";
 ---
 
 <section class="article-featured">
   <div class="article-featured__content">
-    <a href=`${basePath}/${slug}` class="article__header">
-      <img
-        class="article__image"
-        src={author.avatar.url}
-        alt={author.avatar.alt || author.name}
-      />
+
+    <a href={articleHref} class="article__header">
+      {
+        authorAvatarUrl ? (
+          <img
+            class="article__image"
+            src={authorAvatarUrl}
+            alt={authorAvatarAlt}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="article__author-placeholder" />
+        )
+      }
+
       <div class="article__author-info">
         <span class="author-info__text">Por</span>
-        <span class="author-info__name">{author.name}</span>
+        <span class="author-info__name">{authorName}</span>
       </div>
     </a>
 
     <div class="article__body">
-
-      <a href=`${basePath}/${slug}`>
+      <a href={articleHref}>
         <h3 class="article__title">{title}</h3>
       </a>
 
-      <p class="article__description">{excerpt}</p>
+      {excerpt && (
+        <p class="article__description">{excerpt}</p>
+      )}
     </div>
 
     <div class="article__footer">
       <div class="article__meta">
-        <span class="article__category">{category}</span>
-        <span class="article__divider"></span>
-        <span class="article__date">{formattedDate}</span>
+        {category && (
+          <span class="article__category">{category}</span>
+        )}
+
+        {formattedDate && (
+          <>
+            <span class="article__divider"></span>
+            <span class="article__date">{formattedDate}</span>
+          </>
+        )}
       </div>
 
-      <a href=`${basePath}/${slug}` class="article__read-button">
+      <a href={articleHref} class="article__read-button">
         <span class="article__button">Leer</span>
       </a>
     </div>
   </div>
 
   <div class="article-featured__media">
-    <a class="article__featured-image-wrapper" href=`${basePath}/${slug}`>
-      <img class="article__featured-image" src={cover.url} alt={cover.alt || title} />
+    <a class="article__featured-image-wrapper" href={articleHref}>
+      {
+        coverUrl ? (
+          <img
+            class="article__featured-image"
+            src={coverUrl}
+            alt={coverAlt}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="article__featured-placeholder" />
+        )
+      }
     </a>
   </div>
 </section>

@@ -41,14 +41,24 @@ import RichText from "../shared/RichText.astro";
 import Sponsors from "../home/Sponsors.astro";
 import FontSizeControls from "../../islands/FontSizeControls/FontSizeControls";
 
+const STRAPI_URL = "http://localhost:1337";
 const { articles } = Astro.props;
 
 const sliderItems = Array.isArray(articles.media)
-  ? articles.media.map((media) => ({
-      type: "image",
-      src: media.url,
-      alt: media.alt || articles.title,
-    }))
+  ? articles.media.map((media) => {
+      const isVideo = media?.mime?.startsWith("video");
+
+      const fullUrl = media.url?.startsWith("http")
+        ? media.url
+        : `${STRAPI_URL}${media.url}`;
+
+      return {
+        type: isVideo ? "video" : "image",
+        src: fullUrl,
+        alt: media.alt || articles.title,
+        provider: isVideo ? "file" : undefined,
+      };
+    })
   : [];
 
 const plainTextContent = Array.isArray(articles.content)
