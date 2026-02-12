@@ -14,8 +14,7 @@
  * - Defensive checks are applied to avoid runtime errors.
  */
 
-const PUBLIC_STRAPI_API_URL_IMAGES =
-  import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
+const PUBLIC_STRAPI_API_URL_IMAGES = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
 
 /**
  * Normalize a single media object.
@@ -26,14 +25,24 @@ const PUBLIC_STRAPI_API_URL_IMAGES =
 function normalizeSingleMedia(media) {
   if (!media || !media.url) return null;
 
+  const fullUrl = PUBLIC_STRAPI_API_URL_IMAGES + media.url;
+  const mime = media.mime || "";
+
+  const isVideo = mime.startsWith("video/");
+  const isImage = mime.startsWith("image/");
+
   return {
-    url: PUBLIC_STRAPI_API_URL_IMAGES + media.url,
+    type: isVideo ? "video" : "image",
+    provider: isVideo ? "file" : undefined,
+    src: fullUrl,
     alt: media.alternativeText || "",
+    mime,
     width: media.width || null,
     height: media.height || null,
-    thumbnail: media.formats?.thumbnail
-      ? PUBLIC_STRAPI_API_URL_IMAGES + media.formats.thumbnail.url
-      : null,
+    thumbnail:
+      isImage && media.formats?.thumbnail
+        ? PUBLIC_STRAPI_API_URL_IMAGES + media.formats.thumbnail.url
+        : null,
   };
 }
 

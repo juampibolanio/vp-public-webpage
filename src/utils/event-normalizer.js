@@ -1,27 +1,46 @@
 import { formatDate } from "./date";
 
-const PUBLIC_STRAPI_API_URL_IMAGES =
-  import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
+const BASE_URL = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES;
 
 /**
- * Normalize media (single or multiple).
- * Strapi v5 returns media as an object or an array.
+ * Build absolute URL safely
+ */
+function buildUrl(path) {
+  if (!path) return null;
+  if (path.startsWith("http")) return path;
+  return `${BASE_URL}${path}`;
+}
+
+/**
+ * Normalize media (image or video)
  */
 function normalizeMedia(media) {
   if (!media) return [];
 
   const items = Array.isArray(media) ? media : [media];
 
-  return items.map((item) => ({
-    url: PUBLIC_STRAPI_API_URL_IMAGES + item.url,
-    alt: item.alternativeText || "",
-    width: item.width ?? null,
-    height: item.height ?? null,
-  }));
+  return items.map((item) => {
+    const isVideo = item.mime?.startsWith("video");
+    const isImage = item.mime?.startsWith("image");
+
+    return {
+      id: item.id,
+      type: isVideo ? "video" : isImage ? "image" : "file",
+      mime: item.mime,
+      url: buildUrl(item.url),
+      thumbnail:
+        item.formats?.thumbnail?.url
+          ? buildUrl(item.formats.thumbnail.url)
+          : null,
+      alt: item.alternativeText || "",
+      width: item.width ?? null,
+      height: item.height ?? null,
+    };
+  });
 }
 
 /**
- * Normalize event for list views (cards, grids, pagination).
+ * Normalize event for list views
  */
 export function normalizeEventListItem(event) {
   return {
@@ -41,7 +60,7 @@ export function normalizeEventListItem(event) {
 }
 
 /**
- * Normalize event for detail view.
+ * Normalize event for detail view
  */
 export function normalizeEventDetail(event) {
   return {

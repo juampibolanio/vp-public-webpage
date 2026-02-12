@@ -32,11 +32,13 @@ function normalizeSingleMedia(media) {
     alt: media.alternativeText || "",
     width: media.width || null,
     height: media.height || null,
+    mime: media.mime || null, // 👈 IMPORTANTE
     thumbnail: media.formats?.thumbnail
       ? PUBLIC_STRAPI_API_URL_IMAGES + media.formats.thumbnail.url
       : null,
   };
 }
+
 
 /**
  * Normalize author data.
