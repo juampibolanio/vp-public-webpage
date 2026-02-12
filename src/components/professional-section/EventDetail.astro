@@ -35,12 +35,18 @@ const extractPlainText = (blocks = []) => {
 
 /* media slider items */
 const sliderItems = Array.isArray(event.media)
-  ? event.media.map((media) => ({
-      type: "image",
-      src: media.url,
-      alt: media.alt || event.title,
-    }))
+  ? event.media.map((media) => {
+      const isVideo = media?.mime?.startsWith("video");
+
+      return {
+        type: isVideo ? "video" : "image",
+        src: media.url,
+        alt: media.alt || event.title,
+        provider: isVideo ? "file" : undefined,
+      };
+    })
   : [];
+
 
 /* full text for text-to-speech */
 const fullTextToRead = `
