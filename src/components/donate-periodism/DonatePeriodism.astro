@@ -1,16 +1,13 @@
 ---
 import './DonatePeriodism.css';
 import { Icon } from "astro-icon/components";
-import MercadoPago from "../../assets/mp-logo.webp";
-import Cafecito from "../../assets/cafecito-logo.webp";
-import DonateHeader from "../../assets/donate-header.webp";
 ---
 
 <main class="donate-page">
 
 <section class="container hero-section">
         <div class="hero-image-wrapper">
-            <img src={DonateHeader.src} alt="Personas mayores compartiendo" class="hero-img" />
+            <img src="/assets/donate-header.webp" alt="Personas mayores compartiendo" class="hero-img" />
         </div>
 
         <div class="hero-content">
@@ -23,12 +20,12 @@ import DonateHeader from "../../assets/donate-header.webp";
 
         <div class="donation-actions">
             <div class="action-group disabled-group">
-                <img src={Cafecito.src} alt="Cafecito Logo" class="mini-logo" />
+                <img src="/assets/cafecito-logo.webp" alt="Cafecito Logo" class="mini-logo" />
                 <a href="#" class="btn btn-primary" aria-disabled="true">Invitanos un Cafecito</a>
             </div>
                 
             <div class="action-group">
-                <img src={MercadoPago.src} alt="Mercado Pago Logo" class="mini-logo" />
+                <img src="/assets/mp-logo.webp" alt="Mercado Pago Logo" class="mini-logo" />
                 <a href="https://link.mercadopago.com.ar/vivirplenamenteradio" class="btn btn-primary">Apoyar MercadoPago</a>
             </div>
         </div>
