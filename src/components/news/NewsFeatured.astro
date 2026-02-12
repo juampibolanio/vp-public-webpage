@@ -14,6 +14,8 @@ const {
   author
 } = news;
 
+console.log(news);
+
 const formattedDate = formatDate(publishedDate);
 ---
 
@@ -27,7 +29,7 @@ const formattedDate = formatDate(publishedDate);
         media && (
           <img
             class="featured-new__image"
-            src={media.url}
+            src={media.src}
             alt={media.alt || title}
             width="800"
             height="450"
@@ -71,7 +73,7 @@ const formattedDate = formatDate(publishedDate);
           <div class="author__avatar-wrapper">
             <img
               class="author__avatar"
-              src={author.avatar.url}
+              src={author.avatar.src}
               alt={author.avatar.alt || author.name}
               width="48"
               height="48"

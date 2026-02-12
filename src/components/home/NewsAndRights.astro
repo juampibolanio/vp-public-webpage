@@ -27,12 +27,18 @@ const hasSecondaryNews = listNews.length > 1;
       <div class="container__news-section">
         <article class="news-featured">
           <div class="news-featured__image-container">
-            <img
-              src={listNews[0].media?.url || listNews[0].media?.thumbnail}
-              alt={listNews[0].media?.alt || listNews[0].title}
-              class="news-featured__image"
-              loading="lazy"
-            />
+            {listNews[0].media?.url || listNews[0].media?.thumbnail ? (
+              <img
+                src={listNews[0].media?.url || listNews[0].media?.thumbnail}
+                alt={listNews[0].media?.alt || listNews[0].title}
+                class="news-featured__image"
+                loading="lazy"
+              />
+            ) : (
+              <div class="news-featured__image-placeholder">
+                <span>Vivir Plenamente</span>
+              </div>
+            )}
           </div>
 
           <div class="news-featured__meta">
@@ -71,12 +77,18 @@ const hasSecondaryNews = listNews.length > 1;
             {listNews.slice(1).map((item) => (
               <article class="news-list__item">
                 <div class="item__image-wrapper">
-                  <img
-                    src={item.media?.url || item.media?.thumbnail}
-                    alt={item.media?.alt || item.title}
-                    class="item__image-img"
-                    loading="lazy"
-                  />
+                  {item.media?.url || item.media?.thumbnail ? (
+                    <img
+                      src={item.media?.url || item.media?.thumbnail}
+                      alt={item.media?.alt || item.title}
+                      class="item__image-img"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div class="item__image-placeholder">
+                      <span>Vivir Plenamente</span>
+                    </div>
+                  )}
                 </div>
 
                 <div class="item__content">

@@ -36,11 +36,7 @@ import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech.jsx";
 const { news, relatedNews } = Astro.props;
 
 const sliderItems = Array.isArray(news.media)
-  ? news.media.map((media: any) => ({
-      type: "image",
-      src: media.url,
-      alt: media.alt || news.title,
-    }))
+  ? news.media
   : [];
 
 // extracting plain text from RichText
@@ -89,7 +85,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
                 <div class="author__image-wrapper">
                   <img
                     class="author__image"
-                    src={news.author.avatar.url}
+                    src={news.author.avatar.src}
                     alt={news.author.avatar.alt}
                   />
                 </div>
