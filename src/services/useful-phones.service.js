@@ -4,7 +4,7 @@ import { normalizeUsefulPhones } from '../utils/useful-phones-normalizer';
 export async function getUsefulPhones() {
     try {
         const response = await apiFetch(
-            '/useful-phones?pagination[pageSize]=100&sort=priority:asc&populate=image'
+            '/useful-phones?pagination[pageSize]=100&sort=priority:asc&populate=*'
     );
 
     const rawData = response.data || [];
