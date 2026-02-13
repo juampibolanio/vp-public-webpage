@@ -50,11 +50,17 @@ const breadcrumbItems = [
           </a>
         </div>
 
-        <div class="professional-section__news-wrapper">
-          {actualidadArticles.map((article) => (
-            <ProfessionalNewCard article={article} />
-          ))}
-        </div>
+        {actualidadArticles.length > 0 ? (
+          <div class="professional-section__news-wrapper">
+            {actualidadArticles.map((article) => (
+              <ProfessionalNewCard article={article} />
+            ))}
+          </div>
+        ) : (
+          <div class="professional-section__no-articles">
+            <p>No hay artículos disponibles por el momento.</p>
+          </div>
+        )}
       </div>
 
       <div class="professional-section__legal">
@@ -129,6 +135,18 @@ const breadcrumbItems = [
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
     align-items: stretch;
+  }
+
+  .professional-section__no-articles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--color-secondary-light);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-lg);
+    text-align: center;
   }
 
   .professional-section__subtitle {

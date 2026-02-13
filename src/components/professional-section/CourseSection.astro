@@ -4,17 +4,24 @@ import CourseCard from "./CourseCard.astro";
 import "./CourseSection.css";
 
 const { courses } = Astro.props;
-
 ---
 
 <div class="courses-cards-wrapper">
-  {
-    courses.map((event) => (
-      <CourseCard slug={event.slug} />
-    ))
-  }
+  {courses.length > 0 ? (
+    <>
+      {courses.map((event) => (
+        <CourseCard slug={event.slug} />
+      ))}
+    </>
+  ) : (
+    <div class="courses-cards__fallback">
+      <p>No hay capacitaciones ni congresos disponibles por el momento.</p>
+    </div>
+  )}
 
   <div class="courses-cards__button-wrapper">
-    <a class="courses-cards__button" href="/profesionales/capacitaciones-y-congresos">Ver todos los eventos</a>
+    <a class="courses-cards__button" href="/profesionales/capacitaciones-y-congresos">
+      Ver todos los eventos
+    </a>
   </div>
 </div>

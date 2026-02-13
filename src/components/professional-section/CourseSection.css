@@ -22,6 +22,18 @@
     transition: transform 0.3s ease-in-out;
 }
 
+.courses-cards__fallback {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: var(--color-secondary-light);
+    border-radius: var(--radius-md);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-md);
+    text-align: center;
+}
+
 @media (max-width: 1024px) {
     .courses-cards__button-wrapper {
         max-width: 100%;
