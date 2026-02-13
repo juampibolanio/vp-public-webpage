@@ -21,6 +21,10 @@ const { hub, slug } = Astro.params;
 
 const contentHubInfo = await getContentHubBySlug(hub);
 
+console.log(hub);
+
+console.log(contentHubInfo);
+
 if (!contentHubInfo) {
   throw new Error("Content hub not found");
 }
