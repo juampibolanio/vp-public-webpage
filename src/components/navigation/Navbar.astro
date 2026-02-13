@@ -21,14 +21,21 @@ import "./Navbar.css";
 
 <nav class="navbar" aria-label="Navegación principal">
   <div class="navbar__container">
-    <button
-      class="navbar__toggle"
-      aria-label="Abrir menú"
-      aria-expanded="false"
-      aria-controls="navbar-links"
-    >
-      ☰
-    </button>
+    <div class="navbar__mobile-header">
+      <img
+        src="/assets/footer-icon.webp"
+        alt="Logo Vivir Plenamente"
+        class="navbar__mobile-logo"
+      />
+      <button
+        class="navbar__toggle"
+        aria-label="Abrir menú"
+        aria-expanded="false"
+        aria-controls="navbar-links"
+      >
+        ☰
+      </button>
+    </div>
 
     <div class="navbar__links" id="navbar-links">
       <a
@@ -49,74 +56,37 @@ import "./Navbar.css";
           <span class="link__text">Personas</span>
           <span class="link__text">Mayores</span>
         </button>
-
         <div class="dropdown">
-          <a class="dropdown__link" href="/guia-tramites"
-            >Trámites paso a paso</a
-          >
+          <a class="dropdown__link" href="/guia-tramites">Trámites paso a paso</a>
           <a class="dropdown__link" href="/adultos-mayores">Tus derechos</a>
-          <a class="dropdown__link" href="/telefonos-utiles">Teléfonos útiles</a
-          >
-          <a class="dropdown__link" href="/adultos-mayores/clubes-y-centros"
-            >Actividades y clubes</a
-          >
-          <a class="dropdown__link" href="/adultos-mayores/tu-salud"
-            >Salud y cuidados</a
-          >
-          <a class="dropdown__link" href="/adultos-mayores/talleres-y-cursos"
-            >Talleres y cursos</a
-          >
+          <a class="dropdown__link" href="/telefonos-utiles">Teléfonos útiles</a>
+          <a class="dropdown__link" href="/adultos-mayores/clubes-y-centros">Actividades y clubes</a>
+          <a class="dropdown__link" href="/adultos-mayores/tu-salud">Salud y cuidados</a>
+          <a class="dropdown__link" href="/adultos-mayores/talleres-y-cursos">Talleres y cursos</a>
         </div>
       </div>
 
       <div class="navbar__item navbar__item--dropdown">
-        <button
-          class="navbar__link navbar__accordion-toggle"
-          aria-expanded="false"
-        >
+        <button class="navbar__link navbar__accordion-toggle" aria-expanded="false">
           Familias
         </button>
-
         <div class="dropdown">
-          <a class="dropdown__link" href="/familias/primeros-pasos"
-            >Primeros pasos</a
-          >
-          <a class="dropdown__link" href="/familias/residencias-y-estadias"
-            >Residencias</a
-          >
-          <a
-            class="dropdown__link"
-            href="/familias/salud-de-las-personas-mayores">Salud y cuidado</a
-          >
-          <a class="dropdown__link" href="/familias/salud-del-cuidador"
-            >Salud del cuidador</a
-          >
+          <a class="dropdown__link" href="/familias/primeros-pasos">Primeros pasos</a>
+          <a class="dropdown__link" href="/familias/residencias-y-estadias">Residencias</a>
+          <a class="dropdown__link" href="/familias/salud-de-las-personas-mayores">Salud y cuidado</a>
+          <a class="dropdown__link" href="/familias/salud-del-cuidador">Salud del cuidador</a>
           <a class="dropdown__link" href="/familias/cuidadores">Cuidadores</a>
         </div>
       </div>
 
       <div class="navbar__item navbar__item--dropdown">
-        <button
-          class="navbar__link navbar__accordion-toggle"
-          aria-expanded="false"
-        >
+        <button class="navbar__link navbar__accordion-toggle" aria-expanded="false">
           Profesionales
         </button>
-
         <div class="dropdown">
-          <a
-            class="dropdown__link"
-            href="/profesionales/capacitaciones-y-congresos">Capacitaciones</a
-          >
-          <a
-            class="dropdown__link"
-            href="/profesionales/articulos/actualidad-profesioal"
-            >Actualidad Profesional</a
-          >
-          <a
-            class="dropdown__link"
-            href="/profesionales/articulos/marco-normativo">Marco normativo</a
-          >
+          <a class="dropdown__link" href="/profesionales/capacitaciones-y-congresos">Capacitaciones</a>
+          <a class="dropdown__link" href="/profesionales/articulos/actualidad-profesioal">Actualidad Profesional</a>
+          <a class="dropdown__link" href="/profesionales/articulos/marco-normativo">Marco normativo</a>
         </div>
       </div>
 
