@@ -1,7 +1,6 @@
 ---
 import "./Privacy.css";
 import { Icon } from "astro-icon/components";
-import logoIcon from "../../assets/home-icon.webp";
 
 const lastUpdate = "11 de Febrero, 2026";
 
@@ -17,7 +16,7 @@ const summaryPoints = [
     <div class="vp-policy__container">
         
         <header class="vp-policy__header">
-            <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="vp-policy__logo" />
+            <img src="/assets/home-icon.webp" alt="Logo Vivir Plenamente" class="vp-policy__logo" />
             <span class="vp-policy__badge">Última actualización: {lastUpdate}</span>
             <h1 class="vp-policy__title">Su confianza es lo primero</h1>
             <p class="vp-policy__intro">

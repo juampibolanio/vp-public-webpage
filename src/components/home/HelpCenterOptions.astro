@@ -25,17 +25,13 @@
 import "./HelpCenterOptions.css";
 import { Icon } from "astro-icon/components";
 
-import optionImage1 from "../../assets/help-center-image-a.webp";
-import optionImage2 from "../../assets/help-center-image-b.webp";
-import optionImage3 from "../../assets/help-center-image-c.webp";
-
 const options = [
   {
     title: "Soy una persona mayor",
     description:
       "Encontrá información sobre tus derechos, salud, trámites de jubilación y actividades recreativas pensadas para vos.",
     icon: "mdi:hail",
-    image: optionImage1,
+    image: "/assets/help-center-image-a.webp",
     alt: "Persona mayor",
     link: "/adultos-mayores"
   },
@@ -44,7 +40,7 @@ const options = [
     description:
       "Cuando alguien que querés deja de ser autónomo y no sabés por dónde empezar, no estás solo/a.",
     icon: "mdi:people-group",
-    image: optionImage2,
+    image: "/assets/help-center-image-b.webp",
     alt: "Familia acompañando a una persona mayor",
     link: "/familias"
   },
@@ -53,7 +49,7 @@ const options = [
     description:
       "Formación, actualización y recursos para trabajar con personas mayores desde una perspectiva de derechos.",
     icon: "mdi:person-tie",
-    image: optionImage3,
+    image: "/assets/help-center-image-c.webp",
     alt: "Profesional de la salud o área social",
     link: "/profesionales"
   },
@@ -75,7 +71,7 @@ const options = [
         <article class="option-card">
           <div class="option-card__image-wrapper">
             <img
-              src={option.image.src}
+              src={option.image}
               alt={option.alt}
               class="option-card__image"
               loading="lazy"

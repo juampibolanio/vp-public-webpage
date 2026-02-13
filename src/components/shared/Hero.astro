@@ -13,19 +13,16 @@
  * It is intended to be visually prominent and accessible.
  */
 import "./Hero.css";
-import footer_icon from "../../assets/footer-icon.webp";
-import heroMobile from "../../assets/hero-mobile.webp";
-import heroDesktop from "../../assets/hero-desktop.webp";
 ---
 
 <section class="hero">
   <picture class="hero__bg">
     <source
-      srcset={heroMobile.src}
+      srcset="/assets/hero-mobile.webp"
       media="(max-width: 600px)"
     />
     <img
-      src={heroDesktop.src}
+      src="/assets/hero-desktop.webp"
       alt=""
       width="1920"
       height="1080"
@@ -41,7 +38,7 @@ import heroDesktop from "../../assets/hero-desktop.webp";
   <div class="hero__content">
     <div class="hero__header">
       <img
-        src={footer_icon.src}
+        src="/assets/footer-icon.webp"
         alt="Vivir Plenamente"
         class="hero__logo"
         width="240"

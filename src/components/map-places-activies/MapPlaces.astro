@@ -1,7 +1,6 @@
 ---
 import './MapPlaces.css';
 import { Icon } from "astro-icon/components";
-import logoIcon from "../../assets/home-icon.webp";
 
 import { getPlaces } from '../../services/places.service.js';
 import { getUniqueCategories } from '../../utils/places-normalizer.js';
@@ -17,7 +16,7 @@ const categories: any[] = getUniqueCategories(places);
     data-places={JSON.stringify(places)}
 >
     <div class="map-header">
-        <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="header-icon-img" />
+        <img src="/assets/home-icon.webp" alt="Logo Vivir Plenamente" class="header-icon-img" />
         <h2>Mapa de Actividades y Servicios</h2>
     </div>
 

@@ -14,7 +14,6 @@
  *   and ease of future refactoring to a CMS if needed.
  */
 import "./AboutVP.css";
-import logoIcon from "../../assets/home-icon.webp";
 import { Icon } from "astro-icon/components";
 import BroadcastSchedules from "../shared/BroadcastSchedules.astro";
 import { getAuthors } from "../../services/author.service";
@@ -83,7 +82,7 @@ const teamMembers = await getAuthors();
   </div>
 
   <div class="intro__visual">
-    <img src={logoIcon.src} alt="Vivir Plenamente logo" />
+    <img src="/assets/home-icon.webp" alt="Vivir Plenamente logo" />
   </div>
 </article>
 

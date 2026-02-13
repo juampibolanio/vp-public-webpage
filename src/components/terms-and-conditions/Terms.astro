@@ -1,7 +1,6 @@
 ---
 import "./Terms.css";
 import { Icon } from "astro-icon/components";
-import logoIcon from "../../assets/home-icon.webp";
 
 const lastUpdate = "11 de Febrero, 2026";
 
@@ -17,7 +16,7 @@ const summaryPoints = [
     <div class="vp-terms__container">
         
         <header class="vp-terms__header">
-            <img src={logoIcon.src} alt="Logo Vivir Plenamente" class="vp-terms__logo" />
+            <img src="/assets/home-icon.webp" alt="Logo Vivir Plenamente" class="vp-terms__logo" />
             <span class="vp-terms__badge">Última actualización: {lastUpdate}</span>
             <h1 class="vp-terms__title">Términos y Condiciones de Uso</h1>
             <p class="vp-terms__intro">
