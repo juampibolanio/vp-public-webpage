@@ -8,6 +8,7 @@ import { getUniqueCategories } from '../../utils/places-normalizer.js';
 const response: any = await getPlaces(); 
 const places: any[] = response.data || []; 
 const categories: any[] = getUniqueCategories(places);
+console.log(places);
 ---
 
 <section 
@@ -21,6 +22,8 @@ const categories: any[] = getUniqueCategories(places);
     </div>
 
     <div class="map-container">
+        {places.length > 0 ? (
+        <>
         <aside class="map-sidebar">
             <div class="search-bar">
                 <Icon name="mdi:magnify" class="search-icon" />
@@ -29,8 +32,8 @@ const categories: any[] = getUniqueCategories(places);
 
             <div class="categories-row" id="categoriesContainer">
                 <button class="category-btn active" data-filter="all">
-                        <div class="cat-icon-box"><Icon name="mdi:apps" /></div>
-                        <span>Todos</span>
+                    <div class="cat-icon-box"><Icon name="mdi:apps" /></div>
+                    <span>Todos</span>
                 </button>
                 
                 {categories.map((cat: any) => (
@@ -62,10 +65,6 @@ const categories: any[] = getUniqueCategories(places);
                         </div>
                     </div>
                 ))}
-                
-                <div id="noResultsMessage" style="display: none; text-align: center; color: #666; padding: 1rem;">
-                    No se encontraron lugares.
-                </div>
             </div>
         </aside>
 
@@ -73,34 +72,42 @@ const categories: any[] = getUniqueCategories(places);
             <div id="leaflet-map"></div>
 
             <div class="map-popup-card hidden" id="mapPopup">
-                
                 <div class="popup-image" id="popupImageContainer" style="display: none;">
-                        <img id="popupImg" src="" alt="Lugar" />
+                    <img id="popupImg" src="" alt="Lugar" />
                 </div>
 
-                    <div class="popup-content">
-                        <span class="popup-category" id="popupCategory">CATEGORIA</span>
-                        <h3 id="popupTitle">Título del Lugar</h3>
-                        
-                        <div class="popup-data">
-                            <div class="data-row">
-                                <Icon name="mdi:map-marker-outline" />
-                                <span id="popupAddress">Dirección</span>
-                            </div>
-                            <div class="data-row">
-                                <Icon name="mdi:clock-time-four-outline" />
-                                <span id="popupSchedule">Horario</span>
-                            </div>
+                <div class="popup-content">
+                    <span class="popup-category" id="popupCategory">CATEGORIA</span>
+                    <h3 id="popupTitle">Título del Lugar</h3>
+                    
+                    <div class="popup-data">
+                        <div class="data-row">
+                            <Icon name="mdi:map-marker-outline" />
+                            <span id="popupAddress">Dirección</span>
                         </div>
-
-                        <div class="popup-actions">
-                            <button class="btn-call" id="btnCall">Llamar</button>
-                            <button class="btn-go" id="btnGo">Ir</button>
+                        <div class="data-row">
+                            <Icon name="mdi:clock-time-four-outline" />
+                            <span id="popupSchedule">Horario</span>
                         </div>
-                        <button class="btn-close-popup" id="btnClosePopup">✕</button>
                     </div>
+
+                    <div class="popup-actions">
+                        <button class="btn-call" id="btnCall">Llamar</button>
+                        <button class="btn-go" id="btnGo">Ir</button>
+                    </div>
+                    <button class="btn-close-popup" id="btnClosePopup">✕</button>
                 </div>
+            </div>
         </div>
+        </>
+        ) : (
+        <div class="no-places-fallback">
+            <p>No hay lugares disponibles para mostrar.</p>
+            <div class="map-visual-area">
+                <div id="leaflet-map"></div>
+            </div>
+        </div>
+        )}
     </div>
 </section>
 
@@ -122,11 +129,5 @@ const categories: any[] = getUniqueCategories(places);
         }
     };
 
-    document.addEventListener('astro:page-load', startMap);
-    
-    if (document.readyState === 'complete') {
-        startMap();
-    } else {
-        document.addEventListener('DOMContentLoaded', startMap);
-    }
+    window.addEventListener('load', startMap);
 </script>
