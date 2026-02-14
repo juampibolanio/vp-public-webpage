@@ -203,7 +203,8 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                                             style={{ opacity: activePlace.coords ? 1 : 0.5 }}
                                             onClick={() => {
                                                 if (activePlace.coords) {
-                                                    const url = `http://googleusercontent.com/maps.google.com/maps?q=${activePlace.coords[0]},${activePlace.coords[1]}`;
+                                                    const [lat, lng] = activePlace.coords;
+                                                    const url = `https://www.google.com/maps?q=${lat},${lng}`;
                                                     window.open(url, '_blank');
                                                 }
                                             }}>Ir
