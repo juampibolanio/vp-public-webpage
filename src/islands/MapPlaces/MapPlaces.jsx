@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapPlaces.css';
-import logoIcon from '../../assets/home-icon.webp';
 import Icon from '@mdi/react';
 import { 
     mdiMagnify, 
@@ -134,7 +133,7 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
     return (
         <section className="map-section">
             <div className="map-header">
-                <img src={logoIcon.src} alt="Logo Vivir Plenamente" className="header-icon-img" />
+                <img src="/assets/home-icon.webp" alt="Logo Vivir Plenamente" className="header-icon-img" />
                 <h2>Mapa de Actividades y Servicios</h2>
             </div>
 
