@@ -23,9 +23,16 @@ export function normalizePlace(item) {
 
     const imageUrl = imgUrlPath ? `${baseUrl}${imgUrlPath}` : null;
 
-    const lat = parseFloat(data.latitude);
-    const lng = parseFloat(data.longitude);
-    const hasValidCoords = !isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0;
+    const lat = Number(data.latitude);
+    const lng = Number(data.longitude);
+
+    const hasValidCoords =
+      Number.isFinite(lat) &&
+      Number.isFinite(lng) &&
+      lat >= -90 &&
+      lat <= 90 &&
+      lng >= -180 &&
+      lng <= 180;
 
     return {
         id: item.id,

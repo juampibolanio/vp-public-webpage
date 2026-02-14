@@ -4,10 +4,10 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import './MapPlaces.css';
 import Icon from '@mdi/react';
-import { 
-    mdiMagnify, 
-    mdiApps, 
-    mdiMapMarker, 
+import {
+    mdiMagnify,
+    mdiApps,
+    mdiMapMarker,
     mdiClose,
     mdiMapMarkerOutline,
     mdiClockTimeFourOutline,
@@ -85,16 +85,16 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                         <span className="search-icon">
                             <Icon path={mdiMagnify} size={1} />
                         </span>
-                        <input 
-                            type="text" 
-                            placeholder="Buscar lugares..." 
+                        <input
+                            type="text"
+                            placeholder="Buscar lugares..."
                             value={filterText}
                             onChange={(e) => setFilterText(e.target.value)}
                         />
                     </div>
 
                     <div className="categories-row">
-                        <button 
+                        <button
                             className={`category-btn ${activeCategory === 'all' ? 'active' : ''}`}
                             onClick={() => setActiveCategory('all')}
                         >
@@ -103,9 +103,9 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                             </div>
                             <span>Todos</span>
                         </button>
-                        
+
                         {initialCategories.map(cat => (
-                            <button 
+                            <button
                                 key={cat.key}
                                 className={`category-btn ${activeCategory === cat.key ? 'active' : ''}`}
                                 onClick={() => setActiveCategory(cat.key)}
@@ -120,7 +120,7 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
 
                     <div className="places-list">
                         {filteredPlaces.map(place => (
-                            <div 
+                            <div
                                 key={place.id}
                                 className={`place-card ${selectedPlaceId === place.id ? 'is-active' : ''}`}
                                 onClick={() => setSelectedPlaceId(place.id)}
@@ -178,7 +178,7 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                                 <div className="popup-content">
                                     <span className="popup-category">{activePlace.category}</span>
                                     <h3>{activePlace.title}</h3>
-                                    
+
                                     <div className="popup-data">
                                         <div className="data-row">
                                             <Icon path={mdiMapMarkerOutline} size={0.7} />
@@ -192,17 +192,17 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
 
                                     <div className="popup-actions">
                                         {activePlace.phone ? (
-                                            <button className="btn-call" onClick={() => window.location.href=`tel:${activePlace.phone}`}>
+                                            <button className="btn-call" onClick={() => window.location.href = `tel:${activePlace.phone}`}>
                                                 Llamar
                                             </button>
                                         ) : (
-                                            <button className="btn-call" disabled style={{opacity: 0.5}}>Sin tel</button>
+                                            <button className="btn-call" disabled style={{ opacity: 0.5 }}>Sin tel</button>
                                         )}
-                                        <button className="btn-go" 
+                                        <button className="btn-go"
                                             disabled={!activePlace.coords}
                                             style={{ opacity: activePlace.coords ? 1 : 0.5 }}
                                             onClick={() => {
-                                                if(activePlace.coords) {
+                                                if (activePlace.coords) {
                                                     const url = `http://googleusercontent.com/maps.google.com/maps?q=${activePlace.coords[0]},${activePlace.coords[1]}`;
                                                     window.open(url, '_blank');
                                                 }
