@@ -1,133 +1,26 @@
 ---
-import './MapPlaces.css';
-import { Icon } from "astro-icon/components";
-
+import MapPlacesIsland from '../../islands/MapPlaces/MapPlaces.jsx'; 
 import { getPlaces } from '../../services/places.service.js';
 import { getUniqueCategories } from '../../utils/places-normalizer.js';
 
-const response: any = await getPlaces(); 
-const places: any[] = response.data || []; 
-const categories: any[] = getUniqueCategories(places);
-console.log(places);
+const response = await getPlaces();
+const rawPlaces = (response && Array.isArray(response.data)) ? response.data : [];
+
+function isValidPlace(p: any): boolean {
+  return (
+    typeof p === 'object' && 
+    p !== null &&
+    typeof p.id === 'number' &&
+    typeof p.title === 'string' &&
+    Array.isArray(p.coords)
+  );
+}
+const places = rawPlaces.filter(isValidPlace);
+const categories = getUniqueCategories(places) ?? [];
 ---
 
-<section 
-    class="map-section" 
-    id="mapSectionRoot"
-    data-places={JSON.stringify(places)}
->
-    <div class="map-header">
-        <img src="/assets/home-icon.webp" alt="Logo Vivir Plenamente" class="header-icon-img" />
-        <h2>Mapa de Actividades y Servicios</h2>
-    </div>
-
-    <div class="map-container">
-        {places.length > 0 ? (
-        <>
-        <aside class="map-sidebar">
-            <div class="search-bar">
-                <Icon name="mdi:magnify" class="search-icon" />
-                <input type="text" id="searchInput" placeholder="Buscar lugares..." />
-            </div>
-
-            <div class="categories-row" id="categoriesContainer">
-                <button class="category-btn active" data-filter="all">
-                    <div class="cat-icon-box"><Icon name="mdi:apps" /></div>
-                    <span>Todos</span>
-                </button>
-                
-                {categories.map((cat: any) => (
-                    <button class="category-btn" data-filter={cat.key}>
-                        <div class="cat-icon-box">
-                            <Icon name={cat.icon} />
-                        </div>
-                        <span>{cat.name}</span>
-                    </button>
-                ))}
-            </div>
-
-            <div class="places-list" id="placesListContainer">
-                {places.map((place: any) => (
-                    <div 
-                        class="place-card" 
-                        data-id={place.id} 
-                        data-category={place.categoryKey} 
-                    >
-                        <div class="place-img-placeholder">
-                            <div class="placeholder-icon-container">
-                                <Icon name={place.categoryIcon || "mdi:map-marker"} />
-                            </div>
-                        </div>
-                        
-                        <div class="place-info">
-                            <h4>{place.title}</h4>
-                            <p>{place.address}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </aside>
-
-        <div class="map-visual-area">
-            <div id="leaflet-map"></div>
-
-            <div class="map-popup-card hidden" id="mapPopup">
-                <div class="popup-image" id="popupImageContainer" style="display: none;">
-                    <img id="popupImg" src="" alt="Lugar" />
-                </div>
-
-                <div class="popup-content">
-                    <span class="popup-category" id="popupCategory">CATEGORIA</span>
-                    <h3 id="popupTitle">Título del Lugar</h3>
-                    
-                    <div class="popup-data">
-                        <div class="data-row">
-                            <Icon name="mdi:map-marker-outline" />
-                            <span id="popupAddress">Dirección</span>
-                        </div>
-                        <div class="data-row">
-                            <Icon name="mdi:clock-time-four-outline" />
-                            <span id="popupSchedule">Horario</span>
-                        </div>
-                    </div>
-
-                    <div class="popup-actions">
-                        <button class="btn-call" id="btnCall">Llamar</button>
-                        <button class="btn-go" id="btnGo">Ir</button>
-                    </div>
-                    <button class="btn-close-popup" id="btnClosePopup">✕</button>
-                </div>
-            </div>
-        </div>
-        </>
-        ) : (
-        <div class="no-places-fallback">
-            <p>No hay lugares disponibles para mostrar.</p>
-            <div class="map-visual-area">
-                <div id="leaflet-map"></div>
-            </div>
-        </div>
-        )}
-    </div>
-</section>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-
-<script>
-    import { initMapLogic } from '../../utils/map-handler.js';
-
-    const startMap = () => {
-        const root = document.getElementById('mapSectionRoot');
-        if (!root) return;
-
-        try {
-            const places = JSON.parse(root.dataset.places || '[]');
-            initMapLogic(places);
-        } catch (e) {
-            console.error("Error al iniciar el mapa:", e);
-        }
-    };
-
-    window.addEventListener('load', startMap);
-</script>
+<MapPlacesIsland 
+  client:only="react" 
+  initialPlaces={places} 
+  initialCategories={categories} 
+/>
