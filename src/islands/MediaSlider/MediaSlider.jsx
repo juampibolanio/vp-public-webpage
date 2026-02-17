@@ -1,23 +1,3 @@
-/**
- * MediaSlider
- * -----------
- * Horizontal media gallery based on Embla Carousel.
- *
- * - Supports images and videos (local file or YouTube).
- * - No autoplay.
- * - Controls (prev / next) are automatically enabled or disabled
- *   depending on the carousel position.
- *
- * Props:
- * - items: Array of media objects:
- *   {
- *     type: "image" | "video",
- *     src: string,
- *     alt?: string,
- *     provider?: "file" | "youtube",
- *     title?: string
- *   }
- */
 import { useEffect, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import "./MediaSlider.css";
@@ -39,19 +19,30 @@ export default function MediaSlider({ items = [] }) {
 
     useEffect(() => {
         if (!emblaApi) return;
+
         updateControls();
         emblaApi.on("select", updateControls);
         emblaApi.on("reInit", updateControls);
+
+        return () => {
+            emblaApi.off("select", updateControls);
+            emblaApi.off("reInit", updateControls);
+        };
     }, [emblaApi, updateControls]);
 
     if (!items.length) return null;
 
     return (
-        <section className="media-slider" aria-label="Galería multimedia">
+        <section
+            className="media-slider"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Galería multimedia"
+        >
             <div className="media-slider__viewport" ref={emblaRef}>
                 <div className="media-slider__container">
-                    {items.map((item, index) => (
-                        <div className="media-slider__slide" key={index}>
+                    {items.map((item) => (
+                        <figure className="media-slider__slide" key={item.src}>
                             {item.type === "image" && (
                                 <img
                                     src={item.src}
@@ -62,10 +53,7 @@ export default function MediaSlider({ items = [] }) {
                             )}
 
                             {item.type === "video" && item.provider === "file" && (
-                                <video
-                                    controls
-                                    preload="metadata"
-                                >
+                                <video controls preload="metadata">
                                     <source src={item.src} type="video/mp4" />
                                 </video>
                             )}
@@ -75,16 +63,24 @@ export default function MediaSlider({ items = [] }) {
                                     src={item.src}
                                     title={item.title || "Video"}
                                     loading="lazy"
+                                    referrerPolicy="strict-origin-when-cross-origin"
                                     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                 />
                             )}
-                        </div>
+
+                            {item.alt && item.type === "image" && (
+                                <figcaption className="media-slider__caption">
+                                    {item.alt}
+                                </figcaption>
+                            )}
+                        </figure>
                     ))}
                 </div>
             </div>
 
             <button
+                type="button"
                 className="media-slider__arrow media-slider__arrow--prev"
                 onClick={() => emblaApi?.scrollPrev()}
                 disabled={!canPrev}
@@ -94,6 +90,7 @@ export default function MediaSlider({ items = [] }) {
             </button>
 
             <button
+                type="button"
                 className="media-slider__arrow media-slider__arrow--next"
                 onClick={() => emblaApi?.scrollNext()}
                 disabled={!canNext}
