@@ -1,134 +1,103 @@
 ---
-/**
- * ArticleDetail
- *
- * Main detail view component for a single article.
- *
- * Responsibilities:
- * - Renders the full article content, including title, excerpt, author data,
- *   publication date, and rich text body.
- * - Integrates accessibility-focused features such as text-to-speech and
- *   font size controls.
- * - Displays associated media in a slider when available.
- *
- * Data preparation:
- * - `sliderItems` is derived from the article media array and normalized into
- *   a format consumable by the MediaSlider island.
- * - `plainTextContent` is extracted from the rich text blocks to provide a
- *   clean, linear text version for the text-to-speech feature.
- *
- * Architecture:
- * - Uses Astro for static structure and React islands for client-side interactivity.
- * - Keeps data transformation logic close to the component to avoid leaking
- *   presentation concerns into services or normalizers.
- *
- * Performance considerations:
- * - Media slider is conditionally rendered only when media is present.
- * - Client-side islands are loaded selectively (`client:load`, `client:visible`)
- *   to minimize unnecessary JavaScript execution.
- *
- * Assumptions:
- * - `articles` is a fully normalized article object with media, author,
- *   and content fields already resolved.
- */
-
 //@ts-nocheck
-import { Icon } from "astro-icon/components";
 import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech";
-import "./ArticleDetail.css";
 import MediaSlider from "../../islands/MediaSlider/MediaSlider";
 import RichText from "../shared/RichText.astro";
-import Sponsors from "../home/Sponsors.astro";
 import FontSizeControls from "../../islands/FontSizeControls/FontSizeControls";
+import "./ArticleDetail.css";
 
-const STRAPI_URL = "http://localhost:1337";
 const { articles } = Astro.props;
 
-const sliderItems = Array.isArray(articles.media)
-  ? articles.media.map((media) => {
-      const isVideo = media?.mime?.startsWith("video");
+const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES ?? "";
 
-      const fullUrl = media.url?.startsWith("http")
-        ? media.url
-        : `${STRAPI_URL}${media.url}`;
-
-      return {
-        type: isVideo ? "video" : "image",
-        src: fullUrl,
-        alt: media.alt || articles.title,
-        provider: isVideo ? "file" : undefined,
-      };
+const formattedDate = articles?.publishedDate
+  ? new Date(articles.publishedDate).toLocaleDateString("es-AR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
     })
-  : [];
-
-const plainTextContent = Array.isArray(articles.content)
-  ? articles.content
-      .map((block) => block.children?.map((child) => child.text).join(" "))
-      .join("\n")
   : "";
+
+let sliderItems = [];
+
+if (Array.isArray(articles?.media) && articles.media.length > 0) {
+  sliderItems = articles.media.map((media) => {
+    const isVideo = media?.mime?.startsWith("video");
+    const fullUrl = media?.url?.startsWith("http")
+      ? media.url
+      : `${STRAPI_URL}${media?.url ?? ""}`;
+    
+    return {
+      type: isVideo ? "video" : "image",
+      src: fullUrl,
+      alt: media?.alt || articles?.title || "",
+      provider: isVideo ? "file" : undefined,
+    };
+  });
+}
 ---
 
-<section class="article-detail__wrapper">
+<section class="article-detail">
+  <article class="article-detail__container">
 
-  <article class="article-detail__content">
-    <div class="article-detail__header">
-      <div class="article-header__content">
-        <h1 class="article-header__title">{articles.title}</h1>
-        <p class="article-header__excerpt">{articles.excerpt}</p>
+    <header class="article-detail__header">
+      <div class="article-header__text">
+        <h1 id="article-title" class="article-header__title">
+          {articles?.title}
+        </h1>
+        {articles?.excerpt && (
+          <p class="article-header__excerpt">
+            {articles.excerpt}
+          </p>
+        )}
       </div>
 
-      <div class="article-header__meta-buttons">
-        <div class="meta-buttons__author">
-          <div class="author-image-wrapper">
+      <div class="article-header__meta">
+
+        <div class="meta__author">
+          {articles?.author?.avatar?.url && (
             <img
-              class="author-image"
+              class="author__avatar"
               src={articles.author.avatar.url}
               alt={articles.author.avatar.alt || articles.author.name}
+              loading="lazy"
+              decoding="async"
             />
-          </div>
-          <div class="author__info-wrapper">
-            <span class="author__info-text">Por:</span>
-            <span class="author__info-name">{articles.author.name}</span>
-            <span class="date-listening__date">
-              Publicado el
-              {
-                new Date(articles.publishedDate).toLocaleDateString("es-AR", {
-                  day: "2-digit",
-                  month: "long",
-                  year: "numeric",
-                })
-              }
-            </span>
+          )}
+
+          <div class="author__info">
+            {articles?.author?.name && (
+              <span class="author__name">
+                Por {articles.author.name}
+              </span>
+            )}
+            {formattedDate && (
+              <span class="author__date">
+                Publicado el {formattedDate}
+              </span>
+            )}
           </div>
         </div>
 
-        <div class="meta-buttons__meta-info">
-          <div class="meta-buttons__date-listening">
-            <TextToSpeech
-              client:load
-              text={`${articles.title}. ${articles.excerpt}. ${plainTextContent}`}
-            />
-          </div>
-
-          <div class="meta-buttons__buttons">
-            <FontSizeControls client:load />
-          </div>
+        <div class="meta__actions">
+          <TextToSpeech client:load text={articles?.title ?? ""} />
+          <FontSizeControls client:load />
         </div>
+
       </div>
-    </div>
+    </header>
 
     <div class="article-detail__body">
-      <article class="article-detail__article">
-        <RichText content={articles.content} />
-      </article>
-
-      <div class="article-detail__slider">
-        {
-          sliderItems.length > 0 && (
-            <MediaSlider client:visible items={sliderItems} />
-          )
-        }
+      <div id="article-content" class="article-detail__content">
+        <RichText content={articles?.content} />
       </div>
+
+      {sliderItems.length > 0 && (
+        <div class="article-detail__slider">
+          <MediaSlider client:visible items={sliderItems} />
+        </div>
+      )}
     </div>
+
   </article>
 </section>
