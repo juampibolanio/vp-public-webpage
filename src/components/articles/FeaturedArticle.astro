@@ -1,7 +1,6 @@
 ---
 import { formatDate } from "../../utils/date";
 import "./FeaturedArticle.css";
-import { Image } from "astro:assets";
 
 const { featArticle, basePath } = Astro.props;
 
@@ -27,7 +26,7 @@ const articleHref = slug ? `${basePath}/${slug}` : "#";
 
 <section class="article-featured">
   <div class="article-featured__content">
-    <a href={articleHref} class="article__header">
+    <div class="article__header">
       {
         authorAvatarUrl ? (
           <img
@@ -46,7 +45,7 @@ const articleHref = slug ? `${basePath}/${slug}` : "#";
         <span class="author-info__text">Por</span>
         <span class="author-info__name">{authorName}</span>
       </div>
-    </a>
+    </div>
 
     <div class="article__body">
       <a href={articleHref}>
