@@ -27,9 +27,9 @@ const hasSecondaryNews = listNews.length > 1;
       <div class="container__news-section">
         <article class="news-featured">
           <div class="news-featured__image-container">
-            {listNews[0].media?.url || listNews[0].media?.thumbnail ? (
+            {listNews[0].media?.src || listNews[0].media?.thumbnail ? (
               <img
-                src={listNews[0].media?.url || listNews[0].media?.thumbnail}
+                src={listNews[0].media?.src}
                 alt={listNews[0].media?.alt || listNews[0].title}
                 class="news-featured__image"
                 loading="lazy"
@@ -77,9 +77,9 @@ const hasSecondaryNews = listNews.length > 1;
             {listNews.slice(1).map((item) => (
               <article class="news-list__item">
                 <div class="item__image-wrapper">
-                  {item.media?.url || item.media?.thumbnail ? (
+                  {item.media?.src || item.media?.thumbnail ? (
                     <img
-                      src={item.media?.url || item.media?.thumbnail}
+                      src={item.media?.src}
                       alt={item.media?.alt || item.title}
                       class="item__image-img"
                       loading="lazy"

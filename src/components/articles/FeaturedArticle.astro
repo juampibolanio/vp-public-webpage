@@ -1,20 +1,14 @@
 ---
 import { formatDate } from "../../utils/date";
 import "./FeaturedArticle.css";
+import { Image } from "astro:assets";
 
 const { featArticle, basePath } = Astro.props;
 
 const safeArticle = featArticle ?? {};
 
-const {
-  title,
-  slug,
-  excerpt,
-  category,
-  publishedDate,
-  cover,
-  author,
-} = safeArticle;
+const { title, slug, excerpt, category, publishedDate, cover, author } =
+  safeArticle;
 
 const formattedDate = publishedDate ? formatDate(publishedDate) : null;
 
@@ -33,7 +27,6 @@ const articleHref = slug ? `${basePath}/${slug}` : "#";
 
 <section class="article-featured">
   <div class="article-featured__content">
-
     <a href={articleHref} class="article__header">
       {
         authorAvatarUrl ? (
@@ -60,23 +53,21 @@ const articleHref = slug ? `${basePath}/${slug}` : "#";
         <h3 class="article__title">{title}</h3>
       </a>
 
-      {excerpt && (
-        <p class="article__description">{excerpt}</p>
-      )}
+      {excerpt && <p class="article__description">{excerpt}</p>}
     </div>
 
     <div class="article__footer">
       <div class="article__meta">
-        {category && (
-          <span class="article__category">{category}</span>
-        )}
+        {category && <span class="article__category">{category}</span>}
 
-        {formattedDate && (
-          <>
-            <span class="article__divider"></span>
-            <span class="article__date">{formattedDate}</span>
-          </>
-        )}
+        {
+          formattedDate && (
+            <>
+              <span class="article__divider" />
+              <span class="article__date">{formattedDate}</span>
+            </>
+          )
+        }
       </div>
 
       <a href={articleHref} class="article__read-button">
