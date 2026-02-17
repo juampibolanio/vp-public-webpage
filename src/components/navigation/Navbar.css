@@ -197,6 +197,26 @@
     }
 }
 
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    .navbar__links {
+        gap: var(--space-md);
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+
+    .navbar__link,
+    .navbar__accordion-toggle {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.5rem;
+    }
+
+    .link--important {
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+
 @media (min-width: 1280px) {
     .navbar__links {
         gap: var(--space-xl);
