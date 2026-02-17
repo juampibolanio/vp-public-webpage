@@ -2,17 +2,31 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
+  align-items: stretch;
 }
 
 .font-size-controls__button {
-  padding: var(--space-xs) var(--space-xxxl);
+  min-height: 44px; 
+  min-width: 44px;
+
+  padding: 0.5rem 1rem;
   background-color: var(--color-primary);
   color: var(--color-background);
-  border-radius: var(--space-lg);
+  border-radius: 999px;
+  border: none;
+
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  font-weight: 500;
+  justify-content: center;
+
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.font-size-controls__button:hover:not([disabled]) {
+  transform: scale(1.05);
 }
 
 .font-size-controls__button[disabled] {
@@ -21,7 +35,24 @@
 }
 
 @media (max-width: 768px) {
-    .font-size-controls {
-        flex-direction: row;
-    }
+  .font-size-controls {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .font-size-controls__button {
+    flex: 1; /* botones iguales */
+    padding: 0.6rem 0;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .font-size-controls {
+    gap: 0.5rem;
+  }
+
+  .font-size-controls__button {
+    font-size: 0.9rem;
+  }
 }

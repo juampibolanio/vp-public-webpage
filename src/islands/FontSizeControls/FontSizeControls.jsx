@@ -52,7 +52,7 @@ export default function FontSizeControls() {
     const reset = () => applyScale(DEFAULT);
 
     return (
-        <div className="font-size-controls">
+        <div className="font-size-controls" aria-label="Controles de tamaño de texto">
             <button
                 type="button"
                 className="font-size-controls__button"
