@@ -134,7 +134,7 @@
 
 @media (max-width: 640px) {
     .article-featured {
-        gap: var(--space-xl);
+        gap: var(--space-lg);
     }
 
     .article__footer {

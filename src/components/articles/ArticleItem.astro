@@ -48,6 +48,8 @@ const authorAvatarAlt = author?.avatar?.alt ?? author?.name ?? "Autor";
           alt={authorAvatarAlt}
           loading="lazy"
           decoding="async"
+          width="48"
+          height="48"
         />
       ) : (
         <div class="article__author-placeholder" />
@@ -70,6 +72,8 @@ const authorAvatarAlt = author?.avatar?.alt ?? author?.name ?? "Autor";
             alt={coverAlt}
             loading="lazy"
             decoding="async"
+            width="800"
+            height="450"
           />
         ) : (
           <div class="article__image-placeholder" />
