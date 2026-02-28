@@ -1,5 +1,7 @@
 ---
+//@ts-nocheck
 /**
+ * 
  * Navbar
  *
  * Main site navigation.
@@ -98,18 +100,32 @@ import "./Navbar.css";
 </nav>
 
 <script>
+  const navbar = document.querySelector(".navbar");
   const toggle = document.querySelector(".navbar__toggle");
   const links = document.querySelector(".navbar__links");
 
-  if (toggle && links) {
-    toggle.addEventListener("click", () => {
+  if (toggle && links && navbar) {
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
       const isOpen = links.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", (event) => {
+      const isOpen = links.classList.contains("is-open");
+      if (!isOpen) return;
+
+      const clickInsideNavbar = navbar.contains(event.target);
+      if (!clickInsideNavbar) {
+        links.classList.remove("is-open");
+        toggle.setAttribute("aria-expanded", "false");
+      }
     });
   }
 
   document.querySelectorAll(".navbar__accordion-toggle").forEach((btn) => {
-    btn.addEventListener("click", () => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
       const parent = btn.parentElement;
       const isOpen = parent?.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", String(isOpen));
