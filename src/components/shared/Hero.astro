@@ -17,15 +17,13 @@ import "./Hero.css";
 
 <section class="hero">
   <picture class="hero__bg">
-    <source
-      srcset="/assets/hero-mobile.webp"
-      media="(max-width: 600px)"
-    />
+    <source media="(max-width: 600px)" srcset="/assets/hero-mobile.webp" />
+    <source media="(max-width: 1024px)" srcset="/assets/hero-tablet.webp" />
     <img
-      src="/assets/hero-desktop.webp"
+      src="/assets/hero-desktop2.webp"
       alt=""
-      width="1920"
-      height="1080"
+      width="1600"
+      height="600"
       loading="eager"
       decoding="async"
       fetchpriority="high"
@@ -43,7 +41,7 @@ import "./Hero.css";
         class="hero__logo"
         width="240"
         height="240"
-        loading="eager"
+        loading="lazy"
         decoding="async"
       />
 
@@ -59,9 +57,7 @@ import "./Hero.css";
       <a href="https://wa.link/2s0wl1" class="hero__button">
         Necesito ayuda ahora
       </a>
-      <a href="/noticias" class="hero__button">
-        Leer las últimas noticias
-      </a>
+      <a href="/noticias" class="hero__button"> Leer las últimas noticias </a>
     </div>
   </div>
 </section>

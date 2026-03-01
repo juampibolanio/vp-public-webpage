@@ -1,64 +1,100 @@
 ---
-import './DonatePeriodism.css';
+import "./DonatePeriodism.css";
 import { Icon } from "astro-icon/components";
 ---
 
 <main class="donate-page">
+  <section class="container hero-section">
+    <div class="hero-image-wrapper">
+      <img
+        src="/assets/donate-header.webp"
+        alt="Personas mayores compartiendo"
+        class="hero-img"
+        width="1600"
+        height="1067"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </div>
 
-<section class="container hero-section">
-        <div class="hero-image-wrapper">
-            <img src="/assets/donate-header.webp" alt="Personas mayores compartiendo" class="hero-img" />
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Colaborar con <span>Vivir Plenamente</span>
+      </h1>
+      <p class="hero-description">
+        Ayúdanos a seguir construyendo un espacio de información, respeto y
+        transparencia para los mayores. Tu participación es vital para mantener
+        nuestra independencia editorial y seguir ofreciendo contenido de
+        calidad.
+      </p>
+
+      <div class="donation-actions">
+        <div class="action-group disabled-group">
+          <img
+            src="/assets/cafecito-logo.webp"
+            alt="Cafecito Logo"
+            class="mini-logo"
+          />
+          <a href="#" class="btn btn-primary" aria-disabled="true"
+            >Invitanos un Cafecito</a
+          >
         </div>
 
-        <div class="hero-content">
-            <h1 class="hero-title">
-                Colaborar con <span>Vivir Plenamente</span>
-            </h1>
-            <p class="hero-description">
-                Ayúdanos a seguir construyendo un espacio de información, respeto y transparencia para los mayores. Tu participación es vital para mantener nuestra independencia editorial y seguir ofreciendo contenido de calidad.
-            </p>
-
-        <div class="donation-actions">
-            <div class="action-group disabled-group">
-                <img src="/assets/cafecito-logo.webp" alt="Cafecito Logo" class="mini-logo" />
-                <a href="#" class="btn btn-primary" aria-disabled="true">Invitanos un Cafecito</a>
-            </div>
-                
-            <div class="action-group">
-                <img src="/assets/mp-logo.webp" alt="Mercado Pago Logo" class="mini-logo" />
-                <a href="https://link.mercadopago.com.ar/vivirplenamenteradio" class="btn btn-primary">Apoyar MercadoPago</a>
-            </div>
+        <div class="action-group">
+          <img
+            src="/assets/mp-logo.webp"
+            alt="Mercado Pago Logo"
+            class="mini-logo"
+          />
+          <a
+            href="https://link.mercadopago.com.ar/vivirplenamenteradio"
+            class="btn btn-primary">Apoyar MercadoPago</a
+          >
         </div>
-        </div>
-</section>
+      </div>
+    </div>
+  </section>
 
-<section class="container bank-section">
+  <section class="container bank-section">
     <h2 class="section-title">Datos de transferencia bancaria</h2>
     <div class="bank-card">
-        <div class="bank-field">BANCO</div>
-        <div class="bank-field">ALIAS: Vivirplenamenteradio</div>
-        <div class="bank-field">CBU: 0000003100080791985773</div>
+      <div class="bank-field">BANCO</div>
+      <div class="bank-field">ALIAS: Vivirplenamenteradio</div>
+      <div class="bank-field">CBU: 0000003100080791985773</div>
     </div>
-</section>
+  </section>
 
-<section class="why-support-section">
+  <section class="why-support-section">
     <div class="container text-center">
-        <h2 class="section-title">Por qué apoyar este proyecto</h2>
-        <div class="support-text">
-            <p>Vivir Plenamente es un medio independiente comprometido con el periodismo de servicios. No dependemos de grandes corporaciones, lo que nos permite hablar con libertad sobre los temas que realmente importan a las personas mayores: Salud, derechos, cultura y bienestar.</p>
-            <p>Tu colaboración libre de intereses externos y enfocados en lo que realmente importa: Tu bienestar y el de la comunidad.</p>
-        </div>
-    </div>
-</section>
-
-<section class="container footer-cta-section">
-    <img src="/assets/logo-horiz-negro.webp" alt="Vivir Plenamente" class="footer-logo" />
-        <p class="cta-text">
-        Publicita con nosotros y llega a las personas mayores y sus familias de la región y el país
+      <h2 class="section-title">Por qué apoyar este proyecto</h2>
+      <div class="support-text">
+        <p>
+          Vivir Plenamente es un medio independiente comprometido con el
+          periodismo de servicios. No dependemos de grandes corporaciones, lo
+          que nos permite hablar con libertad sobre los temas que realmente
+          importan a las personas mayores: Salud, derechos, cultura y bienestar.
         </p>
-    <a href="https://wa.link/2s0wl1" class="btn btn-whatsapp">
-        <Icon name="mdi:whatsapp" class="icon-ws" /> Whatsapp
-    </a>
-</section>
+        <p>
+          Tu colaboración libre de intereses externos y enfocados en lo que
+          realmente importa: Tu bienestar y el de la comunidad.
+        </p>
+      </div>
+    </div>
+  </section>
 
+  <section class="container footer-cta-section">
+    <img
+      src="/assets/logo-horiz-negro.webp"
+      alt="Vivir Plenamente"
+      class="footer-logo"
+    />
+    <p class="cta-text">
+      Publicita con nosotros y llega a las personas mayores y sus familias de la
+      región y el país
+    </p>
+    <a href="https://wa.link/2s0wl1" class="btn btn-whatsapp">
+      <Icon name="mdi:whatsapp" class="icon-ws" /> Whatsapp
+    </a>
+  </section>
 </main>
