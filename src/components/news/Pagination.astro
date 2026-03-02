@@ -19,61 +19,84 @@
  */
 import "./Pagination.css";
 
-const { currentPage, totalPages, basePath } = Astro.props;
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  basePath: string;
+}
+
+const { currentPage, totalPages, basePath } = Astro.props as Props;
 
 const createPageUrl = (page: number) => `${basePath}?page=${page}`;
+
+const delta = 2;
+
+const range: (number | string)[] = [];
+
+const left = Math.max(2, currentPage - delta);
+const right = Math.min(totalPages - 1, currentPage + delta);
+
+range.push(1);
+
+if (left > 2) {
+  range.push("ellipsis-left");
+}
+
+for (let i = left; i <= right; i++) {
+  range.push(i);
+}
+
+if (right < totalPages - 1) {
+  range.push("ellipsis-right");
+}
+
+if (totalPages > 1) {
+  range.push(totalPages);
+}
 ---
 
-<nav class="pagination" aria-label="Paginación de noticias">
+<nav class="pagination" aria-label="Paginación">
   <ul class="pagination__list">
-    <li
-      class={`pagination__item ${currentPage === 1 ? "pagination__item--disabled" : ""}`}
-    >
-      {
-        currentPage === 1 ? (
-          <span aria-disabled="true">Anterior</span>
-        ) : (
-          <a href={createPageUrl(currentPage - 1)} data-astro-reload>
-            Anterior
-          </a>
-        )
-      }
+    <li class={`pagination__item ${currentPage === 1 ? "pagination__item--disabled" : ""}`}>
+      {currentPage === 1 ? (
+        <span aria-disabled="true">Anterior</span>
+      ) : (
+        <a href={createPageUrl(currentPage - 1)} data-astro-reload>
+          Anterior
+        </a>
+      )}
     </li>
 
-    {
-      Array.from({ length: totalPages }, (_, i) => {
-        const page = i + 1;
-
-        return (
-          <li
-            class={`pagination__item ${
-              page === currentPage ? "pagination__item--active" : ""
-            }`}
-          >
-            {page === currentPage ? (
-              <span aria-current="page">{page}</span>
-            ) : (
-              <a href={createPageUrl(page)} data-astro-reload>
-                {page}
-              </a>
-            )}
-          </li>
-        );
-      })
-    }
+    {range.map((item) => (
+      <li
+        class={`pagination__item ${
+          item === currentPage ? "pagination__item--active" : ""
+        }`}
+      >
+        {typeof item === "string" ? (
+          <span class="pagination__ellipsis">…</span>
+        ) : item === currentPage ? (
+          <span aria-current="page">{item}</span>
+        ) : (
+          <a href={createPageUrl(item)} data-astro-reload>
+            {item}
+          </a>
+        )}
+      </li>
+    ))}
 
     <li
-      class={`pagination__item ${currentPage === totalPages ? "pagination__item--disabled" : ""}`}
+      class={`pagination__item ${
+        currentPage === totalPages ? "pagination__item--disabled" : ""
+      }`}
     >
-      {
-        currentPage === totalPages ? (
-          <span aria-disabled="true">Siguiente</span>
-        ) : (
-          <a href={createPageUrl(currentPage + 1)} data-astro-reload>
-            Siguiente
-          </a>
-        )
-      }
+      {currentPage === totalPages ? (
+        <span aria-disabled="true">Siguiente</span>
+      ) : (
+        <a href={createPageUrl(currentPage + 1)} data-astro-reload>
+          Siguiente
+        </a>
+      )}
     </li>
   </ul>
 </nav>

@@ -1,63 +1,81 @@
 .pagination {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-xxxl);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--space-xxxl);
 }
 
 .pagination__list {
-    display: flex;
-    gap: var(--space-sm);
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: center;
 }
 
 .pagination__item {
-    min-width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    border: 2px solid var(--color-primary);
-    background-color: var(--color-background);
-    font-size: 1.1rem;
-    overflow: hidden;
+  min-width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  border: 2px solid var(--color-primary);
+  background-color: var(--color-background);
+  font-size: 1rem;
 }
 
 .pagination__item a,
 .pagination__item span {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-sm);
-    text-decoration: none;
-    color: var(--color-primary);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: var(--color-primary);
 }
 
 .pagination__item--active {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+  background-color: var(--color-primary);
 }
 
 .pagination__item--active span {
-    color: var(--color-background);
+  color: var(--color-background);
 }
 
 .pagination__item--disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.pagination__item--disabled span {
-    color: var(--color-primary);
-    cursor: not-allowed;
+.pagination__ellipsis {
+  pointer-events: none;
+  border: none;
 }
 
 .pagination__item:hover:not(.pagination__item--active):not(.pagination__item--disabled) {
-    transition: opacity 0.2s ease-in-out;
-    opacity: 0.7;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+@media (max-width: 640px) {
+  .pagination__list {
+    gap: 6px;
+  }
+
+  .pagination__item {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+    border-width: 1.5px;
+  }
+
+  .pagination__item a,
+  .pagination__item span {
+    padding: 0.25rem;
+  }
 }
