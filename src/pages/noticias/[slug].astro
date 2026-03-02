@@ -72,7 +72,12 @@ const breadcrumbItems = [
 ].filter(Boolean);
 ---
 
-<MainLayout title=`${news.title}`>
+<MainLayout
+  title={news.title}
+  description={news.excerpt}
+  image={news.featuredImage?.src}
+  type="article"
+>
   <div class="new-detail-layout">
     <div class="new-detail-content">
       <Breadcrumb items={breadcrumbItems} />

@@ -22,31 +22,57 @@ import Hero from "../components/shared/Hero.astro";
 const title = Astro.props.title
   ? `${Astro.props.title} | Vivir Plenamente`
   : "Vivir Plenamente";
+
+const {
+  title: pageTitle,
+  description,
+  image,
+  url,
+  type = "website",
+} = Astro.props;
+
+const fullTitle = pageTitle
+  ? `${pageTitle} | Vivir Plenamente`
+  : "Vivir Plenamente";
+
+const canonicalUrl = url ?? Astro.url.href;
 ---
 
 <!doctype html>
 <html lang="es-ar">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{fullTitle}</title>
+
     <meta
       name="description"
-      content="Vivir Plenamente - Recursos y apoyo para una vida saludable y feliz."
+      content={description ??
+        "Vivir Plenamente - Recursos y apoyo para una vida saludable y feliz."}
     />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    {image && <meta property="og:image" content={image} />}
+    <meta property="og:locale" content="es_AR" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    {image && <meta name="twitter:image" content={image} />}
+
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
   </head>
 
   <body>
-    <a href="#content" class="skip-link">
-      Saltar al contenido principal
-    </a>
+    <a href="#content" class="skip-link"> Saltar al contenido principal </a>
 
     <Navbar />
 
