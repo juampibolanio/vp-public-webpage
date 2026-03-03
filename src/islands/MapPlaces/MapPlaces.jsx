@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -17,6 +17,7 @@ import {
     mdiHospitalBuilding,
     mdiMapMarkerRadiusOutline
 } from '@mdi/js';
+
 
 const ICON_MAP = {
     'mdi:book-open-page-variant-outline': mdiBookOpenPageVariantOutline,
@@ -44,11 +45,17 @@ const activeIcon = L.divIcon({
 function FlyToPlace({ coords }) {
     const map = useMap();
 
-    if (coords) {
+    useEffect(() => {
+        if (!coords) return;
+
         const isMobile = window.innerWidth <= 768;
         const offsetLng = isMobile ? coords[1] : coords[1] + 0.003;
-        map.flyTo([coords[0], offsetLng], 15, { animate: true, duration: 1.2 });
-    }
+
+        map.flyTo([coords[0], offsetLng], 15, {
+            animate: true,
+            duration: 1.2
+        });
+    }, [coords, map]);
 
     return null;
 }
@@ -57,6 +64,7 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
     const [filterText, setFilterText] = useState('');
     const [activeCategory, setActiveCategory] = useState('all');
     const [selectedPlaceId, setSelectedPlaceId] = useState(null);
+    const [mapReady, setMapReady] = useState(false);
 
     const filteredPlaces = useMemo(() => {
         return initialPlaces.filter(place => {
@@ -66,7 +74,9 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
         });
     }, [initialPlaces, filterText, activeCategory]);
 
-    const activePlace = initialPlaces.find(p => p.id === selectedPlaceId);
+    const activePlace = useMemo(() => {
+        return initialPlaces.find(p => p.id === selectedPlaceId);
+    }, [initialPlaces, selectedPlaceId]);
 
     const getCategoryIcon = (iconName) => {
         return ICON_MAP[iconName] || ICON_MAP['default'];
@@ -140,10 +150,16 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                 </aside>
 
                 <div className="map-visual-area">
+                    {!mapReady && (
+                        <div className="map-loading-overlay">
+                            <div className="map-loader"></div>
+                        </div>
+                    )}
                     <MapContainer
                         center={[-27.451, -58.986]}
                         zoom={13}
                         zoomControl={false}
+                        whenReady={() => setMapReady(true)}
                         style={{ width: '100%', height: '100%', zIndex: 1 }}
                     >
                         <TileLayer
@@ -205,7 +221,7 @@ export default function MapPlacesIsland({ initialPlaces = [], initialCategories 
                                                 if (activePlace.coords) {
                                                     const [lat, lng] = activePlace.coords;
                                                     const url = `https://www.google.com/maps?q=${lat},${lng}`;
-                                                    window.open(url, '_blank');
+                                                    window.open(url, '_blank', 'noopener,noreferrer');
                                                 }
                                             }}>Ir
                                         </button>
