@@ -25,12 +25,19 @@ const API_URL = import.meta.env.PUBLIC_STRAPI_API_URL;
  * @throws {Error} When the HTTP response is not OK.
  */
 export async function apiFetch(endpoint, options = {}) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+
   const response = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
       "Content-Type": "application/json",
+      ...(options.headers || {}),
     },
+    signal: controller.signal,
   });
+
+  clearTimeout(timeout);
 
   if (!response.ok) {
     console.error("API error:", response.status);

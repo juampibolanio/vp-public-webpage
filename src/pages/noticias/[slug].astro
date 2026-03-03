@@ -43,6 +43,11 @@ import NewDetailItem from "../../components/news-detail/NewDetailItem.astro";
 import Sidebar from "../../components/shared/Sidebar.astro";
 import { getNewBySlug, getRelatedNews } from "../../services/news.service";
 
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, s-maxage=120, stale-while-revalidate=600"
+);
+
 const { slug } = Astro.params;
 
 const news = await getNewBySlug(slug);

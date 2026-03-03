@@ -34,12 +34,14 @@ export default function TextToSpeech({ text }) {
   const utteranceRef = useRef(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  if (typeof window === "undefined") return null;
+
   useEffect(() => {
     return () => {
       speechSynthesis.cancel();
     };
   }, []);
-
+  
   const speak = () => {
     if (!text) return;
 
