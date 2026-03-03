@@ -23,14 +23,16 @@ import "./SponsorsCarousel.css";
 export default function SponsorsCarousel({ sponsors }) {
   // initializes Embla with automatic autoplay
   const [emblaRef] = useEmblaCarousel(
-    { loop: true,
+    {
+      loop: true,
       align: "center",
       containScroll: "trimSnaps",
-     },
+    },
     [
       Autoplay({
-        delay: 3000,             
+        delay: 3000,
         stopOnInteraction: true,
+        stopOnMouseEnter: true,
       }),
     ]
   );
@@ -40,14 +42,21 @@ export default function SponsorsCarousel({ sponsors }) {
       <div className="sponsors__viewport" ref={emblaRef}>
         <div className="sponsors__container">
           {sponsors.map((item, id) => (
-            <div className="sponsors__slide" key={id}>
+            <div className="sponsors__slide" key={item.id || item.name}>
               <a
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="sponsors__link"
               >
-                <img src={item.media.url} alt={item.name} />
+                <img
+                  src={item.media.url}
+                  alt={item.name}
+                  loading="lazy"
+                  decoding="async"
+                  width={item.width}
+                  height={item.height}
+                />
               </a>
             </div>
           ))}
