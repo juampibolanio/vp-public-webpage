@@ -15,7 +15,7 @@
 // @ts-nocheck
 import { Icon } from 'astro-icon/components';
 import './Sidebar.css';
-import WeatherWidget from '../../islands/WeatherWidget/WeatherWidget.jsx';
+import WeatherWidget from '../../components/shared/Weather.astro';
 import { getAdvertisements } from '../../services/advertisements.service';
 
 const { advertisements } = await getAdvertisements({limit: 4});
@@ -24,7 +24,7 @@ const { advertisements } = await getAdvertisements({limit: 4});
 
 <aside class="sidebar">
     <div class="sidebar-section weather-section">
-        <WeatherWidget client:load />
+        <WeatherWidget />
     </div>
     <div class="sidebar-section social-networks">
         <h4 class="sidebar-title">Nuestras redes</h4>
