@@ -41,14 +41,16 @@ export default function MediaSlider({ items = [] }) {
         >
             <div className="media-slider__viewport" ref={emblaRef}>
                 <div className="media-slider__container">
-                    {items.map((item) => (
+                    {items.map((item, index) => (
                         <figure className="media-slider__slide" key={item.src}>
                             {item.type === "image" && (
                                 <img
                                     src={item.src}
                                     alt={item.alt || ""}
-                                    loading="lazy"
+                                    loading={index === 0 ? "eager" : "lazy"}
                                     decoding="async"
+                                    width={item.width}
+                                    height={item.height}
                                 />
                             )}
 

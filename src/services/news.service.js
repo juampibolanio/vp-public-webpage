@@ -69,18 +69,25 @@ export async function getNews({ page = 1, pageSize = 5 } = {}) {
  */
 export async function getNewBySlug(slug) {
   const query = new URLSearchParams({
-    "filters[slug][$eq]": slug,
+  "filters[slug][$eq]": slug,
 
-    "populate[media]": "true",
-    "populate[author][populate][avatar]": "true",
-  });
+  "fields[0]": "title",
+  "fields[1]": "slug",
+  "fields[2]": "excerpt",
+  "fields[3]": "published_date",
+  "fields[4]": "content",
+  "fields[5]": "category",
 
+  "populate[media]": "true",
+  "populate[author][fields][0]": "name",
+  "populate[author][populate][avatar]": "true",
+});
+  
   const response = await apiFetch(`/news?${query.toString()}`);
 
   if (!response?.data?.length) {
     return null;
   }
-
   return normalizeNewsItem(response.data[0]);
 }
 
