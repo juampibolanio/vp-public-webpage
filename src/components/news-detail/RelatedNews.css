@@ -18,6 +18,9 @@
     margin: 0 auto;
 }
 
+.related-news__headline-link {
+    color: #000;
+}
 
 .related-news__card {
     display: flex;
@@ -29,7 +32,7 @@
 
 .related-news__image {
     width: 100%;
-    height: 140px;
+    aspect-ratio: 16/10;
     object-fit: cover;
     border-radius: 0.5rem;
     margin-bottom: 0.5rem;
@@ -61,6 +64,7 @@
     height: 140px;
     background: var(--color-surface-soft);
     border-radius: 0.5rem;
+    aspect-ratio: 16/10;
 }
 
 @media (max-width: 900px) {

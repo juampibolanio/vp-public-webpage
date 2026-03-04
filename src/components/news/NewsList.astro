@@ -1,4 +1,5 @@
 ---
+//@ts-nocheck
 /**
  * NewsList
  *
@@ -18,13 +19,12 @@
 import NewsItem from './NewsItem.astro';
 import './NewsList.css';
 
-const { news } = Astro.props;
-
-const items = Array.isArray(news) ? news.slice(0, 4) : [];
+const { news = [], limit = 4 } = Astro.props;
+const items = news.slice(0, limit);
 ---
 
 <section class="news-list">
     {items.map((item) => (
-        <NewsItem news={item}/>
+        <NewsItem news={item} key={item.slug}/>
     ))}
 </section>

@@ -10,94 +10,105 @@ const { articles } = Astro.props;
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES ?? "";
 
-const formattedDate = articles?.publishedDate
-  ? new Date(articles.publishedDate).toLocaleDateString("es-AR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    })
+const plainTextContent = Array.isArray(articles.content)
+  ? articles.content
+      .map((block) => block.children?.map((child) => child.text).join(" "))
+      .join("\n")
   : "";
 
-let sliderItems = [];
+const dateFormatter = new Intl.DateTimeFormat("es-AR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
 
-if (Array.isArray(articles?.media) && articles.media.length > 0) {
-  sliderItems = articles.media.map((media) => {
-    const isVideo = media?.mime?.startsWith("video");
-    const fullUrl = media?.url?.startsWith("http")
-      ? media.url
-      : `${STRAPI_URL}${media?.url ?? ""}`;
-    
-    return {
-      type: isVideo ? "video" : "image",
-      src: fullUrl,
-      alt: media?.alt || articles?.title || "",
-      provider: isVideo ? "file" : undefined,
-    };
-  });
-}
+const formattedDate = articles?.publishedDate
+  ? dateFormatter.format(new Date(articles.publishedDate))
+  : "";
+
+const sliderItems = Array.isArray(articles?.media)
+  ? articles.media.map((media) => {
+      const isVideo = media?.mime?.startsWith("video");
+      const fullUrl = media?.url?.startsWith("http")
+        ? media.url
+        : `${STRAPI_URL}${media?.url ?? ""}`;
+
+      return {
+        type: isVideo ? "video" : "image",
+        src: fullUrl,
+        alt: media?.alt || articles?.title || "",
+        provider: isVideo ? "file" : undefined,
+      };
+    })
+  : [];
 ---
 
 <section class="article-detail">
-  <article class="article-detail__container">
-
+  <article aria-labelledby="article-title" class="article-detail__container">
     <header class="article-detail__header">
       <div class="article-header__text">
         <h1 id="article-title" class="article-header__title">
           {articles?.title}
         </h1>
-        {articles?.excerpt && (
-          <p class="article-header__excerpt">
-            {articles.excerpt}
-          </p>
-        )}
+        {
+          articles?.excerpt && (
+            <p class="article-header__excerpt">{articles.excerpt}</p>
+          )
+        }
       </div>
 
       <div class="article-header__meta">
-
         <div class="meta__author">
-          {articles?.author?.avatar?.url && (
-            <img
-              class="author__avatar"
-              src={articles.author.avatar.url}
-              alt={articles.author.avatar.alt || articles.author.name}
-              loading="lazy"
-              decoding="async"
-            />
-          )}
+          {
+            articles?.author?.avatar?.url && (
+              <img
+                class="author__avatar"
+                src={articles.author.avatar.url}
+                alt={articles.author.avatar.alt || articles.author.name}
+                loading="lazy"
+                decoding="async"
+                width="56"
+                height="56"
+              />
+            )
+          }
 
           <div class="author__info">
-            {articles?.author?.name && (
-              <span class="author__name">
-                Por {articles.author.name}
-              </span>
-            )}
-            {formattedDate && (
-              <span class="author__date">
-                Publicado el {formattedDate}
-              </span>
-            )}
+            {
+              articles?.author?.name && (
+                <span class="author__name">Por {articles.author.name}</span>
+              )
+            }
+            {
+              formattedDate && (
+                <span class="author__date">Publicado el {formattedDate}</span>
+              )
+            }
           </div>
         </div>
 
         <div class="meta__actions">
-          <TextToSpeech client:load text={articles?.title ?? ""} />
-          <FontSizeControls client:load />
+          <TextToSpeech
+            client:visible
+            text={`${articles?.title}. ${articles?.excerpt}. ${plainTextContent}`}
+          />
+          <FontSizeControls client:visible />
         </div>
-
       </div>
     </header>
 
     <div class="article-detail__body">
+      {
+        sliderItems.length > 0 && (
+          <div class="article-detail__slider">
+            <MediaSlider client:visible items={sliderItems} />
+          </div>
+        )
+      }
+
       <div id="article-content" class="article-detail__content">
-        <RichText content={articles?.content} />
+        {articles?.content && <RichText content={articles.content} />}
       </div>
-
-      {sliderItems.length > 0 && (
-        <div class="article-detail__slider">
-          <MediaSlider client:visible items={sliderItems} />
-        </div>
-      )}
     </div>
-
   </article>
 </section>

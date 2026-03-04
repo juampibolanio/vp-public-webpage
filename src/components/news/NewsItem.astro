@@ -5,19 +5,20 @@ import "./NewsItem.css";
 const { news } = Astro.props;
 
 const { title, slug, excerpt, category, publishedDate, media, author } = news;
+console.log(category);
 
 const formattedDate = formatDate(publishedDate);
 ---
 
 <article class="news-item">
-  <a
-    href={`/noticias/${slug}`}
-    class="news-item__link"
-    aria-labelledby={`news-title-${slug}`}></a>
-
   {
     media && (
-      <div class="news-item__image-wrapper">
+      <a
+        class="news-item__image-wrapper"
+        href={`/noticias/${slug}`}
+        aria-hidden="true"
+        tabindex="-1"
+      >
         <img
           class="news-item__image"
           src={media.src}
@@ -27,25 +28,33 @@ const formattedDate = formatDate(publishedDate);
           loading="lazy"
           decoding="async"
         />
-      </div>
+      </a>
     )
   }
 
   <div class="news-item__content-wrapper">
     <div class="news-item__meta">
-      <span class="news-item__category">{category}</span>
+      <a href={`/noticias/categoria/${category}`} class="news-item__category">
+        {category}
+      </a>
       <span class="news-item__meta-divider"></span>
-      <span class="news-item__published-date">{formattedDate}</span>
+      <time class="news-item__published-date" datetime={publishedDate}>
+        {formattedDate}
+      </time>
     </div>
 
     <div class="news-item__content">
-      <h3 class="news-item__title" id={`news-title-${slug}`}>
-        {title}
-      </h3>
+      <h2 class="news-item__title">
+        <a
+          href={`/noticias/${slug}`}
+          class="news-item__title-link"
+          id={`news-title-${slug}`}
+        >
+          {title}
+        </a>
+      </h2>
 
-      <p class="news-item__excerpt">
-        {excerpt}
-      </p>
+      {excerpt && <p class="news-item__excerpt">{excerpt}</p>}
     </div>
 
     {

@@ -35,15 +35,23 @@ import TextToSpeech from "../../islands/TextToSpeech/TextToSpeech.jsx";
 
 const { news, relatedNews } = Astro.props;
 
-const sliderItems = Array.isArray(news.media)
-  ? news.media
-  : [];
+const sliderItems = Array.isArray(news.media) ? news.media : [];
 
 // extracting plain text from RichText
 const plainTextContent = Array.isArray(news.content)
   ? news.content
       .map((block) => block.children?.map((child) => child.text).join(" "))
       .join("\n")
+  : "";
+
+const dateFormatter = new Intl.DateTimeFormat("es-AR", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric",
+});
+
+const formattedDate = news.publishedDate
+  ? dateFormatter.format(new Date(news.publishedDate))
   : "";
 
 // share options
@@ -56,7 +64,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
 ---
 
 <section class="new-detail-wrapper">
-  <header class="new-detail__items">
+  <header aria-label="Navegación de noticia" class="new-detail__items">
     {
       news.category && (
         <a
@@ -73,9 +81,9 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
 
   <article class="new-detail__content">
     <div class="new-detail__header">
-      <h1 class="new-detail__title">{news.title}</h1>
+      <h1 id="article-title" class="new-detail__title">{news.title}</h1>
 
-      <p class="new-detail__excerpt">{news.excerpt}</p>
+      {news.excerpt && <p class="new-detail__excerpt">{news.excerpt}</p>}
 
       <div class="new-detail__meta-wrapper">
         {
@@ -86,7 +94,9 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
                   <img
                     class="author__image"
                     src={news.author.avatar.src}
-                    alt={news.author.avatar.alt}
+                    alt={news.author.avatar.alt || news.author.name}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               )}
@@ -94,13 +104,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
               <div class="author__info-wrapper">
                 <span class="author__name">Por: {news.author.name}</span>
 
-                <span class="author__published-date">
-                  {new Date(news.publishedDate).toLocaleDateString("es-AR", {
-                    day: "2-digit",
-                    month: "long",
-                    year: "numeric",
-                  })}
-                </span>
+                <span class="author__published-date">{formattedDate}</span>
               </div>
             </div>
           )
@@ -120,7 +124,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
         )
       }
 
-      <article class="news-detail__article">
+      <article aria-labelledby="article-title" class="news-detail__article">
         <RichText content={news.content} />
       </article>
 
@@ -130,7 +134,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
           <a
             href={whatsappUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             class="share-button button--whatsapp"
           >
             <Icon class="share-icon" name="mdi:whatsapp" size={32} />
@@ -140,7 +144,7 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
           <a
             href={facebookUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             class="share-button button--facebook"
           >
             <Icon class="share-icon" name="mdi:facebook" size={32} />

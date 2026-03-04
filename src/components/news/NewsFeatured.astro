@@ -4,25 +4,14 @@ import "./NewsFeatured.css";
 
 const { news } = Astro.props;
 
-const {
-  title,
-  slug,
-  excerpt,
-  category,
-  publishedDate,
-  media,
-  author
-} = news;
+const { title, slug, excerpt, category, publishedDate, media, author } = news;
 
 const formattedDate = formatDate(publishedDate);
 ---
 
 <section class="featured-new">
   <div class="featured-new__container">
-    <a
-      href={`/noticias/${slug}`}
-      class="featured-new__image-wrapper"
-    >
+    <a href={`/noticias/${slug}`} class="featured-new__image-wrapper">
       {
         media && (
           <img
@@ -40,10 +29,7 @@ const formattedDate = formatDate(publishedDate);
     </a>
 
     <div class="featured-new__meta">
-      <a
-        href={`/noticias/categoria/${category}`}
-        class="meta__category"
-      >
+      <a href={`/noticias/categoria/${category}`} class="meta__category">
         {category}
       </a>
       <span class="news-item__meta-divider"></span>
@@ -52,18 +38,15 @@ const formattedDate = formatDate(publishedDate);
       </span>
     </div>
 
-    <a
-      href={`/noticias/${slug}`}
-      class="featured-new__content"
-    >
-      <h3 class="content__title">
+    <a href={`/noticias/${slug}`} class="featured-new__content">
+      <h2 class="content__title">
         {title}
-      </h3>
-
-      <p class="content__excerpt">
-        {excerpt}
-      </p>
+      </h2>
     </a>
+    <p class="content__excerpt">
+      {excerpt}
+    </p>
+
 
     <div class="featured-new__author">
       {
@@ -83,12 +66,7 @@ const formattedDate = formatDate(publishedDate);
       }
 
       <div class="author__info">
-        <span class="author__name">
-          {author.name}
-        </span>
-        <span class="author__publication-date">
-          {formattedDate}
-        </span>
+        {author?.name && <span class="author__name">Por {author.name}</span>}
       </div>
     </div>
   </div>

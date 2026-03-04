@@ -1,18 +1,21 @@
 ---
 //@ts-nocheck
+import { never } from "astro:schema";
 import "./RelatedNews.css";
 
 const { relatedNews = [] } = Astro.props;
 
-const safeNews = relatedNews.filter((item) => item?.slug && item?.title);
+const safeNews = relatedNews
+  .filter((item) => item?.slug && item?.title)
+  .slice(0, 3);
 
 if (safeNews.length === 0) {
   return null;
 }
 ---
 
-<section class="related-news">
-  <h2 class="related-news__title">Noticias relacionadas</h2>
+<section class="related-news" aria-labelledby="related-news-title">
+  <h2 class="related-news__title" id="related-news-title">Noticias relacionadas</h2>
 
   <div class="related-news__grid">
     {
@@ -30,13 +33,7 @@ if (safeNews.length === 0) {
             : news.category?.label;
 
         return (
-          <article class="related-news__card">
-            <a
-              href={`/noticias/${news.slug}`}
-              class="related-news__link"
-              aria-label={`Leer noticia: ${news.title}`}
-            />
-
+          <article class="related-news__card" key={news.slug}>
             {hasImage ? (
               <img
                 src={news.media.thumbnail || news.media.src}
@@ -44,6 +41,8 @@ if (safeNews.length === 0) {
                 class="related-news__image"
                 loading="lazy"
                 decoding="async"
+                width="400"
+                height="150"
               />
             ) : (
               <div class="related-news__image related-news__image--placeholder" />
@@ -58,7 +57,14 @@ if (safeNews.length === 0) {
               </a>
             )}
 
-            <h3 class="related-news__headline">{news.title}</h3>
+            <h3 class="related-news__headline">
+              <a
+                href={`/noticias/${news.slug}`}
+                class="related-news__headline-link"
+              >
+                {news.title}
+              </a>
+            </h3>
           </article>
         );
       })

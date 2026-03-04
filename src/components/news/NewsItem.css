@@ -5,15 +5,6 @@
   align-items: stretch;
 }
 
-/* Link overlay */
-.news-item__link {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  text-decoration: none;
-  color: inherit;
-}
-
 /* Imagen */
 .news-item__image-wrapper {
   width: 280px;
@@ -28,6 +19,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  aspect-ratio: 14 / 9;
 }
 
 /* Contenido */
@@ -72,6 +64,16 @@
   font-size: var(--font-size-lg);
   margin: 0;
   line-height: 1.2;
+  color: #000;
+}
+
+/* Link overlay */
+.news-item__link {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  text-decoration: none;
+  color: #000;
 }
 
 .news-item__excerpt {

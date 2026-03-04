@@ -45,7 +45,7 @@ import { getNewBySlug, getRelatedNews } from "../../services/news.service";
 
 Astro.response.headers.set(
   "Cache-Control",
-  "public, max-age=0, s-maxage=120, stale-while-revalidate=600"
+  "public, max-age=0, s-maxage=120, stale-while-revalidate=600",
 );
 
 const { slug } = Astro.params;
@@ -98,39 +98,44 @@ const breadcrumbItems = [
 
 <style>
   .new-detail-layout {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
     gap: 3rem;
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
+    align-items: start;
   }
 
   .new-detail-content {
     display: flex;
     flex-direction: column;
-    gap: var(--space-lg);
+    gap: var(--space-sm);
+    min-width: 0;
+  }
+
+  .new-detail-sidebar {
+    width: 100%;
   }
 
   @media (max-width: 1024px) {
     .new-detail-layout {
-      flex-direction: column;
-      max-width: 100%;
-      padding: 1.5rem 1rem;
-    }
-
-    .new-detail-content {
-      width: 100%;
-    }
-
-    .new-detail-sidebar {
-      width: 100%;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      padding: 1.5rem 1.25rem;
     }
   }
 
   @media (max-width: 768px) {
     .new-detail-layout {
-      padding: 1rem;
+      padding: 1.25rem 1rem;
+      gap: 2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .new-detail-layout {
+      padding: 1rem 0.875rem;
     }
   }
 </style>

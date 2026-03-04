@@ -47,24 +47,25 @@ const editorialValues = [
   },
 ];
 
-const teamMembers = await getAuthors();
-
+const teamMembers = (await getAuthors()) || [];
 ---
+
 <article class="about-vp__intro">
   <div class="intro__content">
-    <h3 class="intro__title">
+    <h1 class="intro__title">
       Periodismo especializado en derecho de la vejez en Argentina. Vivir
       Plenamente es un medio periodístico multiplataforma especializado en
-      derecho de la vejez y calidad de vida de las personas mayores en Argentina.
-    </h3>
+      derecho de la vejez y calidad de vida de las personas mayores en
+      Argentina.
+    </h1>
 
     <div class="intro__texts">
       <p>
         En <strong>Vivir Plenamente</strong> informamos, orientamos y acompañamos
-        a personas mayores, sus familias y a quienes trabajan con ellas,
-        brindando información clara, confiable y accesible para la toma de
-        decisiones cotidianas vinculadas a salud, cuidados, recreación,
-        trámites, jubilaciones y acceso a derechos.
+        a personas mayores, sus familias y a quienes trabajan con ellas, brindando
+        información clara, confiable y accesible para la toma de decisiones cotidianas
+        vinculadas a salud, cuidados, recreación, trámites, jubilaciones y acceso
+        a derechos.
       </p>
 
       <p>
@@ -82,7 +83,14 @@ const teamMembers = await getAuthors();
   </div>
 
   <div class="intro__visual">
-    <img src="/assets/home-icon.webp" alt="Vivir Plenamente logo" />
+    <img
+      src="/assets/home-icon.webp"
+      alt="Logo del medio Vivir Plenamente"
+      width="180"
+      height="180"
+      loading="eager"
+      decoding="async"
+    />
   </div>
 </article>
 
@@ -90,7 +98,7 @@ const teamMembers = await getAuthors();
   <div class="pilars__container">
     <div class="pilar__mission">
       <Icon name="mdi:format-quote-close" />
-      <h4 class="pilar__title">Nuestra misión</h4>
+      <h2 class="pilar__title">Nuestra misión</h2>
       <p>
         Brindar información periodística confiable y orientación clara para que
         las personas mayores y sus familias puedan conocer, ejercer y defender
@@ -100,7 +108,7 @@ const teamMembers = await getAuthors();
 
     <div class="pilar__vision">
       <Icon name="mdi:eye-outline" />
-      <h4 class="pilar__title">Nuestra visión</h4>
+      <h2 class="pilar__title">Nuestra visión</h2>
       <p>
         Ser un medio de referencia en comunicación sobre derecho de la vejez y
         personas mayores en Argentina.
@@ -109,7 +117,7 @@ const teamMembers = await getAuthors();
 
     <div class="pilar__audience">
       <Icon name="mdi:earth" />
-      <h4 class="pilar__title">A quienes nos dirigimos</h4>
+      <h2 class="pilar__title">A quienes nos dirigimos</h2>
       <ul class="pilar__list">
         <li>Personas mayores.</li>
         <li>Familias y redes de cuidado.</li>
@@ -119,20 +127,22 @@ const teamMembers = await getAuthors();
   </div>
 </section>
 
-<section class="vp__values">
+<section aria-labelledby="values-title" class="vp__values">
   <header class="values__header">
-    <h3>Valores editoriales</h3>
+    <h2 id="values-title">Valores editoriales</h2>
     <p>Los pilares que guían cada contenido.</p>
   </header>
 
   <div class="values__grid">
-    {editorialValues.map((item) => (
-      <div class="value__card">
-        <Icon name={item.icon} class="value__icon" />
-        <h5>{item.title}</h5>
-        <p>{item.description}</p>
-      </div>
-    ))}
+    {
+      editorialValues.map((item) => (
+        <div class="value__card" key={item.title}>
+          <Icon name={item.icon} class="value__icon" />
+          <h2 style="font-size: var(--font-size-md);">{item.title}</h2>
+          <p>{item.description}</p>
+        </div>
+      ))
+    }
   </div>
 </section>
 
@@ -145,26 +155,28 @@ const teamMembers = await getAuthors();
   </header>
 
   <div class="team__grid">
-    {teamMembers.map((member) => (
-      <div class="team__card">
-        <div class="team__photo-placeholder">
-          {member.avatar ? (
-            <img
-              src={member.avatar.url}
-              alt={member.avatar.alt}
-              class="team__photo"
-              loading="lazy"
-              decoding="async"
-            />
-          ) : (
-            <div class="team__photo team__photo--placeholder" />
-          )}
-        </div>
+    {
+      teamMembers.map((member) => (
+        <div class="team__card" key={member.id}>
+          <div class="team__photo-placeholder">
+            {member.avatar ? (
+              <img
+                src={member.avatar.url}
+                alt={member.avatar.alt}
+                class="team__photo"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="team__photo team__photo--placeholder" />
+            )}
+          </div>
 
-        <p class="team__name">{member.name}</p>
-        <p class="team__role">{member.role}</p>
-      </div>
-    ))}
+          <p class="team__name">{member.name}</p>
+          <p class="team__role">{member.role}</p>
+        </div>
+      ))
+    }
   </div>
 
   <hr class="divisor" />
