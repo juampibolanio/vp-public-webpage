@@ -38,6 +38,13 @@ export function normalizeTextForTTS(rawText) {
     (_, int, dec) => `${int} coma ${dec}`
   );
 
+  // fractions -> text
+  text = text.replace(/\b1\/2\b/g, "un medio");
+  text = text.replace(/\b1\/4\b/g, "un cuarto");
+  text = text.replace(/\b3\/4\b/g, "tres cuartos");
+  text = text.replace(/\b1\/3\b/g, "un tercio");
+  text = text.replace(/\b2\/3\b/g, "dos tercios");
+
   // percentages: 25% -> 25 por ciento
   text = text.replace(/\b(\d+)\s?%\b/g, (_, n) => `${n} por ciento`);
 
@@ -47,8 +54,12 @@ export function normalizeTextForTTS(rawText) {
     (_, n) => `${n.replace(/\./g, "")} pesos`
   );
 
-  // cegrees: 30° -> 30 grados
+  // degrees: 30° -> 30 grados
   text = text.replace(/\b(\d+)\s?°\b/g, (_, n) => `${n} grados`);
+
+  // Cleanup: remove spaces before periods and multiple periods from DOM parsing
+  text = text.replace(/\s+\./g, "."); 
+  text = text.replace(/\.{2,}/g, "."); 
 
   // normalize whitespace
   return text.replace(/\s+/g, " ").trim();

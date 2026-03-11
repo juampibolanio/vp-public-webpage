@@ -118,7 +118,10 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
 
         <TextToSpeech
           client:idle
-          text={`${news.title}. ${news.excerpt}. ${plainTextContent}`}
+          title={news?.title}
+          excerpt={news?.excerpt}
+          contentHtml={news?.content_html}
+          contentBlocks={news?.content}
         />
       </div>
     </div>
