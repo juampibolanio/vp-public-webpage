@@ -10,11 +10,17 @@ const { articles } = Astro.props;
 
 const STRAPI_URL = import.meta.env.PUBLIC_STRAPI_API_URL_IMAGES ?? "";
 
-const plainTextContent = Array.isArray(articles.content)
-  ? articles.content
-      .map((block) => block.children?.map((child) => child.text).join(" "))
-      .join("\n")
-  : "";
+let plainTextContent = "";
+
+if (articles?.content_html) {
+  // new editor text
+  plainTextContent = articles.content_html.replace(/<[^>]+>/g, " ");
+} else if (Array.isArray(articles?.content)) {
+  // strapi rich text
+  plainTextContent = articles.content
+    .map((block) => block.children?.map((child) => child.text).join(" "))
+    .join("\n");
+}
 
 const dateFormatter = new Intl.DateTimeFormat("es-AR", {
   day: "2-digit",
@@ -107,7 +113,13 @@ const sliderItems = Array.isArray(articles?.media)
       }
 
       <div id="article-content" class="article-detail__content">
-        {articles?.content && <RichText content={articles.content} />}
+        {
+          articles?.content_html ? (
+            <div class="jodit-content" set:html={articles.content_html} />
+          ) : (
+            articles?.content && <RichText content={articles.content} />
+          )
+        }
       </div>
     </div>
   </article>

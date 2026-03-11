@@ -99,6 +99,7 @@ export function normalizeArticleDetail(item) {
     slug: item.slug,
     excerpt: item.excerpt,
     content: item.content || [],
+    content_html: item.content_html || null,
     category: item.category,
     articleType: item.article_type,
     targetAudience: item.target_audience,
