@@ -90,7 +90,8 @@ export function normalizeNewsItem(item) {
     title: item.title,
     slug: item.slug,
     excerpt: item.excerpt,
-    content: item.content || "",
+    content: item.content || null,
+    content_html: item.content_html || null,
     category: item.category
       ? {
           label: item.category,

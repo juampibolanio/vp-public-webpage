@@ -77,6 +77,7 @@ export async function getNewBySlug(slug) {
   "fields[3]": "published_date",
   "fields[4]": "content",
   "fields[5]": "category",
+  "fields[6]": "content_html",
 
   "populate[media]": "true",
   "populate[author][fields][0]": "name",

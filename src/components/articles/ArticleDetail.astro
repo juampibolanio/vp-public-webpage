@@ -89,7 +89,7 @@ const sliderItems = Array.isArray(articles?.media)
 
         <div class="meta__actions">
           <TextToSpeech
-            client:visible
+            client:load
             text={`${articles?.title}. ${articles?.excerpt}. ${plainTextContent}`}
           />
           <FontSizeControls client:visible />

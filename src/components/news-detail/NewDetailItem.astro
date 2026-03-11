@@ -37,12 +37,18 @@ const { news, relatedNews } = Astro.props;
 
 const sliderItems = Array.isArray(news.media) ? news.media : [];
 
-// extracting plain text from RichText
-const plainTextContent = Array.isArray(news.content)
-  ? news.content
-      .map((block) => block.children?.map((child) => child.text).join(" "))
-      .join("\n")
-  : "";
+// extracting plain text
+let plainTextContent = "";
+
+if (news.content_html) {
+  // new editor
+  plainTextContent = news.content_html.replace(/<[^>]+>/g, " ");
+} else if (Array.isArray(news.content)) {
+  // strapi rich text editor
+  plainTextContent = news.content
+    .map((block) => block.children?.map((child) => child.text).join(" "))
+    .join("\n");
+}
 
 const dateFormatter = new Intl.DateTimeFormat("es-AR", {
   day: "2-digit",
@@ -125,7 +131,13 @@ const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURICom
       }
 
       <article aria-labelledby="article-title" class="news-detail__article">
-        <RichText content={news.content} />
+        {
+          news.content_html ? (
+            <div class="jodit-content" set:html={news.content_html} />
+          ) : (
+            <RichText content={news.content} />
+          )
+        }
       </article>
 
       <div class="new-detail__share">
