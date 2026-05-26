@@ -1,93 +1,110 @@
 ---
 //@ts-nocheck
-const res = await fetch(Astro.url.origin + "/api/weather.json");
-const data = await res.json();
+let weatherData = null;
+let current = null;
+let forecast = null;
+let hasError = false;
 
-if (!data || data.error) {
-  throw new Error("Weather unavailable");
+try {
+  const res = await fetch(Astro.url.origin + "/api/weather.json");
+  const data = await res.json();
+
+  if (!data || data.error) {
+    hasError = true;
+  } else {
+    weatherData = data;
+    current = data.current;
+    forecast = data.forecast;
+  }
+} catch (error) {
+  console.error("Error fetching weather:", error);
+  hasError = true;
 }
-
-const { current, forecast } = data;
 ---
-
-<section class="weather-sections">
-  <header class="weather__header">
-    <h4 class="weather__title">{current.name}</h4>
-    <span class="weather__state">
-      {
-        current.weather[0].description.charAt(0).toUpperCase() +
-          current.weather[0].description.slice(1)
-      }
-    </span>
-  </header>
-
-  <div class="weather__body">
-    <div class="weather__stats">
-      <div class="weather__stat">
-        <span class="weather__stat-value">{current.main.humidity}%</span>
-        <span class="weather__stat-label">Humedad</span>
-      </div>
-
-      <div class="weather__stat">
-        <span class="weather__stat-value">
-          {Math.round(current.wind.speed * 3.6)} km/h
-        </span>
-        <span class="weather__stat-label">Viento</span>
-      </div>
-
-      <div class="weather__stat">
-        <span class="weather__stat-value">
-          {Math.round(current.main.feels_like)}°
-        </span>
-        <span class="weather__stat-label">Sen. térmica</span>
-      </div>
-    </div>
-
-    <div class="weather__temperature">
-      <img
-        src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
-        alt={current.weather[0].description}
-        width="80"
-        height="80"
-        loading="lazy"
-      />
-
-      <span class="weather__temp-value">
-        {Math.round(current.main.temp)}°
-      </span>
-
-      <div class="weather__temp-range">
-        <span>Min {Math.round(current.main.temp_min)}°</span>
-        <span>Max {Math.round(current.main.temp_max)}°</span>
-      </div>
-    </div>
+{hasError ? (
+  <div class="weather-error" style="padding: 1rem; text-align: center; background: #f8d7da; color: #721c24; border-radius: 8px;">
+    <span>Clima no disponible temporalmente.</span>
   </div>
+) : (
+  <section class="weather-sections">
+    <header class="weather__header">
+      <h4 class="weather__title">{current.name}</h4>
+      <span class="weather__state">
+        {
+          current.weather[0].description.charAt(0).toUpperCase() +
+            current.weather[0].description.slice(1)
+        }
+      </span>
+    </header>
 
-  <footer class="weather__forecast">
-    {
-      forecast.map((day) => {
-        const date = new Date(day.dt * 1000);
-        const label = date.toLocaleDateString("es-AR", {
-          weekday: "short",
-        });
+    <div class="weather__body">
+      <div class="weather__stats">
+        <div class="weather__stat">
+          <span class="weather__stat-value">{current.main.humidity}%</span>
+          <span class="weather__stat-label">Humedad</span>
+        </div>
 
-        return (
-          <div class="weather__forecast-day">
-            <img
-              src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
-              alt={day.weather[0].description}
-              width="40"
-              height="40"
-              loading="lazy"
-            />
-            <span>{label}</span>
-            <span>{Math.round(day.main.temp)}°</span>
-          </div>
-        );
-      })
-    }
-  </footer>
-</section>
+        <div class="weather__stat">
+          <span class="weather__stat-value">
+            {Math.round(current.wind.speed * 3.6)} km/h
+          </span>
+          <span class="weather__stat-label">Viento</span>
+        </div>
+
+        <div class="weather__stat">
+          <span class="weather__stat-value">
+            {Math.round(current.main.feels_like)}°
+          </span>
+          <span class="weather__stat-label">Sen. térmica</span>
+        </div>
+      </div>
+
+      <div class="weather__temperature">
+        <img
+          src={`https://openweathermap.org/img/wn/${current.weather[0].icon}@2x.png`}
+          alt={current.weather[0].description}
+          width="80"
+          height="80"
+          loading="lazy"
+        />
+
+        <span class="weather__temp-value">
+          {Math.round(current.main.temp)}°
+        </span>
+
+        <div class="weather__temp-range">
+          <span>Min {Math.round(current.main.temp_min)}°</span>
+          <span>Max {Math.round(current.main.temp_max)}°</span>
+        </div>
+      </div>
+    </div>
+
+    <footer class="weather__forecast">
+      {
+        forecast.map((day) => {
+          const date = new Date(day.dt * 1000);
+          const label = date.toLocaleDateString("es-AR", {
+            weekday: "short",
+          });
+
+          return (
+            <div class="weather__forecast-day">
+              <img
+                src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
+                alt={day.weather[0].description}
+                width="40"
+                height="40"
+                loading="lazy"
+              />
+              <span>{label}</span>
+              <span>{Math.round(day.main.temp)}°</span>
+            </div>
+          );
+        })
+      }
+    </footer>
+  </section>
+)}
 
 <style>
   .weather-sections {
